@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Gaya C: Blueprint Teknis</title>
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  body { background: #061428; color: #e6f6ff; }
+  svg { position: absolute; inset: 0; }
+  .ln { fill: none; stroke: #5fd4ff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .eq { fill: rgba(95,212,255,.06); }
+  .thin { stroke-width: 1.5; opacity: .7; }
+  .pipe { fill: none; stroke: rgba(95,212,255,.35); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+  .flow { fill: none; stroke: #bff3ff; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 34; }
+  .hp { stroke: #ffffff; stroke-width: 5; }
+  .brine { stroke: #7fb4d6; }
+  text { font-family: 'Jakarta', sans-serif; fill: #bfe9ff; }
+  .tag { font-size: 18px; font-weight: 700; letter-spacing: 3px; }
+  .tagbg { fill: #061428; stroke: #5fd4ff; stroke-width: 1.5; }
+  .chip { left: 90px; top: 74px; }
+  .chip .k { font-size: 20px; font-weight: 700; letter-spacing: 5px; color: #5fd4ff; }
+  .chip .tt { font-size: 50px; font-weight: 700; margin-top: 6px; }
+  .chip .bar { width: 90px; height: 4px; background: #5fd4ff; margin-top: 16px; }
+  .subs { left: 0; right: 0; bottom: 70px; text-align: center; }
+  #sub { display: inline-block; font-size: 40px; font-weight: 600; color: #fff; padding: 10px 28px; border-left: 4px solid #5fd4ff; background: rgba(6,20,40,.85); }
+  .logo { right: 90px; top: 84px; font-weight: 800; font-size: 24px; letter-spacing: 5px; color: rgba(191,233,255,.5); }
+</style>
+</head>
+<body>
+<svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <pattern id="g1" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(95,212,255,.07)" stroke-width="1"/></pattern>
+    <pattern id="g2" width="200" height="200" patternUnits="userSpaceOnUse"><path d="M200 0H0V200" fill="none" stroke="rgba(95,212,255,.14)" stroke-width="1.2"/></pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <radialGradient id="vg" cx="50%" cy="50%" r="70%"><stop offset="60%" stop-color="#061428" stop-opacity="0"/><stop offset="100%" stop-color="#020a16" stop-opacity=".85"/></radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g1)"/>
+  <rect width="1920" height="1080" fill="url(#g2)"/>
+  <g id="cam">
+    <g id="pipes"></g>
+    <g id="flows" filter="url(#glow)"></g>
+    <g id="eqs" filter="url(#glow)"></g>
+    <g id="labels"></g>
+  </g>
+  <g id="chart" transform="translate(130 790)"></g>
+  <rect width="1920" height="1080" fill="url(#vg)" pointer-events="none"/>
+</svg>
+<div class="ov chip" id="chip"><div class="k">TAHAP 06 / 13</div><div class="tt">Pompa Tekanan Tinggi</div><div class="bar"></div></div>
+<div class="ov logo">TRAYA</div>
+<div class="ov subs"><span id="sub"></span></div>
+
+<script type="module">
+import { prog, easeOut, easeInOut, lerp, subtitle, reveal } from './lib/common.js';
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (id) => document.getElementById(id);
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+
+// --- Jalur pipa (koordinat diagram) ---
+const P = {
+  inlet: 'M60 560 H300',
+  suction: 'M440 560 H600 V640 H750',
+  hp: 'M850 540 V420 H990 V700',
+  feeds: ['M990 430 H1060', 'M990 560 H1060', 'M990 690 H1060'],
+  brine: ['M1620 430 H1680', 'M1620 560 H1680', 'M1620 690 H1680', 'M1680 420 V820 H1880'],
+  perm: ['M1340 452 V470', 'M1340 582 V600', 'M1340 712 V730'],
+  permOut: 'M1700 300 H1880',
+};
+const pipes = $('pipes'), flows = $('flows');
+const drawn = [];
+function pipe(d, cls = '', speed = 1) {
+  const bg = el('path', { d, class: 'pipe', pathLength: 1 }, pipes);
+  const fl = el('path', { d, class: 'flow ' + cls }, flows);
+  drawn.push({ e: bg, start: 0.4 });
+  return { bg, fl, speed };
+}
+const segs = [
+  pipe(P.inlet), pipe(P.suction),
+  pipe(P.hp, 'hp', 2), ...P.feeds.map((d) => pipe(d, 'hp', 2)),
+  ...P.brine.map((d) => pipe(d, 'brine', 1.4)),
+];
+// Saluran permeat (garis putus tipis dari tengah vessel ke header)
+const permPath = el('path', { d: 'M1640 452 H1700 V300 M1640 582 H1700 M1640 712 H1700 V300', class: 'ln thin', 'stroke-dasharray': '6 8' }, pipes);
+segs.push(pipe(P.permOut, '', 1));
+
+// --- Peralatan ---
+const eqs = $('eqs');
+const equip = [];
+function shape(tag, attrs, t0) { const e = el(tag, { ...attrs, class: (attrs.class || '') + ' ln', pathLength: 1 }, eqs); equip.push({ e, t0 }); return e; }
+// Cartridge filter
+shape('rect', { x: 300, y: 420, width: 140, height: 280, rx: 28, class: 'eq' }, 0.2);
+for (let i = 0; i < 4; i++) shape('line', { x1: 330 + i * 27, y1: 460, x2: 330 + i * 27, y2: 660, class: 'thin' }, 0.5);
+// Motor + pompa
+// motor di bawah pompa, dihubungkan poros
+shape('rect', { x: 770, y: 770, width: 160, height: 100, rx: 10, class: 'eq' }, 0.4);
+for (let i = 0; i < 6; i++) shape('line', { x1: 790 + i * 24, y1: 780, x2: 790 + i * 24, y2: 860, class: 'thin' }, 0.7);
+shape('line', { x1: 850, y1: 740, x2: 850, y2: 770 }, 0.6);
+shape('circle', { cx: 850, cy: 640, r: 100, class: 'eq' }, 0.5);
+const imp = el('g', {}, eqs);
+for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; el('path', { d: `M850 640 Q${850 + Math.cos(a + .5) * 50} ${640 + Math.sin(a + .5) * 50} ${850 + Math.cos(a) * 78} ${640 + Math.sin(a) * 78}`, class: 'ln thin' }, imp); }
+el('circle', { cx: 850, cy: 640, r: 14, class: 'ln' }, imp);
+// Pressure vessel ×3
+[430, 560, 690].forEach((y, k) => {
+  shape('rect', { x: 1060, y: y - 34, width: 560, height: 68, rx: 34, class: 'eq' }, 0.6 + k * 0.15);
+  for (let i = 1; i < 6; i++) shape('line', { x1: 1060 + i * 93, y1: y - 30, x2: 1060 + i * 93, y2: y + 30, class: 'thin' }, 0.9 + k * 0.15);
+  // simbol spiral di ujung umpan
+  let d = ''; for (let a = 0; a < Math.PI * 6; a += 0.2) { const r = 2 + a * 1.4; d += (a ? 'L' : 'M') + (1100 + Math.cos(a) * r) + ' ' + (y + Math.sin(a) * r); }
+  shape('path', { d, class: 'thin' }, 1.0 + k * 0.15);
+});
+
+// --- Label teknis ---
+const labels = $('labels');
+function tag(x, y, text, t0) {
+  const g = el('g', { opacity: 0 }, labels);
+  const t = el('text', { x: x + 16, y: y + 27, class: 'tag' }, g); t.textContent = text;
+  const r = el('rect', { x, y, width: 10, height: 40, class: 'tagbg' });
+  g.insertBefore(r, t);
+  return { g, t0, r, t };
+}
+const tags = [
+  tag(250, 370, 'CARTRIDGE FILTER 5 µm', 0.9),
+  tag(960, 800, 'POMPA TEKANAN TINGGI', 1.4),
+  tag(1170, 330, 'MEMBRAN RO SPIRAL-WOUND', 5.0),
+  tag(1720, 254, 'PERMEAT', 5.6),
+  tag(1720, 838, 'BRINE', 5.6),
+  tag(150, 500, 'AIR UMPAN', 0.9),
+];
+// Kotak pembacaan tekanan
+const read = el('g', { opacity: 0 }, labels);
+el('rect', { x: 880, y: 300, width: 250, height: 96, class: 'tagbg' }, read);
+const rv = el('text', { x: 900, y: 352, style: 'font-size:44px;font-weight:800;fill:#fff' }, read);
+const rt = el('text', { x: 900, y: 382, style: 'font-size:17px;font-weight:600;fill:#5fd4ff' }, read); rt.textContent = 'tipikal 55–70 bar';
+
+// --- Grafik profil tekanan ---
+const ch = $('chart');
+const CW = 380, CH = 200;
+el('rect', { x: -20, y: -50, width: CW + 40, height: CH + 90, class: 'tagbg', opacity: .9 }, ch);
+const ct = el('text', { x: 0, y: -20, class: 'tag', style: 'font-size:15px' }, ch); ct.textContent = 'PROFIL TEKANAN (bar)';
+el('path', { d: `M0 0 V${CH} H${CW}`, class: 'ln thin' }, ch);
+const yv = (b) => CH - b / 80 * CH;
+el('rect', { x: 0, y: yv(70), width: CW, height: yv(55) - yv(70), fill: 'rgba(95,212,255,.15)' }, ch);
+[0, 40, 80].forEach((b) => { const t = el('text', { x: -16, y: yv(b) + 5, 'text-anchor': 'end', style: 'font-size:13px' }, ch); t.textContent = b; });
+const curve = el('path', { d: `M0 ${yv(2)} H120 L150 ${yv(62)} H${CW}`, class: 'ln', pathLength: 1, 'stroke-dasharray': '1 1' }, ch);
+const xl = ['umpan', 'pompa', 'membran']; [40, 140, 290].forEach((x, i) => { const t = el('text', { x, y: CH + 24, style: 'font-size:13px' }, ch); t.textContent = xl[i]; });
+
+window.renderFrame = (t) => {
+  // gerak kamera: perbesar perlahan ke pompa lalu geser ke membran
+  const z = lerp(1, 1.06, easeInOut(prog(t, 0, 8)));
+  const cx = lerp(920, 1000, easeInOut(prog(t, 2, 6)));
+  $('cam').setAttribute('transform', `translate(960 560) scale(${z}) translate(${-cx} -560)`);
+
+  drawn.forEach(({ e, start }) => { const p = easeOut(prog(t, start, 1.2)); e.setAttribute('stroke-dasharray', `${p} 1`); });
+  equip.forEach(({ e, t0 }) => { const p = easeOut(prog(t, t0, 1.0)); e.setAttribute('stroke-dasharray', `${p} 1`); e.style.fillOpacity = p; });
+  const pressure = 62 * easeInOut(prog(t, 2.4, 2.6));
+  const pr = pressure / 62;
+  const spin = t > 0.8 ? 400 * ((t - 0.8) - (1 - Math.exp(-1.5 * (t - 0.8))) / 1.5) : 0;
+  imp.setAttribute('transform', `rotate(${spin} 850 640)`);
+  segs.forEach((s) => {
+    s.fl.style.strokeDashoffset = -t * 90 * s.speed * (0.35 + 0.65 * pr);
+    s.fl.style.opacity = prog(t, 1.2, 0.6);
+  });
+  permPath.style.strokeDashoffset = -t * 30;
+  permPath.style.opacity = prog(t, 5.4, 0.6);
+  tags.forEach(({ g, t0 }) => g.setAttribute('opacity', easeOut(prog(t, t0, 0.5))));
+  read.setAttribute('opacity', easeOut(prog(t, 2.2, 0.5)));
+  rv.textContent = `P = ${Math.round(pressure)} bar`;
+  ch.setAttribute('opacity', easeOut(prog(t, 2.2, 0.6)));
+  curve.setAttribute('stroke-dasharray', `${0.3 + 0.7 * easeInOut(prog(t, 2.4, 2.6))} 1`);
+  reveal($('chip'), t, 0.3);
+  subtitle($('sub'), t);
+};
+// lebar kotak label mengikuti panjang teks setelah font termuat
+window.ready = document.fonts.ready.then(() => tags.forEach(({ r, t }) => r.setAttribute('width', t.getComputedTextLength() + 32)));
+</script>
+</body>
+</html>

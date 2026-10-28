@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Gaya D: Infografis Flat Terang</title>
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  body { background: #f3f7fb; color: #0b2a4a; }
+  svg { position: absolute; inset: 0; }
+  .rail { left: 0; right: 0; top: 56px; display: flex; justify-content: center; align-items: center; gap: 0; }
+  .rail .d { width: 18px; height: 18px; border-radius: 50%; background: #d3e2f1; }
+  .rail .d.done { background: #0b2a4a; }
+  .rail .d.cur { width: 44px; height: 44px; background: #1e88e5; color: #fff; font-weight: 800; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 8px rgba(30,136,229,.18); }
+  .rail .s { width: 70px; height: 4px; background: #d3e2f1; }
+  .rail .s.done { background: #0b2a4a; }
+  .title { left: 120px; top: 170px; }
+  .title .k { font-size: 22px; font-weight: 700; color: #1e88e5; letter-spacing: 3px; }
+  .title .tt { font-size: 60px; font-weight: 800; letter-spacing: -1px; margin-top: 4px; }
+  .card { right: 100px; top: 300px; width: 460px; padding: 40px 44px; background: #fff; border-radius: 32px; box-shadow: 0 30px 60px rgba(11,42,74,.12); }
+  .card .lbl { font-size: 20px; font-weight: 700; color: #5d7a99; letter-spacing: 2px; }
+  .card .big { font-size: 118px; font-weight: 800; line-height: 1; margin-top: 10px; letter-spacing: -3px; }
+  .card .big small { font-size: 40px; color: #1e88e5; letter-spacing: 0; margin-left: 10px; }
+  .card .pill { display: inline-block; margin-top: 14px; font-size: 18px; font-weight: 800; color: #fff; background: #1e88e5; padding: 6px 16px; border-radius: 99px; letter-spacing: 2px; }
+  .card .meter { position: relative; height: 18px; border-radius: 9px; background: #e3edf7; margin-top: 30px; overflow: hidden; }
+  .card .meter .band { position: absolute; top: 0; bottom: 0; background: rgba(79,195,247,.45); }
+  .card .meter .fill { position: absolute; left: 0; top: 0; bottom: 0; background: #0b2a4a; border-radius: 9px; }
+  .card .scale { display: flex; justify-content: space-between; font-size: 16px; color: #8aa3bd; margin-top: 8px; font-weight: 600; }
+  .card .note { margin-top: 26px; font-size: 21px; line-height: 1.45; color: #36506d; display: flex; gap: 12px; }
+  .card .note b { color: #1e88e5; }
+  .subs { left: 0; right: 0; bottom: 60px; text-align: center; }
+  #sub { display: inline-block; font-size: 40px; font-weight: 700; color: #0b2a4a; background: #fff; padding: 14px 34px; border-radius: 99px; box-shadow: 0 14px 34px rgba(11,42,74,.14); }
+  .logo { left: 120px; bottom: 74px; font-weight: 800; font-size: 24px; letter-spacing: 5px; color: #9db4cc; }
+</style>
+</head>
+<body>
+<svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="blob" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#cfe6fb"/><stop offset="1" stop-color="#cfe6fb" stop-opacity="0"/></radialGradient>
+  </defs>
+  <circle id="b1" cx="560" cy="620" r="520" fill="url(#blob)"/>
+  <circle id="b2" cx="1600" cy="300" r="380" fill="url(#blob)" opacity=".7"/>
+  <g id="art" transform="translate(30 50) scale(0.9)"></g>
+</svg>
+<div class="ov rail" id="rail"></div>
+<div class="ov title" id="title"><div class="k">TAHAP 06</div><div class="tt">Pompa Tekanan Tinggi</div></div>
+<div class="ov card" id="card">
+  <div class="lbl">TEKANAN KERJA</div>
+  <div class="big"><span id="lo">0</span>–<span id="hi">0</span><small>bar</small></div>
+  <div class="pill">TIPIKAL</div>
+  <div class="meter"><div class="band" style="left:68.75%;width:18.75%"></div><div class="fill" id="fill"></div></div>
+  <div class="scale"><span>0</span><span>40</span><span>80 bar</span></div>
+  <div class="note" id="note"><span>→</span><span>Jauh melampaui <b>tekanan osmotik</b> air laut, sehingga air tawar terdorong menembus membran.</span></div>
+</div>
+<div class="ov subs"><span id="sub"></span></div>
+<div class="ov logo">TRAYA</div>
+
+<script type="module">
+import { prog, easeOut, easeBack, easeInOut, subtitle, reveal } from './lib/common.js';
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (id) => document.getElementById(id);
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// Rel kemajuan 13 tahap
+const rail = $('rail');
+for (let i = 1; i <= 13; i++) {
+  const d = document.createElement('div');
+  d.className = 'd' + (i < 6 ? ' done' : i === 6 ? ' cur' : '');
+  if (i === 6) d.textContent = '06';
+  rail.appendChild(d);
+  if (i < 13) { const s = document.createElement('div'); s.className = 's' + (i < 6 ? ' done' : ''); rail.appendChild(s); }
+}
+
+const art = $('art');
+const NAVY = '#0b2a4a', BLUE = '#1e88e5', AQUA = '#4fc3f7', LIGHT = '#e3edf7';
+// Grup yang muncul bergantian dengan efek "pop"
+const pops = [];
+function group(cx, cy, t0) { const g = el('g', {}, art); pops.push({ g, cx, cy, t0 }); return g; }
+
+// Pipa (digambar dulu agar di belakang peralatan)
+const pipeG = el('g', {}, art);
+const pipeD = 'M-200 440 H570 V540 M640 520 V340 H860 V680 M860 500 H900 M860 590 H900 M860 680 H900';
+el('path', { d: pipeD, fill: 'none', stroke: LIGHT, 'stroke-width': 34, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, pipeG);
+el('path', { d: pipeD, fill: 'none', stroke: '#c4d8ec', 'stroke-width': 34, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .5, transform: 'translate(0 6)' }, pipeG);
+const flowPaths = [
+  { d: 'M-200 440 H570 V540', sp: 0.5 },
+  { d: 'M640 520 V340 H860 V680 H900', sp: 1 },
+  { d: 'M860 500 H900', sp: 1 },
+  { d: 'M860 590 H900', sp: 1 },
+].map((f) => ({ ...f, e: el('path', { d: f.d, fill: 'none' }, art) }));
+const drops = el('g', {}, art);
+const dropEls = [];
+flowPaths.forEach((f, k) => { const L = f.e.getTotalLength(); for (let i = 0; i < Math.max(1, Math.round(L / 70)); i++) dropEls.push({ f, L, u: i * 70, c: el('circle', { r: 8, fill: k ? BLUE : AQUA }, drops) }); });
+
+// Skid + motor + pompa
+const pump = group(470, 640, 0.5);
+el('rect', { x: 200, y: 690, width: 560, height: 34, rx: 10, fill: NAVY }, pump);
+el('rect', { x: 230, y: 540, width: 250, height: 150, rx: 26, fill: BLUE }, pump);
+for (let i = 0; i < 6; i++) el('rect', { x: 262 + i * 34, y: 556, width: 14, height: 118, rx: 7, fill: '#5eaef0' }, pump);
+el('rect', { x: 205, y: 575, width: 30, height: 80, rx: 8, fill: NAVY }, pump);
+el('rect', { x: 480, y: 595, width: 50, height: 40, rx: 8, fill: '#ffb74d' }, pump);
+el('circle', { cx: 640, cy: 610, r: 92, fill: NAVY }, pump);
+el('circle', { cx: 640, cy: 610, r: 66, fill: 'none', stroke: AQUA, 'stroke-width': 8 }, pump);
+const imp = el('g', {}, pump);
+for (let i = 0; i < 6; i++) el('rect', { x: 636, y: 554, width: 8, height: 56, rx: 4, fill: '#ffffff', transform: `rotate(${i * 60} 640 610)` }, imp);
+el('circle', { cx: 640, cy: 610, r: 14, fill: AQUA }, pump);
+
+// Rak pressure vessel
+[500, 590, 680].forEach((y, k) => {
+  const g = group(1080, y, 1.0 + k * 0.15);
+  el('rect', { x: 900, y: y - 30, width: 360, height: 60, rx: 30, fill: '#ffffff', stroke: NAVY, 'stroke-width': 5 }, g);
+  for (let i = 1; i < 5; i++) el('line', { x1: 900 + i * 72, y1: y - 24, x2: 900 + i * 72, y2: y + 24, stroke: LIGHT, 'stroke-width': 4 }, g);
+  el('rect', { x: 888, y: y - 36, width: 24, height: 72, rx: 8, fill: BLUE }, g);
+  el('rect', { x: 1248, y: y - 36, width: 24, height: 72, rx: 8, fill: BLUE }, g);
+});
+const tagG = group(1080, 400, 5.0);
+el('rect', { x: 930, y: 392, width: 300, height: 48, rx: 24, fill: NAVY }, tagG);
+const tt = el('text', { x: 1080, y: 424, 'text-anchor': 'middle', fill: '#fff', style: 'font: 700 20px Jakarta, sans-serif; letter-spacing: 1px' }, tagG); tt.textContent = 'Membran RO spiral-wound';
+
+window.renderFrame = (t) => {
+  $('b1').setAttribute('cx', 560 + Math.sin(t * 0.5) * 30);
+  $('b2').setAttribute('cy', 300 + Math.cos(t * 0.4) * 24);
+  reveal($('rail'), t, 0.1, 0.6, -16);
+  reveal($('title'), t, 0.3);
+  pops.forEach(({ g, cx, cy, t0 }) => {
+    const s = easeBack(prog(t, t0, 0.6));
+    g.setAttribute('transform', `translate(${cx} ${cy}) scale(${Math.max(s, 0.0001)}) translate(${-cx} ${-cy})`);
+  });
+  pipeG.setAttribute('opacity', easeOut(prog(t, 0.9, 0.5)));
+  const pressure = easeInOut(prog(t, 2.4, 2.6));
+  const spin = t > 0.8 ? 400 * ((t - 0.8) - (1 - Math.exp(-1.5 * (t - 0.8))) / 1.5) : 0;
+  imp.setAttribute('transform', `rotate(${spin} 640 610)`);
+  let pos = 0;
+  dropEls.forEach((d) => {
+    const v = 120 * d.f.sp * (0.4 + 0.6 * pressure);
+    const u = (d.u + t * v) % d.L;
+    const p = d.f.e.getPointAtLength(u);
+    d.c.setAttribute('cx', p.x); d.c.setAttribute('cy', p.y);
+    d.c.setAttribute('opacity', prog(t, 1.3, 0.5) * Math.min(1, u / 30, (d.L - u) / 30));
+  });
+  reveal($('card'), t, 2.0, 0.7, 40);
+  $('lo').textContent = Math.round(55 * pressure);
+  $('hi').textContent = Math.round(70 * pressure);
+  $('fill').style.width = (62 / 80 * 100 * pressure) + '%';
+  reveal($('note'), t, 5.0, 0.6, 16);
+  subtitle($('sub'), t);
+};
+window.ready = document.fonts.ready;
+</script>
+</body>
+</html>
