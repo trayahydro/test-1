@@ -16,5 +16,7 @@ for p in pages:
         if m: cur, fr = int(m[-1][0]), int(m[-1][1])
     if os.path.exists(seg) and os.path.getsize(seg) > 0 and fr: cur = fr
     if fr: done += cur; total += fr
-print(f'{done}/{total} frame')
+TOTAL = 19038  # total frame seluruh adegan (durasi desain × 30 fps)
+selesai = len([f for f in glob.glob('out/seg/*.mp4') if not f.endswith('.part.mp4')])
+print(f'{done}/{TOTAL} frame ({done / TOTAL * 100:.1f}%), segmen selesai: {selesai}/26')
 PY

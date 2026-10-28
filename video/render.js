@@ -45,7 +45,7 @@ function serve(root) {
     await page.evaluate((t) => window.renderFrame(t), (f0 + i) / fps);
     const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
     if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
-    if (i % 30 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);
+    if (i % 10 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);
   }
   ff.stdin.end();
   await new Promise((r) => ff.on('close', r));
