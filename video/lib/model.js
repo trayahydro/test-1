@@ -472,7 +472,7 @@ export function buildSWRO(M, logos) {
   box(0.9, 0.1, 0.5, M.frame, cx, 0.05, cz);
   box(0.9, 2.0, 0.5, M.cabinet, cx, 1.1, cz);
   box(0.86, 1.96, 0.01, M.cabinet, cx, 1.1, cz - 0.255);
-  const scr = add(new THREE.PlaneGeometry(0.42, 0.26), M.hmi, E, false); scr.position.set(cx, 1.52, cz - 0.262); scr.rotation.y = Math.PI;
+  const scr = add(new THREE.PlaneGeometry(0.42, 0.26), M.hmi, E, false); scr.position.set(cx, 1.52, cz - 0.262); scr.rotation.y = Math.PI; refs.hmiScreen = scr;
   box(0.46, 0.3, 0.012, M.black, cx, 1.52, cz - 0.257);
   [[-0.25, M.green], [-0.12, M.red], [0.01, M.yellow]].forEach(([dx, m]) => { const b = cyl(0.022, V(cx + dx, 1.18, cz - 0.26), V(cx + dx, 1.18, cz - 0.29), m, E, 20); });
   cyl(0.04, V(cx + 0.24, 1.18, cz - 0.26), V(cx + 0.24, 1.18, cz - 0.29), M.yellow, E, 24);

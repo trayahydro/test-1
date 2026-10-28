@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 17: Penutup</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .end { position: absolute; left: 0; right: 0; top: 190px; text-align: center; opacity: 0; }
+  .end img { height: 210px; filter: drop-shadow(0 6px 24px rgba(0,0,0,.5)); }
+  .end .tg { font-size: 30px; font-weight: 600; margin-top: 18px; color: #fff3e6; text-shadow: 0 3px 16px rgba(0,0,0,.6); }
+  .contact { position: absolute; left: 50%; top: 610px; transform: translateX(-50%); width: 1100px; padding: 26px 34px; border-radius: 22px; background: rgba(8,20,42,.78); border: 1px solid rgba(255,200,150,.35); text-align: center; opacity: 0; }
+  .contact .co { font-size: 36px; font-weight: 800; letter-spacing: -.3px; }
+  .contact .ad { font-size: 24px; color: #e6eefa; margin-top: 10px; }
+  .contact .ln { display: flex; justify-content: center; gap: 46px; margin-top: 14px; font-size: 28px; font-weight: 700; color: #ffd2a8; }
+  .vg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(5,10,25,.25), rgba(5,10,25,.6)); opacity: 0; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { siapkanAdegan, el, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut } from './lib/common.js';
+
+const A = await siapkanAdegan(17, { extra: 8 });
+const D = A.durasi;
+const P = await panggungKontainer({ exposure: 0.9, bloom: 0.25, langitOpt: { elev: 5, az: 180, top: '#1b2b55', mid: '#b5655c', hor: '#ffb27a', sunCol: '#ffc58a', glow: 0.7 } });
+const { cam, sun } = P;
+sun.color.set('#ffb070'); sun.intensity = 1.8;
+const camAt = kamera(cam, [
+  { t: 0, p: [3.5, 1.6, 22.0], l: [6.0, 1.4, 0], f: 36 },
+  { t: 12.0, p: [7.5, 2.6, 18.5], l: [6.0, 1.6, 0], f: 36 },
+  { t: D, p: [9.5, 3.8, 16.5], l: [6.0, 2.2, 0], f: 38 },
+]);
+const vg = el('', 'vg');
+const end = el('<img src="../logo/traya-logo-putih.png" alt=""><div class="tg">Mitra Anda untuk solusi air bersih dari air laut</div>', 'end');
+const ct = el('<div class="co">PT Traya Hydro Indonesia</div><div class="ad">The Smith Alam Sutera SOHO-D/10/1009, Tangerang</div><div class="ln"><span>+62 823 110 110 29</span><span>www.trayahydro.com</span></div>', 'contact');
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  P.render();
+  const a1 = easeOut(prog(t, 5.0, 1.2)); end.style.opacity = a1; end.style.transform = `translateY(${(1 - a1) * 20}px)`; vg.style.opacity = a1;
+  const a2 = easeOut(prog(t, 11.2, 1.0)); ct.style.opacity = a2; ct.style.transform = `translateX(-50%) translateY(${(1 - a2) * 16}px)`;
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

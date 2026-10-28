@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 15: CIP & monitoring</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .mon { position: absolute; left: 160px; top: 230px; width: 1040px; padding: 22px; border-radius: 22px; background: #1b1f24; box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 0 0 2px #2c3239; opacity: 0; }
+  .mon canvas { display: block; width: 100%; border-radius: 8px; }
+</style>
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar, loadImg } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliran, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
+
+const A = await siapkanAdegan(15);
+const D = A.durasi;
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+P.setEnv(true); P.setDinding(1);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+// jalur sirkulasi CIP (selang sementara): tangki → pompa CIP → header umpan rak → kembali dari header brine
+const kirim = new THREE.CatmullRomCurve3([V(2.5, 0.17, -0.62), V(2.7, 0.05, -0.25), V(4.8, 0.05, -0.15), V(10.6, 0.05, -0.15), V(11.0, 0.05, 0.45), V(11.05, 0.4, 0.62), V(11.05, 0.55, 0.8)], false, 'centripetal');
+const balik = new THREE.CatmullRomCurve3([V(5.05, 0.42, 0.8), V(4.95, 0.12, 0.5), V(4.6, 0.06, 0.05), V(2.6, 0.06, 0.0), V(2.1, 0.5, -0.25), V(1.95, 1.32, -0.5)], false, 'centripetal');
+const hoseM = new THREE.MeshStandardMaterial({ color: '#2a2f35', roughness: 0.6 });
+[kirim, balik].forEach((c) => { const m = new THREE.Mesh(new THREE.TubeGeometry(c, 200, 0.025, 10), hoseM); m.castShadow = true; scene.add(m); });
+const fK = aliran(kirim, 0.025, WARNA.cip, { parent: scene, speed: 1.2, spacing: 0.3, scale: 1.6 });
+const fBk = aliran(balik, 0.025, WARNA.cip, { parent: scene, speed: 1.2, spacing: 0.3, scale: 1.6 });
+// vessel bercahaya hijau samar saat dilalui larutan CIP
+const vmats = refs.vesselMeshes.map((v) => { v.mesh.material = v.mesh.material.clone(); return v.mesh.material; });
+
+// layar HMI dinamis
+const logo = await loadImg('../logo/traya-logo-putih.png');
+const hc = document.createElement('canvas'); hc.width = 800; hc.height = 500; const hg = hc.getContext('2d');
+const htex = new THREE.CanvasTexture(hc); htex.colorSpace = THREE.SRGBColorSpace;
+refs.hmiScreen.material = refs.hmiScreen.material.clone(); refs.hmiScreen.material.emissiveMap = htex; refs.hmiScreen.material.emissiveIntensity = 1.1;
+function hmi(t) {
+  hg.fillStyle = '#0b1a30'; hg.fillRect(0, 0, 800, 500);
+  hg.fillStyle = '#132b4f'; hg.fillRect(0, 0, 800, 56);
+  if (logo) hg.drawImage(logo, 14, 6, 44 * logo.width / logo.height, 44);
+  hg.fillStyle = '#fff'; hg.font = '700 24px Jakarta'; hg.fillText('SWRO — PEMANTAUAN', 150, 37);
+  hg.fillStyle = Math.sin(t * 4) > 0 ? '#4caf50' : '#2e6b31'; hg.beginPath(); hg.arc(762, 28, 10, 0, 7); hg.fill();
+  const v = [['Tekanan umpan', (62 + Math.sin(t * 0.7) * 0.4).toFixed(1), 'bar'], ['Laju aliran', 'stabil', ''], ['Konduktivitas', Math.round(560 + Math.sin(t * 0.5) * 8), 'µS/cm'], ['pH produk', (7.6 + Math.sin(t * 0.3) * 0.05).toFixed(1), ''], ['Suhu', (29 + Math.sin(t * 0.2) * 0.2).toFixed(1), '°C']];
+  v.forEach(([n, x, u], i) => {
+    const bx = 20 + (i % 3) * 258, by = 76 + Math.floor(i / 3) * 96;
+    hg.strokeStyle = '#4fc3f7'; hg.lineWidth = 2; hg.strokeRect(bx, by, 244, 82);
+    hg.fillStyle = '#9fd3ff'; hg.font = '600 17px Jakarta'; hg.fillText(n, bx + 12, by + 26);
+    hg.fillStyle = '#fff'; hg.font = '800 32px Jakarta'; hg.fillText(`${x} ${u}`, bx + 12, by + 66);
+  });
+  hg.strokeStyle = '#2a4a75'; hg.lineWidth = 1; for (let i = 0; i < 4; i++) { hg.beginPath(); hg.moveTo(20, 290 + i * 50); hg.lineTo(780, 290 + i * 50); hg.stroke(); }
+  [['#4fc3f7', 330, 0.06], ['#ffb74d', 420, 0.045]].forEach(([c, y0, f]) => { hg.strokeStyle = c; hg.lineWidth = 3; hg.beginPath(); for (let x = 0; x <= 760; x += 6) hg.lineTo(20 + x, y0 + Math.sin((x + t * 60) * f) * 10 + Math.sin((x + t * 90) * f * 0.37) * 6); hg.stroke(); });
+  htex.needsUpdate = true;
+}
+
+const camAt = kamera(cam, [
+  { t: 0, p: [4.3, 2.3, -2.9], l: [2.2, 0.6, -0.3], f: 46 },
+  { t: 8.0, p: [6.0, 2.8, -3.6], l: [5.6, 0.4, 0.2], f: 48 },
+  { t: 17.6, p: [5.0, 2.6, -3.3], l: [4.6, 0.5, 0.2], f: 48 },
+  { t: 19.6, p: [3.45, 1.55, 0.05], l: [3.38, 1.48, 0.66], f: 38 },
+  { t: D, p: [3.42, 1.53, 0.18], l: [3.38, 1.5, 0.66], f: 36 },
+]);
+chip('10', 'CIP & Monitoring', 'Perawatan & pemantauan', -1, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'PERAWATAN MEMBRAN', tt: 'CIP (Clean-In-Place)', rows: [['Fungsi', 'membersihkan membran'], ['Tanpa', 'membongkar pressure vessel'], ['Mengangkat', 'kerak, organik, biofilm']], x: 110, y: 200, t0: 1.0, t1: 17.8, w: 480, anchor: S(V(1.95, 1.0, -0.5)) });
+penanda('•', 'Larutan pembersih bersirkulasi', S(V(7.5, 0.06, -0.15)), 8.6, 17.8);
+const mon = document.createElement('div'); mon.className = 'mon'; mon.appendChild(hc); document.getElementById('ov').insertBefore(mon, document.getElementById('ov').lastChild);
+kartu({ k: 'PANEL KONTROL', tt: 'PLC + Layar HMI', rows: [['Tekanan', 'real-time'], ['Laju aliran', 'real-time'], ['Konduktivitas', 'real-time'], ['pH & suhu', 'real-time']], x: 1360, y: 200, t0: 18.4, t1: 99 });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  fK.set(t, easeInOut(prog(t, 8.4, 3.0)), 1);
+  fBk.set(t, easeInOut(prog(t, 12.0, 3.0)), t > 12 ? 1 : 0);
+  const glow = t > 10.5 && t < 18.5 ? 0.25 + 0.15 * Math.sin(t * 3) : 0;
+  vmats.forEach((m) => { m.emissive.set('#3fdc7a'); m.emissiveIntensity = glow; });
+  hmi(t);
+  P.render();
+  const am = easeOut(prog(t, 19.2, 0.8)); mon.style.opacity = am; mon.style.transform = `scale(${0.92 + 0.08 * am})`;
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

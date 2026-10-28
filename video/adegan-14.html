@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 14: Rekap skala filtrasi</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"><canvas id="cv" width="1920" height="1080"></canvas></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js" } }</script>
+<script type="module">
+import { siapkanAdegan, chip, bug, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
+
+const A = await siapkanAdegan(14);
+await document.fonts.ready;
+chip('↺', 'Rekap Skala Filtrasi', 'Dari milimeter ke nanometer', -1, 0.3);
+bug(0.2);
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+const X0 = 150, X1 = 1770, AY = 470;
+const xOf = (um) => X0 + (4 - Math.log10(um)) / 8 * (X1 - X0);
+const label = (t, x, y, s = 22, c = '#fff', w = 700, al = 'center') => { g.font = `${w} ${s}px Jakarta`; g.fillStyle = c; g.textAlign = al; g.fillText(t, x, y); };
+
+const STAGES = [
+  { n: 'Strainer', cut: 1000, txt: '± milimeter', t: 4.0, col: ['#7d8b99', '#a9b8c6'] },
+  { n: 'Multimedia filter', cut: 10, txt: '± 10–20 µm', t: 7.5, col: ['#3f7fbf', '#6fb0ef'] },
+  { n: 'Cartridge filter', cut: 5, txt: '5 µm', t: 14.7, col: ['#2f86d0', '#5ab8ff'] },
+  { n: 'Ultrafiltrasi (opsional)', cut: 0.01, txt: '0,01–0,03 µm', t: 17.9, col: ['#2aa3c9', '#6fe0ff'] },
+  { n: 'Membran RO', cut: 0.0001, txt: '± 0,0001 µm', t: 25.7, col: ['#5ad1ff', '#d8f6ff'] },
+];
+const REFS = [
+  { n: 'Rambut manusia', s: 70, t: 12.0, draw: (x, y) => { g.strokeStyle = '#d9b48a'; g.lineWidth = 10; g.lineCap = 'round'; g.beginPath(); g.moveTo(x - 30, y + 20); g.quadraticCurveTo(x, y - 30, x + 30, y + 10); g.stroke(); } },
+  { n: 'Bakteri', s: 1, t: 20.5, draw: (x, y) => { g.fillStyle = '#5fbf5a'; g.beginPath(); g.roundRect(x - 26, y - 10, 52, 20, 10); g.fill(); } },
+  { n: 'Virus', s: 0.08, t: 22.0, draw: (x, y) => { g.fillStyle = '#b26ad8'; g.beginPath(); g.arc(x, y, 13, 0, 7); g.fill(); g.strokeStyle = '#b26ad8'; g.lineWidth = 3; for (let k = 0; k < 10; k++) { const a = k / 10 * 6.28; g.beginPath(); g.moveTo(x + Math.cos(a) * 13, y + Math.sin(a) * 13); g.lineTo(x + Math.cos(a) * 20, y + Math.sin(a) * 20); g.stroke(); } } },
+  { n: 'Ion garam', s: 0.0006, t: 28.5, draw: (x, y) => { [['#ff9f43', '+', -14], ['#ffd54f', '−', 14]].forEach(([c, sg, dx]) => { g.fillStyle = c; g.beginPath(); g.arc(x + dx, y, 12, 0, 7); g.fill(); g.fillStyle = '#222'; g.font = '800 16px Jakarta'; g.textAlign = 'center'; g.fillText(sg, x + dx, y + 6); }); } },
+];
+
+function bg() {
+  const gr = g.createRadialGradient(960, 480, 100, 960, 540, 1200); gr.addColorStop(0, '#0b2142'); gr.addColorStop(1, '#06152c');
+  g.fillStyle = gr; g.fillRect(0, 0, 1920, 1080);
+  g.strokeStyle = 'rgba(110,195,255,0.05)'; g.lineWidth = 1;
+  for (let x = 0; x <= 1920; x += 60) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 1080); g.stroke(); }
+  for (let y = 0; y <= 1080; y += 60) { g.beginPath(); g.moveTo(0, y); g.lineTo(1920, y); g.stroke(); }
+}
+function axis(a) {
+  g.globalAlpha = a;
+  g.strokeStyle = 'rgba(207,233,255,0.9)'; g.lineWidth = 4; g.beginPath(); g.moveTo(X0, AY); g.lineTo(X1, AY); g.stroke();
+  const ticks = [[10000, '10 mm'], [1000, '1 mm'], [100, '100 µm'], [10, '10 µm'], [1, '1 µm'], [0.1, '0,1 µm'], [0.01, '0,01 µm'], [0.001, '0,001 µm'], [0.0001, '0,0001 µm']];
+  ticks.forEach(([v, l]) => { const x = xOf(v); g.beginPath(); g.moveTo(x, AY - 12); g.lineTo(x, AY + 12); g.stroke(); label(l, x, AY + 44, 19, '#a9c7e4', 600); });
+  label('UKURAN PARTIKEL (skala logaritmik)', 960, AY + 84, 16, '#6ec3ff', 800);
+  label('← lebih besar', X0, AY - 30, 16, '#a9c7e4', 600, 'left'); label('lebih kecil →', X1, AY - 30, 16, '#a9c7e4', 600, 'right');
+  g.globalAlpha = 1;
+}
+function stages(t) {
+  STAGES.forEach((s, i) => {
+    const k = easeInOut(prog(t, s.t, 1.4)); if (k <= 0) return;
+    const y = 610 + i * 74, xe = lerp(X0, xOf(s.cut), k);
+    const gr = g.createLinearGradient(X0, 0, xe, 0); gr.addColorStop(0, s.col[0]); gr.addColorStop(1, s.col[1]);
+    const active = t < (STAGES[i + 1]?.t ?? 99);
+    g.globalAlpha = active ? 1 : 0.55;
+    g.fillStyle = gr; g.beginPath(); g.roundRect(X0, y - 22, Math.max(4, xe - X0), 44, 10); g.fill();
+    label(s.n, X0 + 18, y + 8, 21, '#06152c', 800, 'left');
+    if (k > 0.9) {
+      g.strokeStyle = s.col[1]; g.lineWidth = 3; g.setLineDash([8, 6]); g.beginPath(); g.moveTo(xe, AY + 12); g.lineTo(xe, y - 22); g.stroke(); g.setLineDash([]);
+      if (xe > 1600) label(s.txt, xe - 12, y - 32, 22, s.col[1], 800, 'right'); else label(s.txt, xe + 14, y + 8, 22, s.col[1], 800, 'left');
+    }
+    g.globalAlpha = 1;
+  });
+}
+function refs(t) {
+  REFS.forEach((r) => {
+    const a = easeOut(prog(t, r.t, 0.8)); if (a <= 0) return;
+    g.globalAlpha = a; const x = xOf(r.s), y = 330 - (1 - a) * 20;
+    r.draw(x, y); label(r.n, x, y - 46, 20, '#fff', 700); label(`± ${r.s >= 1 ? r.s : String(r.s).replace('.', ',')} µm`.replace('± 0,0006 µm', '< 0,001 µm'), x, y + 56, 17, '#a9c7e4', 600);
+    g.strokeStyle = 'rgba(255,255,255,0.25)'; g.lineWidth = 2; g.beginPath(); g.moveTo(x, y + 66); g.lineTo(x, AY - 14); g.stroke();
+    g.globalAlpha = 1;
+  });
+}
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  bg(); axis(easeOut(prog(t, 0.4, 1.0))); stages(t); refs(t);
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

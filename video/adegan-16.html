@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 16: Keunggulan SWRO Traya</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .adv { position: absolute; right: 110px; top: 230px; width: 520px; padding: 28px 32px; border-radius: 22px; background: linear-gradient(160deg, rgba(14,34,66,.94), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.4); box-shadow: 0 30px 70px rgba(0,0,0,.5); opacity: 0; }
+  .adv .no { font-size: 18px; font-weight: 800; color: #0c2342; background: #6ec3ff; display: inline-block; padding: 4px 12px; border-radius: 8px; }
+  .adv .tt { font-size: 44px; font-weight: 800; margin: 14px 0 8px; letter-spacing: -.5px; }
+  .adv .ds { font-size: 22px; color: #cfe6ff; line-height: 1.45; }
+  .list { position: absolute; left: 96px; top: 200px; opacity: 0; padding: 14px 26px; border-radius: 16px; background: rgba(8,24,48,.78); border: 1px solid rgba(110,190,255,.3); }
+  .list div { font-size: 24px; font-weight: 700; margin: 12px 0; opacity: .32; }
+  .list div.on { opacity: 1; }
+  .list div b { color: #6ec3ff; margin-right: 10px; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, rangkaian, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, judulBesar, bug, el, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut } from './lib/common.js';
+
+const A = await siapkanAdegan(16);
+const D = A.durasi;
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+const F = (n, w, o = {}) => aliranPipa(refs, n, w, { parent: scene, ...o });
+const semua = [rangkaian([F('feed', WARNA.laut), F('pre', WARNA.pre), F('lp', WARNA.pre), F('hp', WARNA.hp, { speed: 1.3 })]), rangkaian([F('permeate', WARNA.produk), F('permOut', WARNA.produk)]), rangkaian([F('brine', WARNA.brine)])];
+
+const camAt = kamera(cam, [
+  { t: 0, p: [18.5, 1.2, -10.0], l: [6.5, 1.0, 0], f: 38, sx: -320 },
+  { t: 4.6, p: [16.0, 2.2, -8.6], l: [6.2, 1.1, 0], f: 38, sx: -320 },
+  { t: 6.6, p: [6.0, 10.6, -8.0], l: [6.0, 0.3, 0.25], f: 40, sx: 260 },
+  { t: 14.4, p: [6.8, 10.2, -7.4], l: [6.0, 0.3, 0.25], f: 40, sx: 260 },
+  { t: 16.0, p: [-4.0, 7.5, -15.0], l: [5.0, 0.8, 0.0], f: 36, sx: 260 },
+  { t: 20.3, p: [-1.0, 6.2, -15.5], l: [5.5, 0.8, 0.0], f: 36, sx: 260 },
+  { t: 21.6, p: [8.6, 1.5, -2.6], l: [8.0, 0.5, 0.2], f: 48, sx: 260 },
+  { t: 26.0, p: [8.0, 1.4, -2.4], l: [7.6, 0.5, 0.2], f: 48, sx: 260 },
+  { t: 27.2, p: [11.2, 1.9, -1.7], l: [9.0, 1.7, 0.4], f: 46, sx: 260 },
+  { t: 31.4, p: [10.6, 1.8, -1.6], l: [8.6, 1.6, 0.5], f: 46, sx: 260 },
+  { t: 32.8, p: [-7.5, 3.0, -6.0], l: [-1.5, 1.0, 0.4], f: 40, sx: 260 },
+  { t: D, p: [-6.6, 3.3, -5.2], l: [-1.4, 1.0, 0.4], f: 40, sx: 260 },
+]);
+judulBesar({ k: 'PT TRAYA HYDRO INDONESIA', tt: 'Mengapa Memilih<br>SWRO Traya?', t0: 0.6, t1: 4.6 });
+bug(5.0);
+const ADV = [
+  { t: 4.9, tt: 'Desain Custom', ds: 'Dirancang dari analisis kualitas air baku, kapasitas yang dibutuhkan, dan kondisi lokasi.' },
+  { t: 14.8, tt: 'Kontainer Plug & Play', ds: 'Ringkas, mudah dipindahkan, dan cepat dipasang di lokasi.' },
+  { t: 20.5, tt: 'Hemat Energi', ds: 'Energy recovery device dan pompa berefisiensi tinggi menekan biaya operasional.' },
+  { t: 26.2, tt: 'Tahan Air Laut', ds: 'Material stainless steel duplex dan FRP untuk lingkungan klorida tinggi.' },
+  { t: 31.7, tt: 'Instalasi & Perawatan', ds: 'Didukung tim Traya untuk instalasi dan perawatan berkala.' },
+];
+const cards = ADV.map((a, i) => el(`<span class="no">0${i + 1}</span><div class="tt">${a.tt}</div><div class="ds">${a.ds}</div>`, 'adv'));
+const list = el(ADV.map((a, i) => `<div><b>✓</b>${a.tt}</div>`).join(''), 'list');
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  const inside = (t > 5.6 && t < 15.2) || (t > 21.0 && t < 32.4);
+  const wallK = inside ? 1 : 0;
+  P.setDinding(wallK); P.setEnv(inside);
+  P.setPotong(t > 5.6 && t < 15.2 ? 2.49 : Infinity);
+  semua.forEach((s) => s.set(t, 1, t > 5.0 ? 1 : 0));
+  P.render();
+  ADV.forEach((a, i) => {
+    const end = ADV[i + 1] ? ADV[i + 1].t - 0.3 : 1e9;
+    const k = easeOut(prog(t, a.t + 0.2, 0.6)) * (1 - prog(t, end, 0.3));
+    cards[i].style.opacity = k; cards[i].style.transform = `translateX(${(1 - k) * 30}px)`;
+    list.children[i].classList.toggle('on', t > a.t + 0.2);
+  });
+  list.style.opacity = easeOut(prog(t, 5.0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

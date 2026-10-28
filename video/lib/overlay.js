@@ -24,6 +24,8 @@ export const keDesain = (tr) => interp(tr, kR, kD);
 export const keNyata = (td) => interp(td, kD, kR);
 export async function siapkanAdegan(no, { pre = PRE, post = POST, extra = 0, dari = 0, ke = null } = {}) {
   const [des, vo] = await Promise.all(['../tts/timing_desain.json', '../tts/timing_vo.json'].map((u) => fetch(u).then((r) => r.json())));
+  // muat semua ketebalan font lebih dulu (dipakai juga oleh gambar canvas)
+  await Promise.all(['400', '500', '600', '700', '800'].map((w) => document.fonts.load(`${w} 20px Jakarta`)));
   const sd = des.find((d) => d.no === no), sv = vo.find((d) => d.no === no);
   cues = sv.cues.map((c) => ({ ...c, a: c.a + pre, b: c.b + pre }));
   const fullD = +(pre + sd.durasi + post + extra).toFixed(3), fullR = +(pre + sv.durasi + post + extra).toFixed(3);
