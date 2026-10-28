@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 13a: Air produk</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .use { position: absolute; left: 50%; top: 700px; transform: translateX(-50%); display: flex; gap: 24px; }
+  .use div { opacity: 0; width: 290px; padding: 18px; border-radius: 16px; background: rgba(8,24,48,.88); border: 1px solid rgba(110,190,255,.4); text-align: center; }
+  .use i { display: block; font-style: normal; font-size: 40px; color: #8fe3ff; font-weight: 800; }
+  .use b { display: block; font-size: 25px; font-weight: 800; margin-top: 4px; }
+  .use span { display: block; font-size: 17px; color: #bfe3ff; margin-top: 2px; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, el, muncul, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeInOut } from './lib/common.js';
+
+const POTONG = 13.1;
+const A = await siapkanAdegan(13, { ke: POTONG });
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const fIn = aliranPipa(refs, 'uvOut', WARNA.produk, { parent: scene });
+const fOut = aliranPipa(refs, 'dist', WARNA.produk, { parent: scene, speed: 1.0 });
+const T = refs.productTank;
+const camAt = kamera(cam, [
+  { t: 0, p: [-2.2, 2.6, -4.4], l: [-4.0, 1.4, 0.9], f: 42 },
+  { t: 6.0, p: [-4.6, 2.2, -4.6], l: [-5.4, 0.9, 0.8], f: 42 },
+  { t: POTONG, p: [-7.2, 1.8, -4.2], l: [-8.0, 0.3, 0.9], f: 42 },
+]);
+chip('9', 'Air Produk', 'Siap disimpan & didistribusikan', 9, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'KUALITAS', tt: 'TDS < 500 mg/L', rows: [['Status', 'tipikal'], ['Siap untuk', 'disimpan & didistribusikan']], x: 110, y: 200, t0: 0.9, t1: 99, anchor: S(V(T.x, T.yg + 2.0, T.z - T.r)) });
+const use = el('<div><i>⌂</i><b>Domestik</b><span>permukiman & fasilitas umum</span></div><div><i>▦</i><b>Komersial</b><span>resor, hotel, pelabuhan</span></div><div><i>⚙</i><b>Industri</b><span>proses & utilitas</span></div>', 'use');
+[...use.children].forEach((c, i) => muncul(c, 7.0 + i * 1.6));
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  fIn.set(t, 1, 1); fOut.set(t, easeInOut(prog(t, 5.6, 4.0)), 1);
+  P.render(); perbarui(t);
+};
+window._ready();
+</script></body></html>

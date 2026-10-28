@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 11a: Brine ke ERD</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, aliran, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeInOut } from './lib/common.js';
+
+const POTONG = 12.4;
+const A = await siapkanAdegan(11, { ke: POTONG });
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+P.setEnv(true); P.setDinding(1);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+// jalur brine bertekanan dari header brine → PX (pipa tanpa nama di model: buat kurva yang sama)
+const brineHP = new THREE.CatmullRomCurve3([V(5.05, 0.41, 0.8), V(5.05, 0.22, 0.8), V(5.05, 0.22, 0.42), V(6.42, 0.22, 0.42), V(6.42, 0.33, 0.42), V(6.42, 0.33, 0.24)], false, 'catmullrom', 0.05);
+const fB = aliran(brineHP, 0.04, WARNA.brine, { parent: scene, speed: 1.4 });
+const fBL = aliranPipa(refs, 'brine', '#c7652a', { parent: scene, speed: 0.7 });
+const fHp = aliranPipa(refs, 'hp', WARNA.hp, { parent: scene, speed: 1.4 });
+const camAt = kamera(cam, [
+  { t: 0, p: [5.6, 1.9, -2.6], l: [5.6, 0.7, 0.5], f: 44 },
+  { t: 6.0, p: [6.4, 1.4, -2.0], l: [6.6, 0.5, 0.3], f: 42 },
+  { t: POTONG, p: [7.0, 1.05, -1.4], l: [6.9, 0.45, 0.16], f: 40 },
+]);
+chip('7', 'Energy Recovery Device', 'Hemat energi', 7, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'KONSENTRAT', tt: 'Brine Bertekanan Tinggi', rows: [['Tekanan', 'masih mendekati tekanan umpan'], ['Tanpa ERD', 'energi terbuang']], x: 110, y: 200, t0: 0.9, t1: 6.4, w: 480, anchor: S(V(5.6, 0.22, 0.42)) });
+kartu({ k: 'PEMULIHAN ENERGI', tt: 'Isobaric Pressure Exchanger', rows: [['Fungsi', 'memindahkan tekanan brine'], ['Ke', 'air laut umpan']], x: 110, y: 200, t0: 6.9, t1: 99, w: 480, anchor: S(V(6.95, 0.6, 0.16)) });
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  fB.set(t, easeInOut(prog(t, 0.6, 2.4)), 1);
+  fBL.set(t, easeInOut(prog(t, 7.0, 3.0)), t > 7 ? 0.8 : 0);
+  fHp.set(t, 1, 0.6);
+  P.render(); perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -599,15 +599,16 @@ function buildExterior(M, refs, logos) {
   box(2.2, 0.08, 0.9, M.frame, -1.55, yg + 0.04, pz, G);
   // filter kalsit (remineralisasi)
   const cx = -0.95;
-  cyl(0.26, V(cx, yg + 0.35, pz), V(cx, yg + 1.45, pz), M.white, G, 40);
+  const calBody = cyl(0.26, V(cx, yg + 0.35, pz), V(cx, yg + 1.45, pz), M.white, G, 40);
   const cb = add(new THREE.SphereGeometry(0.26, 40, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.white, G); cb.position.set(cx, yg + 0.35, pz); cb.scale.y = 0.45;
   const ct = add(new THREE.SphereGeometry(0.26, 40, 12, 0, Math.PI * 2, 0, Math.PI / 2), M.white, G); ct.position.set(cx, yg + 1.45, pz); ct.scale.y = 0.45;
   [0, 1, 2].forEach((k) => { const a = k / 3 * Math.PI * 2; box(0.04, 0.25, 0.04, M.frame, cx + Math.cos(a) * 0.18, yg + 0.2, pz + Math.sin(a) * 0.18, G); });
   const lab = add(new THREE.CylinderGeometry(0.2605, 0.2605, 0.18, 40, 1, true, Math.PI * 1.25, Math.PI * 0.55), new THREE.MeshStandardMaterial({ map: TX.textPanel(512, 120, (g2) => { g2.fillStyle = '#0e2242'; g2.fillRect(0, 0, 512, 120); g2.fillStyle = '#fff'; g2.font = '800 54px Jakarta, sans-serif'; g2.textAlign = 'center'; g2.fillText('FILTER KALSIT', 256, 80); }), roughness: 0.5 }), G, false);
   lab.position.set(cx, yg + 1.0, pz);
   refs.hot.calcite = V(cx, yg + 1.0, pz);
+  refs.calciteParts = [calBody, cb, ct, lab];
   // reaktor UV
-  cyl(0.085, V(-2.3, yg + 0.75, pz), V(-1.5, yg + 0.75, pz), M.ss, G, 32);
+  refs.uvParts = [cyl(0.085, V(-2.3, yg + 0.75, pz), V(-1.5, yg + 0.75, pz), M.ss, G, 32)];
   [-2.3, -1.5].forEach((x) => ring(0.1, 0.03, V(x, yg + 0.75, pz), V(1, 0, 0), M.duplex, G, 32));
   cyl(0.03, V(-2.36, yg + 0.75, pz), V(-2.3, yg + 0.75, pz), M.black, G, 16);
   [-2.15, -1.65].forEach((x) => box(0.06, 0.45, 0.06, M.frame, x, yg + 0.3, pz, G));

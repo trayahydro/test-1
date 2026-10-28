@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 12: Post-treatment</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .ph { position: absolute; left: 110px; top: 200px; width: 470px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+  .ph .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+  .ph .v { font-size: 64px; font-weight: 800; margin: 6px 0 10px; }
+  .ph .scale { position: relative; height: 22px; border-radius: 11px; background: linear-gradient(90deg, #e04f4f, #f2a33a, #f2e33a, #6fd36f, #3aa0f2, #5a4fe0, #8a3ad8); }
+  .ph .band { position: absolute; top: -6px; bottom: -6px; border: 3px solid #fff; border-radius: 8px; left: 46.4%; width: 14.3%; }
+  .ph .needle { position: absolute; top: -12px; width: 4px; height: 46px; background: #fff; border-radius: 2px; box-shadow: 0 0 10px rgba(0,0,0,.6); }
+  .ph .lab { display: flex; justify-content: space-between; font-size: 15px; color: #a9c7e4; margin-top: 10px; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, rangkaian, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, el, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const A = await siapkanAdegan(12);
+const D = A.durasi;
+const P = await panggungKontainer();
+const { scene, cam, refs, M } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const yg = -0.26, pz = 1.25, cx = -0.95;
+const F = (n) => aliranPipa(refs, n, WARNA.produk, { parent: scene });
+const alur = rangkaian([F('permeate'), F('permOut'), F('calOut'), F('uvOut')]);
+const R = rng(12);
+
+// filter kalsit transparan dengan butiran kalsit putih di dalamnya
+const calGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.262, 0.262, 1.1, 48), new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: 0.1, transparent: true, opacity: 0, depthWrite: false }));
+calGlass.position.set(cx, yg + 0.9, pz); scene.add(calGlass);
+const gr = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.018, 0), new THREE.MeshStandardMaterial({ color: '#f3efe6', roughness: 0.8 }), 700);
+const _m = new THREE.Matrix4();
+for (let i = 0; i < 700; i++) { const a = R() * 6.28, r = Math.sqrt(R()) * 0.23; _m.makeTranslation(cx + Math.cos(a) * r, yg + 0.4 + R() * 0.75, pz + Math.sin(a) * r); gr.setMatrixAt(i, _m); }
+gr.visible = false; scene.add(gr);
+// reaktor UV: cangkang menjadi transparan, lampu UV menyala, mikroba menjadi tidak aktif
+const uvShell = new THREE.Mesh(new THREE.CylinderGeometry(0.088, 0.088, 0.8, 32), new THREE.MeshPhysicalMaterial({ color: '#d0d6dc', metalness: 0.6, roughness: 0.3, transparent: true, opacity: 0, depthWrite: false }));
+uvShell.rotation.z = Math.PI / 2; uvShell.position.set(-1.9, yg + 0.75, pz); scene.add(uvShell);
+const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.74, 16), new THREE.MeshStandardMaterial({ color: '#b9a6ff', emissive: '#7d5cff', emissiveIntensity: 0 }));
+lamp.rotation.z = Math.PI / 2; lamp.position.copy(uvShell.position); scene.add(lamp);
+const mic = new THREE.InstancedMesh(new THREE.CapsuleGeometry(0.008, 0.022, 4, 8), new THREE.MeshBasicMaterial(), 50); mic.visible = false; scene.add(mic);
+const MD = Array.from({ length: 50 }, () => ({ ph: R(), th: R() * 6.28, r: 0.035 + R() * 0.04 }));
+const cLive = new THREE.Color('#5fbf5a'), cDead = new THREE.Color('#6b7178'), _c = new THREE.Color();
+// LED pompa dosing pH
+const phLed = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.02, 0.005), new THREE.MeshStandardMaterial({ color: '#2e7d32', emissive: '#1b5e20', emissiveIntensity: 0.3 }));
+phLed.position.set(-2.45 + 0.03, yg + 0.71, pz + 0.3 + 0.047); scene.add(phLed);
+
+const camAt = kamera(cam, [
+  { t: 0, p: [-7.0, 2.8, -4.6], l: [-1.6, 1.2, 0.8], f: 42 },
+  { t: 5.8, p: [-5.2, 2.1, -3.2], l: [-1.6, 0.8, 1.1], f: 42 },
+  { t: 9.2, p: [-0.25, 1.2, -0.35], l: [cx, 0.55, pz], f: 40 },
+  { t: 17.4, p: [-3.5, 1.25, -0.35], l: [-2.1, 0.45, pz], f: 40 },
+  { t: 23.6, p: [-3.0, 1.0, 0.0], l: [-1.9, 0.5, pz], f: 38 },
+  { t: D, p: [-2.9, 1.05, 0.05], l: [-1.9, 0.5, pz], f: 38 },
+]);
+// badan asli filter kalsit & reaktor UV memakai material yang bisa memudar
+const fadeParts = (arr) => arr.map((m) => { m.material = m.material.clone(); m.material.transparent = true; return m; });
+const calParts = fadeParts(refs.calciteParts), uvParts = fadeParts(refs.uvParts);
+chip('8', 'Post-Treatment', 'Remineralisasi, pH & disinfeksi', 8, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'AIR HASIL RO', tt: 'Sangat Murni', rows: [['Mineral', 'sangat rendah'], ['Sifat', 'cenderung korosif']], x: 1360, y: 200, t0: 0.9, t1: 9.0, anchor: S(V(-0.6, 2.0, pz)) });
+kartu({ k: 'REMINERALISASI', tt: 'Filter Kalsit', rows: [['Menambah', 'kalsium & alkalinitas'], ['Alternatif', 'dosing bahan kimia'], ['Hasil', 'air stabil, tidak korosif']], x: 1360, y: 200, t0: 9.6, t1: 17.4, anchor: S(V(cx, yg + 1.2, pz - 0.26)) });
+kartu({ k: 'DISINFEKSI', tt: 'UV / Klorin', rows: [['Fungsi', 'menonaktifkan mikroorganisme'], ['Hasil', 'air aman untuk distribusi']], x: 1360, y: 200, t0: 24.0, t1: 99, anchor: S(V(-1.9, yg + 0.85, pz - 0.09)) });
+const ph = el('<div class="k">PENYESUAIAN pH</div><div class="v" id="phv">pH 5,6</div><div class="scale"><div class="band"></div><div class="needle" id="phn"></div></div><div class="lab"><span>0</span><span>6,5–8,5 tipikal</span><span>14</span></div>', 'ph');
+const $ = (id) => document.getElementById(id);
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  alur.set(t, easeInOut(prog(t, 0.4, 6.0)), 1);
+  const kc = easeInOut(prog(t, 9.6, 1.2)) * (1 - easeInOut(prog(t, 17.6, 1.0)));
+  calGlass.material.opacity = 0.2 * kc; gr.visible = kc > 0.05;
+  calParts.forEach((m) => { m.material.opacity = 1 - 0.85 * kc; m.material.depthWrite = kc < 0.5; });
+  const ku = easeInOut(prog(t, 24.0, 1.2));
+  uvShell.material.opacity = 0.25 * ku; lamp.material.emissiveIntensity = 3 * ku; mic.visible = ku > 0.05;
+  uvParts.forEach((m) => { m.material.opacity = 1 - 0.85 * ku; m.material.depthWrite = ku < 0.5; });
+  MD.forEach((m, i) => {
+    const u = (m.ph + t * 0.25) % 1;
+    _m.makeRotationX(t + i); _m.setPosition(lerp(-2.28, -1.52, u), yg + 0.75 + Math.cos(m.th + t) * m.r, pz + Math.sin(m.th + t) * m.r);
+    mic.setMatrixAt(i, _m); _c.copy(cLive).lerp(cDead, Math.min(1, u * 1.6)); mic.setColorAt(i, _c);
+  });
+  mic.instanceMatrix.needsUpdate = true; if (mic.instanceColor) mic.instanceColor.needsUpdate = true;
+  phLed.material.emissiveIntensity = t > 17.6 && Math.sin(t * 9) > 0 ? 2 : 0.3;
+  P.render();
+  const a = easeOut(prog(t, 17.7, 0.6)) * (1 - prog(t, 23.8, 0.4));
+  ph.style.opacity = a;
+  const v = lerp(5.6, 7.6, easeInOut(prog(t, 18.6, 3.2)));
+  $('phv').textContent = 'pH ' + v.toFixed(1).replace('.', ','); $('phn').style.left = (v / 14 * 100) + '%';
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

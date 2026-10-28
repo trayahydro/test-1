@@ -48,7 +48,10 @@ export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 
   const bloomPass = new UnrealBloomPass(new THREE.Vector2(W, H), bloom, 0.5, 0.9);
   if (bloom > 0) composer.addPass(bloomPass);
   composer.addPass(new OutputPass());
-  return { renderer, scene, cam, pmrem, composer, aoPass, bloomPass, render: () => composer.render() };
+  // InstancedMesh: batas frustum dihitung dari posisi awal instans, jadi partikel yang bergerak bisa
+  // ikut "terpotong". Matikan frustum culling untuk semua InstancedMesh sebelum render.
+  const render = () => { scene.traverse((o) => { if (o.isInstancedMesh) o.frustumCulled = false; }); composer.render(); };
+  return { renderer, scene, cam, pmrem, composer, aoPass, bloomPass, render };
 }
 
 // Kubah langit gradasi + kilau matahari. Warna dapat diganti (pagi, siang, senja).

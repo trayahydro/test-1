@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 11b: Rotor pressure exchanger</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .chart { position: absolute; left: 110px; top: 200px; width: 560px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+  .chart .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; margin-bottom: 14px; }
+  .chart .r { display: flex; align-items: center; gap: 14px; margin: 12px 0; font-size: 19px; }
+  .chart .r span { width: 140px; color: #a9c7e4; }
+  .chart .r i { display: block; height: 30px; border-radius: 8px; }
+  .chart .r b { font-size: 20px; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, layar, latarStudio } from './lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { WARNA } from './lib/aliran.js';
+
+const T0 = 12.4;
+const A = await siapkanAdegan(11, { dari: T0 });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.15, exposure: 0.95 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#dcecff', '#223344', 0.6));
+const key = new THREE.DirectionalLight('#ffffff', 2.0); key.position.set(2, 4, 5); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); scene.add(key);
+const rim = new THREE.DirectionalLight('#6ec3ff', 1.4); rim.position.set(-3, 2, -3); scene.add(rim);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const add = (geo, mat, x = 0, y = 0, z = 0, parent = scene) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; parent.add(m); return m; };
+const along = (m) => { m.rotation.z = Math.PI / 2; return m; };
+
+// rumah (dipotong setengah) + tutup ujung dengan port
+const LR = 0.9, RR = 0.2;
+const frp = new THREE.MeshPhysicalMaterial({ color: '#e9e9e4', roughness: 0.3, clearcoat: 0.5 });
+along(add(new THREE.CylinderGeometry(RR + 0.05, RR + 0.05, LR + 0.1, 64, 1, true, Math.PI / 2, Math.PI), frp));
+along(add(new THREE.CylinderGeometry(RR + 0.035, RR + 0.035, LR + 0.1, 64, 1, true, Math.PI / 2, Math.PI), new THREE.MeshStandardMaterial({ color: '#9aa4ae', side: THREE.BackSide })));
+const ss = new THREE.MeshStandardMaterial({ color: '#c9d1d8', metalness: 0.9, roughness: 0.3 });
+[-1, 1].forEach((s) => along(add(new THREE.CylinderGeometry(RR + 0.07, RR + 0.07, 0.08, 64, 1, false, Math.PI / 2, Math.PI), ss, s * (LR / 2 + 0.09), 0, 0)));
+// port: kiri = tekanan rendah (air laut masuk, brine keluar); kanan = tekanan tinggi (brine masuk, air laut keluar)
+const port = (x, y, col) => { const p = add(new THREE.CylinderGeometry(0.05, 0.05, 0.35, 24), new THREE.MeshStandardMaterial({ color: col, roughness: 0.4 }), x, y, -0.05); return p; };
+port(-(LR / 2 + 0.09), 0.27, '#2a6fc0'); port(-(LR / 2 + 0.09), -0.27, '#c7652a');
+port(LR / 2 + 0.09, 0.27, '#ff8a3d'); port(LR / 2 + 0.09, -0.27, '#5ad1ff');
+// rotor keramik dengan saluran aksial; isi tiap saluran: biru (air laut) / oranye (brine)
+const rotor = new THREE.Group(); scene.add(rotor);
+along(add(new THREE.CylinderGeometry(RR, RR, LR, 64, 1, true), new THREE.MeshStandardMaterial({ color: '#f1efe9', roughness: 0.25, transparent: true, opacity: 0.1, depthWrite: false }), 0, 0, 0, rotor));
+along(add(new THREE.CylinderGeometry(0.05, 0.05, LR, 24), new THREE.MeshStandardMaterial({ color: '#e3e0d8', roughness: 0.3 }), 0, 0, 0, rotor));
+const ND = 14, ducts = [];
+const mBlue = new THREE.MeshStandardMaterial({ color: '#2f86e0', emissive: '#0b3d7a', emissiveIntensity: 0.6, roughness: 0.3 });
+const mOr = new THREE.MeshStandardMaterial({ color: '#ff8a3d', emissive: '#7a2f0b', emissiveIntensity: 0.6, roughness: 0.3 });
+for (let i = 0; i < ND; i++) {
+  const a = i / ND * Math.PI * 2;
+  const blue = along(add(new THREE.CylinderGeometry(0.03, 0.03, 1, 16), mBlue, 0, 0, 0, rotor));
+  const or = along(add(new THREE.CylinderGeometry(0.03, 0.03, 1, 16), mOr, 0, 0, 0, rotor));
+  ducts.push({ a, blue, or });
+}
+function setRotor(rot) {
+  rotor.rotation.x = rot;
+  ducts.forEach((d) => {
+    const ang = ((d.a + rot) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+    // separuh putaran: zona tekanan rendah (air laut mendorong brine keluar ke kiri) → b naik
+    const b = ang < Math.PI ? easeInOut(ang / Math.PI) : 1 - easeInOut((ang - Math.PI) / Math.PI);
+    const y = Math.cos(d.a) * 0.13, z = Math.sin(d.a) * 0.13;
+    const lb = Math.max(0.001, b * LR), lo = Math.max(0.001, (1 - b) * LR);
+    d.blue.scale.y = lb; d.blue.position.set(-LR / 2 + lb / 2, y, z);
+    d.or.scale.y = lo; d.or.position.set(LR / 2 - lo / 2, y, z);
+  });
+}
+
+// booster pump kecil (muncul belakangan)
+const boost = new THREE.Group(); boost.position.set(1.25, -0.45, -0.1); boost.visible = false; scene.add(boost);
+along(add(new THREE.CylinderGeometry(0.1, 0.1, 0.32, 32), new THREE.MeshStandardMaterial({ color: '#1f4f94', roughness: 0.4 }), 0.18, 0, 0, boost));
+along(add(new THREE.CylinderGeometry(0.075, 0.075, 0.26, 32), ss, -0.12, 0, 0, boost));
+
+const camAt = kamera(cam, [
+  { t: 12.4, p: [0.6, 0.5, 2.0], l: [0, 0, -0.05], f: 40 },
+  { t: 19.6, p: [-0.4, 0.45, 1.75], l: [0, 0, -0.05], f: 38 },
+  { t: 23.8, p: [0.6, 0.3, 2.3], l: [0.35, -0.1, -0.05], f: 40 },
+  { t: 29.2, p: [0.9, 0.5, 2.6], l: [0.45, -0.1, -0.05], f: 40 },
+  { t: A.durasi, p: [0.5, 0.45, 2.5], l: [0.35, -0.05, -0.05], f: 40 },
+]);
+chip('7', 'Energy Recovery Device', 'Rotor pressure exchanger', 7, T0 + 0.2);
+bug(T0);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+penanda('•', 'Rotor keramik', S(V(0, RR, 0)), 13.4, 23.6);
+penanda('•', 'Brine bertekanan masuk', S(V(LR / 2 + 0.09, 0.45, -0.05)), 16.6, 23.6);
+penanda('•', 'Air laut bertekanan keluar', S(V(LR / 2 + 0.09, -0.45, -0.05)), 17.6, 23.6);
+penanda('•', 'Air laut masuk (tekanan rendah)', S(V(-LR / 2 - 0.09, 0.45, -0.05)), 18.4, 23.6, { kiri: true });
+kartu({ k: 'EFISIENSI', tt: '> 95%', rows: [['Transfer tekanan', 'brine → air laut', 'TIPIKAL']], x: 1360, y: 200, t0: 19.9, t1: 23.8 });
+kartu({ k: 'PENGUAT', tt: 'Booster Pump', rows: [['Fungsi', 'menambah sedikit tekanan'], ['Lalu', 'bergabung ke aliran utama']], x: 1360, y: 200, t0: 24.2, t1: 29.4, anchor: S(V(1.25, -0.35, -0.1)) });
+const ch = el('<div class="k">KONSUMSI ENERGI POMPA TEKANAN TINGGI</div><div class="r"><span>Tanpa ERD</span><i style="width:300px;background:#7d8b99"></i><b>100%</b></div><div class="r"><span>Dengan ERD</span><i id="eb" style="width:300px;background:#6ec3ff"></i><b id="et">100%</b></div><div style="font-size:18px;color:#8ff0b0;font-weight:700;margin-top:8px" id="en"></div>', 'chart');
+const $ = (id) => document.getElementById(id);
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  setRotor(t * 1.6);
+  boost.visible = t > 23.9;
+  render();
+  const a = easeOut(prog(t, 29.6, 0.6)); ch.style.opacity = a;
+  const k = easeInOut(prog(t, 30.4, 2.4)), pct = lerp(100, 45, k);
+  $('eb').style.width = (3 * pct) + 'px'; $('et').textContent = Math.round(pct) + '%';
+  $('en').textContent = k > 0.95 ? 'Hemat ± 50–60% (tipikal)' : '';
+  perbarui(t);
+};
+window._ready();
+</script></body></html>
