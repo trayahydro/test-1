@@ -38,17 +38,28 @@ function serve(root) {
   const durasi = dur === 'auto' ? await page.evaluate(() => window.DURASI) : Number(dur);
   const frames = Math.round(durasi * fps);
 
-  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
-    '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
-
-  for (let i = 0; i < frames; i++) {
-    await page.evaluate((t) => window.renderFrame(t), (f0 + i) / fps);
-    const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
-    if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
-    if (i % 10 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);
+  // Mode potongan (output diakhiri '/'): frame dirender per potongan CHUNK frame ke <dir>/c0000.mp4 dst.
+  // Potongan yang sudah ada dilewati, sehingga render bisa dilanjutkan setelah proses terhenti.
+  const chunked = out.endsWith('/');
+  const CH = chunked ? Number(process.env.CHUNK || 150) : frames;
+  if (chunked) fs.mkdirSync(out, { recursive: true });
+  for (let c0 = 0; c0 < frames; c0 += CH) {
+    const c1 = Math.min(frames, c0 + CH);
+    const dst = chunked ? path.join(out, `c${String(c0 / CH).padStart(4, '0')}.mp4`) : out;
+    if (chunked && fs.existsSync(dst) && fs.statSync(dst).size > 0) continue;
+    const tmp = chunked ? dst.replace(/\.mp4$/, '.part.mp4') : dst;
+    const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
+      '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
+    for (let i = c0; i < c1; i++) {
+      await page.evaluate((t) => window.renderFrame(t), (f0 + i) / fps);
+      const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
+      if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
+      if (i % 10 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);
+    }
+    ff.stdin.end();
+    await new Promise((r) => ff.on('close', r));
+    if (chunked) fs.renameSync(tmp, dst);
   }
-  ff.stdin.end();
-  await new Promise((r) => ff.on('close', r));
   await browser.close();
   srv.close();
   console.log(`\rselesai: ${out}`);
