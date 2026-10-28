@@ -11,7 +11,12 @@ import { easeInOut, clamp, lerp } from './common.js';
 
 export const W = 1920, H = 1080;
 
-export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 4, shadows = true } = {}) {
+export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 2, shadows = true } = {}) {
+  // override kualitas lewat URL (untuk uji kecepatan): ?ao=0&msaa=2&bloom=0
+  const q = new URLSearchParams(location.search);
+  if (q.has('ao')) ao = ao && q.get('ao') === '1';
+  if (q.has('msaa')) samples = Number(q.get('msaa'));
+  if (q.has('bloom')) bloom = q.get('bloom') === '0' ? 0 : bloom;
   const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
   renderer.setSize(W, H);
   renderer.shadowMap.enabled = shadows;
@@ -44,6 +49,8 @@ export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 
     };
     aoPass.restoreVisibility = function () { this.scene.traverse((o) => { if (cache.has(o)) o.visible = cache.get(o); }); cache.clear(); };
     composer.addPass(aoPass);
+    // AO pada setengah resolusi: hampir sama secara visual, jauh lebih cepat
+    if (q.get('aofull') !== '1') aoPass.setSize(W / 2, H / 2);
   }
   const bloomPass = new UnrealBloomPass(new THREE.Vector2(W, H), bloom, 0.5, 0.9);
   if (bloom > 0) composer.addPass(bloomPass);

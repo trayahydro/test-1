@@ -27,11 +27,17 @@ export async function panggungKontainer({ ao = true, bloom = 0.18, exposure = 0.
 
   const sun = matahari(scene, sk.sunDir, new THREE.Vector3(5, 0, 0), { span: 13 });
   scene.add(new THREE.HemisphereLight('#cfe6ff', '#6b6458', 0.5));
-  refs.lights.forEach((p) => { const l = new THREE.RectAreaLight('#f4f8ff', 9, 1.18, 0.25); l.position.copy(p); l.lookAt(p.x, 0, p.z); scene.add(l); });
-  [[3.0, 0.2], [7.0, 0.3], [10.4, 0.3]].forEach(([x, z]) => {
+  const q = new URLSearchParams(location.search);
+  const nRect = q.has('rect') ? Number(q.get('rect')) : 0, spotShadow = q.get('spot') === '1', nSpot = q.has('nspot') ? Number(q.get('nspot')) : 3;
+  // mode cepat (default): lampu LED disimulasikan dengan point light tanpa bayangan (jauh lebih murah dari RectAreaLight)
+  if (!q.has('rect')) {
+    refs.lights.forEach((p, i) => { if (i % 2) return; const l = new THREE.PointLight('#f4f8ff', 2.6, 7, 1.5); l.position.set(p.x, p.y - 0.12, p.z); scene.add(l); });
+  }
+  if (q.has('rect')) refs.lights.slice(0, nRect).forEach((p) => { const l = new THREE.RectAreaLight('#f4f8ff', 9 * 5 / Math.max(1, nRect), 1.18, 0.25); l.position.copy(p); l.lookAt(p.x, 0, p.z); scene.add(l); });
+  [[3.0, 0.2], [7.0, 0.3], [10.4, 0.3]].slice(0, nSpot).forEach(([x, z]) => {
     const s = new THREE.SpotLight('#ffffff', 9, 6, 1.25, 0.9, 1.6);
     s.position.set(x, 2.62, z); s.target.position.set(x, 0, z + 0.3);
-    s.castShadow = true; s.shadow.mapSize.set(1024, 1024); s.shadow.bias = -0.0005; s.shadow.radius = 5;
+    s.castShadow = spotShadow; s.shadow.mapSize.set(1024, 1024); s.shadow.bias = -0.0005; s.shadow.radius = 5;
     scene.add(s, s.target);
   });
   // peta lingkungan interior
@@ -42,13 +48,19 @@ export async function panggungKontainer({ ao = true, bloom = 0.18, exposure = 0.
   const envInterior = pmrem.fromCubemap(cubeRT.texture).texture;
   scene.environment = sk.env;
 
+  // Bayangan hanya dihitung ulang saat geometri berubah (dinding/potongan) atau tiap 15 frame.
+  renderer.shadowMap.autoUpdate = false;
+  let nFrame = 0, kotor = true, lastW = null, lastC = null;
+  const renderD = D.render;
   return {
     ...D, M, refs, sea, sun, sky: sk,
+    render() { if (kotor || nFrame % 15 === 0) renderer.shadowMap.needsUpdate = true; kotor = false; nFrame++; renderD(); },
+    tandaiBayangan() { kotor = true; },
     env: { luar: sk.env, dalam: envInterior },
     // k: 0 = dinding utuh, 1 = dinding sisi lorong turun penuh
-    setDinding(k) { refs.nearWall.position.y = -k * 3.0; refs.nearWall.visible = k < 0.999; },
+    setDinding(k) { if (k !== lastW) { kotor = true; lastW = k; } refs.nearWall.position.y = -k * 3.0; refs.nearWall.visible = k < 0.999; },
     // tinggi potong global (m); Infinity = tanpa potongan
-    setPotong(y) { cut.constant = Number.isFinite(y) ? y : 50; },
+    setPotong(y) { if (y !== lastC) { kotor = true; lastC = y; } cut.constant = Number.isFinite(y) ? y : 50; },
     setEnv(dalam) { scene.environment = dalam ? envInterior : sk.env; },
   };
 }
