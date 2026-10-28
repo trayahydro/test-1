@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 4a: Intake (diorama)</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, layar, latarStudio, loadImg } from './lib/dunia.js';
+import { buatDiorama, kelapa, h, DZ, SEA } from './lib/diorama.js';
+import { makeMaterials, buildSWRO } from './lib/model.js';
+import { aliran, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, penanda, kartu, perbarui } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const POTONG = 14.0;
+const A = await siapkanAdegan(4, { ke: POTONG });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.12, exposure: 1.0 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#e6f2ff', '#3a4a5a', 0.7));
+const sun = new THREE.DirectionalLight('#fff4e0', 2.6); sun.position.set(-6, 14, 9); sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096); Object.assign(sun.shadow.camera, { left: -13, right: 13, top: 9, bottom: -9, near: 1, far: 50 }); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+scene.add(sun);
+const dio = buatDiorama(scene, { mode: 'lapisan' });
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const FZ = DZ / 2; // muka potong depan
+[[-1.6, -1.0], [-0.8, -2.2], [-2.6, -2.4], [-3.4, 1.9]].forEach(([x, z], i) => kelapa(dio.G, x, z, 1.3 + (i % 3) * 0.25, i + 7));
+
+// miniatur kontainer (diputar: sisi pompa umpan menghadap laut)
+const logos = { dark: await loadImg('../logo/traya-logo-putih.png'), light: await loadImg('../traya-logo.png') };
+await document.fonts.ready;
+const M = makeMaterials(logos);
+const { root: cont, refs } = buildSWRO(M, logos);
+refs.pad.visible = false;
+const SC = 0.25, CX = -6.37, CZ = 0.6, CY = 0.16 * SC;
+cont.scale.setScalar(SC); cont.rotation.y = Math.PI; cont.position.set(CX, CY, CZ); scene.add(cont);
+const lokal = (x, y, z) => V(CX - x * SC, CY + y * SC, CZ - z * SC);
+const strainerW = lokal(-1.75, -0.01, -0.6);
+
+// pipa intake: dari strainer → ke muka potong → di bawah pantai & dasar laut → kepala intake
+const pipeMat = new THREE.MeshStandardMaterial({ color: '#25292e', roughness: 0.45 });
+const XI = 6.3, YI = h(6.3);
+const pts = [strainerW.clone().setY(-0.05), V(strainerW.x, -0.32, strainerW.z), V(strainerW.x, -0.32, FZ), V(-0.6, -0.32, FZ)];
+for (let x = 0.0; x <= XI - 0.4; x += 0.6) pts.push(V(x, h(x) - 0.38, FZ));
+pts.push(V(XI - 0.15, YI - 0.38, FZ), V(XI, YI - 0.2, FZ), V(XI, YI + 0.12, FZ));
+const intakeCurve = new THREE.CatmullRomCurve3(pts.reverse(), false, 'centripetal', 0.3); // arah aliran: laut → darat
+const intakePipe = new THREE.Mesh(new THREE.TubeGeometry(intakeCurve, 300, 0.085, 16), pipeMat); intakePipe.castShadow = true; scene.add(intakePipe);
+const fIntake = aliran(intakeCurve, 0.085, WARNA.laut, { parent: scene, speed: 1.1, spacing: 0.4, scale: 1.3 });
+
+// kepala intake dengan saringan (sangkar batang) dan tutup kecepatan (velocity cap)
+const ss = new THREE.MeshStandardMaterial({ color: '#c9d1d8', metalness: 0.9, roughness: 0.35 });
+const head = new THREE.Group(); head.position.set(XI, YI + 0.12, FZ); scene.add(head);
+const mk = (geo, mat, x, y, z) => { const o = new THREE.Mesh(geo, mat); o.position.set(x, y, z); o.castShadow = true; head.add(o); return o; };
+mk(new THREE.CylinderGeometry(0.16, 0.18, 0.06, 32), ss, 0, 0, 0);
+for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; mk(new THREE.CylinderGeometry(0.012, 0.012, 0.32, 6), ss, Math.cos(a) * 0.2, 0.19, Math.sin(a) * 0.2); }
+[0.04, 0.19, 0.34].forEach((y) => { const r = mk(new THREE.TorusGeometry(0.2, 0.012, 6, 36), ss, 0, y, 0); r.rotation.x = Math.PI / 2; });
+mk(new THREE.CylinderGeometry(0.32, 0.32, 0.05, 40), ss, 0, 0.38, 0);
+// rumput laut & sampah tertahan di luar saringan
+const R = rng(9);
+const debris = [];
+for (let i = 0; i < 14; i++) {
+  const a = Math.PI * 0.15 + R() * Math.PI * 0.7;
+  const g = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.12 + R() * 0.1, 0.05), new THREE.MeshStandardMaterial({ color: i % 3 ? '#3f7a3a' : '#7a5a3a', roughness: 0.9 }));
+  g.userData = { a, y: 0.08 + R() * 0.24, ph: R() * 6 };
+  head.add(g); debris.push(g);
+}
+// partikel air yang tersedot ke kepala intake
+const pGeo = new THREE.SphereGeometry(0.025, 8, 6), pMat = new THREE.MeshBasicMaterial({ color: '#8fd6ff' });
+const parts = [];
+for (let i = 0; i < 60; i++) { const p = new THREE.Mesh(pGeo, pMat); p.userData = { a: R() * Math.PI, r0: 0.8 + R() * 1.0, y0: R() * 1.1 - 0.2, ph: R() }; scene.add(p); parts.push(p); }
+
+// sumur pantai: casing setengah terbuka (terlihat dalamnya), saringan berlubang, pompa submersible
+const XW = 0.35, YW = h(0.35);
+const casing = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, YW + 0.25 + 2.25, 32, 1, true, Math.PI, Math.PI), new THREE.MeshStandardMaterial({ color: '#a8b0b8', roughness: 0.5, side: THREE.DoubleSide }));
+casing.position.set(XW, (YW + 0.25 - 2.25) / 2, FZ); scene.add(casing);
+const slots = new THREE.Mesh(new THREE.CylinderGeometry(0.112, 0.112, 0.8, 32, 1, true, Math.PI, Math.PI), new THREE.MeshStandardMaterial({ color: '#59626b', roughness: 0.6, side: THREE.DoubleSide, map: (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 256; const g = c.getContext('2d'); g.fillStyle = '#9aa3ab'; g.fillRect(0, 0, 64, 256); g.fillStyle = '#20262c'; for (let y = 6; y < 256; y += 14) g.fillRect(6, y, 52, 5); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(6, 3); return t; })() }));
+slots.position.set(XW, -1.85, FZ); scene.add(slots);
+const sub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 20), new THREE.MeshStandardMaterial({ color: '#1f4f94', metalness: 0.3, roughness: 0.4 })); sub.position.set(XW, -1.55, FZ - 0.02); scene.add(sub);
+const wellCurve = new THREE.CatmullRomCurve3([V(XW, -1.3, FZ - 0.02), V(XW, YW + 0.2, FZ - 0.02), V(XW - 0.1, -0.12, FZ), V(-0.6, -0.15, FZ), V(-0.9, -0.32, FZ)], false, 'centripetal');
+const wellPipe = new THREE.Mesh(new THREE.TubeGeometry(wellCurve, 120, 0.035, 12), pipeMat); scene.add(wellPipe);
+const fWell = aliran(wellCurve, 0.035, WARNA.laut, { parent: scene, speed: 0.8, spacing: 0.25, scale: 1.4 });
+const wellHead = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.12, 0.2), new THREE.MeshStandardMaterial({ color: '#d0d4d8', roughness: 0.5 })); wellHead.position.set(XW, YW + 0.25, FZ - 0.1); scene.add(wellHead);
+// partikel air laut merembes melalui pasir menuju saringan sumur
+const seep = [];
+for (let i = 0; i < 40; i++) { const p = new THREE.Mesh(new THREE.SphereGeometry(0.022, 8, 6), new THREE.MeshBasicMaterial({ color: '#5fb8ff' })); p.userData = { y: -1.45 - R() * 0.75, ph: R(), sp: 0.7 + R() * 0.5 }; scene.add(p); seep.push(p); }
+
+const camAt = kamera(cam, [
+  { t: 0, p: [-1.5, 6.8, 17.0], l: [-0.6, -1.0, 0.0], f: 42 },
+  { t: 3.0, p: [3.8, 2.0, 12.5], l: [3.8, -1.8, 2.2], f: 40 },
+  { t: 8.2, p: [6.6, 0.2, 8.4], l: [5.6, -2.6, 2.6], f: 40 },
+  { t: 10.0, p: [1.7, -0.2, 8.0], l: [0.5, -1.3, 2.7], f: 40 },
+  { t: POTONG, p: [1.3, -0.1, 7.6], l: [0.4, -1.3, 2.7], f: 40 },
+]);
+
+chip('1', 'Intake Air Laut', 'Pengambilan air baku', 0, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+penanda('A', 'Kepala intake + saringan', S(V(XI, YI + 0.55, FZ)), 3.4, 9.0);
+penanda('•', 'Pipa intake', S(V(3.0, h(3.0) - 0.4, FZ)), 4.6, 9.0, { kiri: true });
+penanda('B', 'Sumur pantai', S(V(XW, YW + 0.38, FZ - 0.1)), 9.0, 99);
+penanda('•', 'Pasir = penyaring alami', S(V(1.7, -1.75, FZ)), 10.4, 99);
+
+window.renderFrame = (tl) => {
+  const t = tl + A.T0;
+  camAt(t);
+  dio.update(t);
+  fIntake.set(t, 1, prog(t, 2.8, 0.6));
+  fWell.set(t, 1, prog(t, 9.2, 0.6));
+  parts.forEach((p) => {
+    const u = (p.userData.ph + t * 0.35) % 1, rr = p.userData.r0 * (1 - u);
+    p.position.set(XI + Math.cos(p.userData.a) * (rr + 0.22), YI + 0.3 + p.userData.y0 * (1 - u), FZ + 0.02 + Math.sin(p.userData.a) * 0.1);
+    p.visible = t > 3.0 && t < 9.5;
+  });
+  debris.forEach((d) => { const a = d.userData.a; d.position.set(Math.cos(a) * 0.24, d.userData.y + Math.sin(t * 2 + d.userData.ph) * 0.01, Math.sin(a) * 0.24); d.rotation.set(Math.sin(t + d.userData.ph) * 0.3, -a, 0); });
+  seep.forEach((p) => {
+    const u = (p.userData.ph + t * 0.18 * p.userData.sp) % 1;
+    p.position.set(lerp(3.2, XW + 0.12, u), p.userData.y + Math.sin(u * 12 + p.userData.ph * 6) * 0.04, FZ + 0.015);
+    p.visible = t > 9.4;
+  });
+  render();
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

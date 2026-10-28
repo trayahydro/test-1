@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 5a: Dosing koagulan</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  #inset { position: absolute; left: 1300px; top: 250px; width: 470px; height: 470px; border-radius: 50%; border: 3px solid rgba(110,195,255,.8); box-shadow: 0 0 0 10px rgba(110,195,255,.15), 0 30px 60px rgba(0,0,0,.5); overflow: hidden; opacity: 0; }
+  #inset canvas { width: 100%; height: 100%; }
+  #insetLbl { position: absolute; left: 1300px; width: 470px; top: 735px; text-align: center; font-size: 22px; font-weight: 700; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,.7); }
+</style></head>
+<body><div id="stage"></div>
+<div id="inset"><canvas id="cv" width="470" height="470"></canvas></div><div id="insetLbl"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, aliran, rangkaian, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, perbarui } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const POTONG = 18.9;
+const A = await siapkanAdegan(5, { ke: POTONG });
+const P = await panggungKontainer();
+const { scene, cam, refs, M } = P;
+P.setEnv(true);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const dz = refs.dosing.KOAGULAN;
+const fKoag = aliran(dz.tube, 0.006, WARNA.kimia, { parent: scene, speed: 0.6, spacing: 0.12, scale: 2.2 });
+const F = (n, w, o = {}) => aliranPipa(refs, n, w, { parent: scene, ...o });
+const feed = F('feed', WARNA.laut);
+const ledMat = dz.led.material = dz.led.material.clone();
+
+const camAt = kamera(cam, [
+  { t: 0, p: [3.6, 2.35, -0.85], l: [1.7, 0.95, 0.75], f: 46 },
+  { t: 6.8, p: [3.2, 2.2, -0.75], l: [1.6, 0.9, 0.8], f: 44 },
+  { t: 15.4, p: [3.0, 2.25, -0.8], l: [1.3, 1.2, 0.6], f: 44 },
+  { t: POTONG, p: [2.7, 2.15, -0.95], l: [0.45, 2.05, 0.2], f: 48 },
+]);
+
+chip('2', 'Pretreatment', 'Koagulasi & flokulasi', 1, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'DOSING KIMIA', tt: 'Pompa Dosing Koagulan', rows: [['Fungsi', 'menginjeksikan koagulan'], ['Takaran', 'dosis kecil, terukur'], ['Titik injeksi', 'pipa umpan sebelum MMF']], x: 110, y: 190, t0: 3.2, t1: 7.4, anchor: S(V(dz.pump.x, dz.pump.y + 0.05, dz.pump.z - 0.06)) });
+
+// inset koagulasi → flokulasi
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+const R = rng(12);
+const centers = Array.from({ length: 9 }, () => [60 + R() * 350, 60 + R() * 350]);
+const pts = Array.from({ length: 240 }, (_, i) => ({ x: R() * 470, y: R() * 470, c: i % 9, ox: (R() - 0.5) * 34, oy: (R() - 0.5) * 34, ph: R() * 6, s: 2 + R() * 2.5 }));
+const drops = Array.from({ length: 30 }, () => ({ x: R() * 470, y: R() * 470, ph: R() }));
+function inset(t) {
+  const k = easeInOut(prog(t, 9.0, 4.5));
+  g.fillStyle = '#123c66'; g.fillRect(0, 0, 470, 470);
+  const gr = g.createRadialGradient(235, 235, 40, 235, 235, 260); gr.addColorStop(0, 'rgba(70,150,220,.35)'); gr.addColorStop(1, 'rgba(10,30,60,.6)'); g.fillStyle = gr; g.fillRect(0, 0, 470, 470);
+  // tetes koagulan (kuning) menyebar di awal
+  const dk = prog(t, 7.4, 1.0) * (1 - prog(t, 10.5, 1.5));
+  drops.forEach((d) => { if (dk <= 0) return; g.globalAlpha = dk * 0.8; g.beginPath(); g.arc(d.x + Math.sin(t * 2 + d.ph * 6) * 8, d.y + Math.cos(t * 1.7 + d.ph * 6) * 8, 4, 0, 7); g.fillStyle = '#ffd54f'; g.fill(); });
+  g.globalAlpha = 1;
+  pts.forEach((p) => {
+    const [cx, cy] = centers[p.c];
+    const x = lerp(p.x + Math.sin(t * 1.4 + p.ph) * 6, cx + p.ox * (1 - 0.35 * k), k);
+    const y = lerp(p.y + Math.cos(t * 1.2 + p.ph) * 6, cy + p.oy * (1 - 0.35 * k), k) + k * Math.sin(t * 0.8 + p.c) * 6;
+    g.beginPath(); g.arc(x, y, p.s * (1 + 0.6 * k), 0, 7); g.fillStyle = k > 0.5 ? '#8a6a45' : '#a38a6a'; g.fill();
+  });
+}
+const lbl = document.getElementById('insetLbl'), box = document.getElementById('inset');
+
+window.renderFrame = (t) => {
+  camAt(t);
+  P.sea.update(t);
+  // LED pompa berkedip saat memompa; cairan kuning mengalir di selang
+  const on = t > 3.0 && Math.sin(t * 9) > 0;
+  ledMat.emissiveIntensity = on ? 2.0 : 0.2;
+  fKoag.set(t, easeInOut(prog(t, 3.3, 2.6)), 1);
+  feed.set(t, 1, prog(t, 0.2, 0.5));
+  P.render();
+  const a = easeOut(prog(t, 7.2, 0.6)) * (1 - prog(t, 15.6, 0.5));
+  box.style.opacity = a; lbl.style.opacity = a;
+  lbl.textContent = t < 10.6 ? 'Partikel halus & koloid tersebar' : 'Terbentuk flok yang lebih besar';
+  if (a > 0) inset(t);
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

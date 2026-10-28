@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 5b: Multimedia filter (potongan)</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, layar, latarStudio } from './lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, perbarui } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const T0 = 18.9;
+const A = await siapkanAdegan(5, { dari: T0 });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.12, exposure: 1.0 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#dcecff', '#223344', 0.5));
+const key = new THREE.DirectionalLight('#ffffff', 2.4); key.position.set(3, 5, 6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -3, right: 3, top: 3.5, bottom: -1.5, near: 1, far: 20 }); key.shadow.bias = -0.0005; scene.add(key);
+const rim = new THREE.DirectionalLight('#6ec3ff', 1.6); rim.position.set(-4, 3, -3); scene.add(rim);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+
+// ---- tangki terpotong setengah ----
+const RT = 0.75, HT = 2.2;
+const navy = new THREE.MeshPhysicalMaterial({ color: '#1a3459', roughness: 0.3, clearcoat: 0.6 });
+const inner = new THREE.MeshStandardMaterial({ color: '#c3d0dd', roughness: 0.6, side: THREE.BackSide });
+const edge = new THREE.MeshStandardMaterial({ color: '#d9cba8', roughness: 0.8 });
+const add = (geo, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; scene.add(m); return m; };
+add(new THREE.CylinderGeometry(RT, RT, HT, 72, 1, true, Math.PI / 2, Math.PI), navy, 0, HT / 2);
+add(new THREE.CylinderGeometry(RT - 0.03, RT - 0.03, HT, 72, 1, true, Math.PI / 2, Math.PI), inner, 0, HT / 2);
+[-1, 1].forEach((s) => add(new THREE.BoxGeometry(0.03, HT, 0.012), edge, s * (RT - 0.015), HT / 2, 0));
+const domeT = add(new THREE.SphereGeometry(RT, 72, 18, Math.PI, Math.PI, 0, Math.PI / 2), navy, 0, HT); domeT.scale.y = 0.42;
+const domeB = add(new THREE.SphereGeometry(RT, 72, 18, Math.PI, Math.PI, Math.PI / 2, Math.PI / 2), navy, 0, 0); domeB.scale.y = 0.42;
+const domeBi = add(new THREE.SphereGeometry(RT - 0.03, 72, 18, Math.PI, Math.PI, Math.PI / 2, Math.PI / 2), inner, 0, 0); domeBi.scale.y = 0.42;
+// kaki & pipa
+[0.55, -0.55].forEach((x) => add(new THREE.BoxGeometry(0.08, 0.45, 0.08), new THREE.MeshStandardMaterial({ color: '#474d55' }), x, -0.45, -0.25));
+const pipeM = new THREE.MeshStandardMaterial({ color: '#7b838b', roughness: 0.5 });
+add(new THREE.CylinderGeometry(0.07, 0.07, 0.75, 24), pipeM, 0, HT + 0.62);
+add(new THREE.CylinderGeometry(0.07, 0.07, 0.6, 24), pipeM, 0, -0.55);
+// distributor masuk + lengan lateral
+add(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 20), pipeM, 0, HT - 0.1);
+[-1, 1].forEach((s) => { const a = add(new THREE.CylinderGeometry(0.025, 0.025, 1.1, 12), pipeM, s * 0.0, HT - 0.32, 0); a.rotation.z = Math.PI / 2; });
+// pelat underdrain + nosel
+const LY = { plate: 0.15, gravel: 0.35, garnet: 0.5, sand: 1.0, anth: 1.5, water: 2.1 };
+add(new THREE.CylinderGeometry(RT - 0.03, RT - 0.03, 0.03, 72, 1, false, Math.PI / 2, Math.PI), new THREE.MeshStandardMaterial({ color: '#8f99a3', roughness: 0.5 }), 0, LY.plate);
+for (let i = 0; i < 9; i++) add(new THREE.CylinderGeometry(0.018, 0.022, 0.07, 10), new THREE.MeshStandardMaterial({ color: '#e0e4e8' }), -0.6 + i * 0.15, LY.plate + 0.05, -0.08);
+
+// ---- media: muka potong bertekstur + butiran 3D ----
+const LAYERS = [
+  { n: 'kerikil', y0: LY.plate + 0.02, y1: LY.gravel, r: [0.022, 0.034], col: ['#8d8a85', '#a5a29b', '#6f6c68'] },
+  { n: 'garnet', y0: LY.gravel, y1: LY.garnet, r: [0.006, 0.009], col: ['#7a2f2f', '#5e2424', '#94403a'] },
+  { n: 'pasir', y0: LY.garnet, y1: LY.sand, r: [0.007, 0.011], col: ['#d9c08a', '#cbb07a', '#e6d3a2'] },
+  { n: 'antrasit', y0: LY.sand, y1: LY.anth, r: [0.012, 0.019], col: ['#1b1c1f', '#2b2d31', '#3a3c40'] },
+];
+// muka potong (latar warna lapisan)
+const fc = document.createElement('canvas'); fc.width = 512; fc.height = 1024; const fg = fc.getContext('2d');
+const fy = (y) => 1024 - (y / LY.anth) * 1024;
+fg.fillStyle = '#7f9bb5'; fg.fillRect(0, 0, 512, 1024); // ruang pengumpul di bawah pelat underdrain
+LAYERS.forEach((L) => { fg.fillStyle = L.col[0]; fg.fillRect(0, fy(L.y1), 512, fy(L.y0) - fy(L.y1)); });
+const faceTex = new THREE.CanvasTexture(fc); faceTex.colorSpace = THREE.SRGBColorSpace;
+const face = add(new THREE.PlaneGeometry(2 * (RT - 0.03), LY.anth), new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.9 }), 0, LY.anth / 2, -0.002);
+// permukaan atas media (setengah cakram antrasit)
+const topD = add(new THREE.CircleGeometry(RT - 0.03, 72, 0, Math.PI), new THREE.MeshStandardMaterial({ color: '#25272b', roughness: 0.7 }), 0, LY.anth, 0); topD.rotation.x = -Math.PI / 2; topD.rotation.z = 0; topD.scale.y = -1;
+const R = rng(51);
+const grains = [];
+const gGeo = new THREE.IcosahedronGeometry(1, 1);
+LAYERS.forEach((L, li) => {
+  const avg = (L.r[0] + L.r[1]) / 2, area = 2 * RT * (L.y1 - L.y0);
+  const n = Math.min(2600, Math.round(area / (avg * avg * 4.2)));
+  const mesh = new THREE.InstancedMesh(gGeo, new THREE.MeshStandardMaterial({ roughness: li === 3 ? 0.35 : 0.8, metalness: li === 3 ? 0.25 : 0 }), n);
+  mesh.castShadow = false; mesh.receiveShadow = true;
+  const data = [];
+  for (let i = 0; i < n; i++) {
+    const r = lerp(L.r[0], L.r[1], R());
+    const x = (R() * 2 - 1) * (RT - 0.04 - r), y = lerp(L.y0 + r, L.y1 - r * 0.6, R()), z = R() * r * 0.6;
+    data.push({ x, y, z, r, ph: R() * 6.28, sx: 0.8 + R() * 0.4, sy: 0.75 + R() * 0.3 });
+    mesh.setColorAt(i, new THREE.Color(L.col[i % 3]));
+  }
+  scene.add(mesh); grains.push({ L, mesh, data });
+});
+const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _e = new THREE.Euler(), _s = new THREE.Vector3(), _p = new THREE.Vector3();
+function updateGrains(t, bw) {
+  grains.forEach(({ L, mesh, data }, li) => {
+    const exp = li >= 2 ? bw * (li === 3 ? 0.2 : 0.12) : 0; // pasir & antrasit mengembang saat backwash
+    data.forEach((d, i) => {
+      const rel = (d.y - L.y0) / (L.y1 - L.y0);
+      const lift = exp * (0.3 + rel) + (li === 3 ? bw * 0.1 : 0);
+      const jig = bw * (li >= 2 ? 0.012 : 0) * Math.sin(t * 9 + d.ph);
+      _p.set(d.x + jig * 0.6, d.y + lift + jig, d.z); _e.set(d.ph, d.ph * 1.3, 0); _q.setFromEuler(_e); _s.set(d.r * d.sx, d.r * d.sy, d.r);
+      _m.compose(_p, _q, _s); mesh.setMatrixAt(i, _m);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+  });
+}
+updateGrains(0, 0);
+
+// ---- air bebas di atas media ----
+const waterM = new THREE.MeshPhysicalMaterial({ color: '#3a8fd8', roughness: 0.1, transparent: true, opacity: 0.28, depthWrite: false });
+const wv = add(new THREE.CylinderGeometry(RT - 0.035, RT - 0.035, LY.water - LY.anth, 72, 1, false, Math.PI / 2, Math.PI), waterM, 0, (LY.water + LY.anth) / 2); wv.castShadow = false;
+const wTop = add(new THREE.CircleGeometry(RT - 0.035, 72, 0, Math.PI), new THREE.MeshPhysicalMaterial({ color: '#6ab8f0', roughness: 0.05, transparent: true, opacity: 0.45, depthWrite: false }), 0, LY.water, 0); wTop.rotation.x = -Math.PI / 2; wTop.scale.y = -1;
+
+// ---- partikel air & flok ----
+const wGeo = new THREE.SphereGeometry(0.014, 8, 6);
+const W = []; const cRaw = new THREE.Color('#2f7fd0'), cClean = new THREE.Color('#bff0ff');
+const wMesh = new THREE.InstancedMesh(wGeo, new THREE.MeshBasicMaterial({ toneMapped: false }), 320); wMesh.renderOrder = 8; scene.add(wMesh);
+for (let i = 0; i < 320; i++) W.push({ x: (R() * 2 - 1) * (RT - 0.08), ph: R(), sp: 0.8 + R() * 0.4, z: 0.02 + R() * 0.02 });
+const flocGeo = new THREE.IcosahedronGeometry(0.017, 0);
+const FL = [];
+const fMesh = new THREE.InstancedMesh(flocGeo, new THREE.MeshStandardMaterial({ color: '#7a5a38', roughness: 0.9 }), 160); scene.add(fMesh);
+for (let i = 0; i < 160; i++) FL.push({ x: (R() * 2 - 1) * (RT - 0.1), ts: 19.5 + R() * 31, ys: LY.anth - 0.02 - R() * 0.3, z: 0.025 + R() * 0.02, ph: R() * 6, s: 0.7 + R() * 0.7 });
+const _c = new THREE.Color();
+function updateParticles(t, bw) {
+  W.forEach((w, i) => {
+    let y, u;
+    if (bw < 0.5) { u = (w.ph + t * 0.16 * w.sp) % 1; y = lerp(LY.water - 0.08, LY.plate - 0.05, u); }
+    else { u = (w.ph + t * 0.22 * w.sp) % 1; y = lerp(LY.plate - 0.05, LY.water + 0.05, u); }
+    const inMedia = y < LY.anth && y > LY.plate;
+    const x = w.x + (inMedia ? Math.sin(y * 40 + w.ph * 6) * 0.015 : 0);
+    const clean = bw < 0.5 ? clamp((LY.sand - y) / 0.6) : 0;
+    _c.copy(cRaw).lerp(cClean, clean); if (bw >= 0.5) _c.set('#5aa8e8');
+    _m.makeTranslation(x, y, w.z); wMesh.setMatrixAt(i, _m); wMesh.setColorAt(i, _c);
+  });
+  wMesh.instanceMatrix.needsUpdate = true; wMesh.instanceColor.needsUpdate = true;
+  FL.forEach((f, i) => {
+    let y, x = f.x;
+    const tb = 52.4;
+    if (t < f.ts) y = 99; // belum muncul
+    else {
+      y = Math.max(f.ys, LY.water - 0.08 - (Math.min(t, tb) - f.ts) * 0.45);
+      if (t > tb) { // backwash: flok terangkat & terbuang lewat atas
+        const k = (t - tb - (i % 20) * 0.15) * 0.35;
+        if (k > 0) { y = f.ys + k; x = f.x + Math.sin(k * 6 + f.ph) * 0.05; if (y > LY.water + 0.05) y = 99; }
+      }
+    }
+    _s.setScalar(y > 50 ? 0.0001 : f.s); _p.set(x, Math.min(y, 50), f.z); _e.set(f.ph, f.ph, 0); _q.setFromEuler(_e); _m.compose(_p, _q, _s); fMesh.setMatrixAt(i, _m);
+  });
+  fMesh.instanceMatrix.needsUpdate = true;
+}
+
+const camAt = kamera(cam, [
+  { t: 18.9, p: [0, 1.25, 6.4], l: [0, 1.15, 0], f: 38 },
+  { t: 23.3, p: [1.25, 1.5, 3.3], l: [0, 1.25, 0], f: 36 },
+  { t: 29.6, p: [1.15, 0.95, 3.1], l: [0, 0.75, 0], f: 36 },
+  { t: 34.3, p: [0.95, 0.5, 2.9], l: [0, 0.33, 0], f: 36 },
+  { t: 38.0, p: [-2.0, 1.5, 5.3], l: [0, 0.98, 0], f: 38 },
+  { t: 44.9, p: [0.45, 1.5, 1.8], l: [0.05, 1.38, 0], f: 34 },
+  { t: 52.0, p: [0.6, 1.45, 1.9], l: [0.05, 1.38, 0], f: 34 },
+  { t: 54.0, p: [0.9, 1.35, 5.4], l: [0, 1.05, 0], f: 38 },
+  { t: A.durasi, p: [-0.5, 1.4, 5.2], l: [0, 1.05, 0], f: 38 },
+]);
+
+chip('2', 'Multimedia Filter', 'Penyaringan bertingkat', 1, T0 + 0.2);
+bug(T0);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+penanda('•', 'Antrasit', S(V(-0.62, 1.25, 0.03)), 23.4, 99, { kiri: true });
+penanda('•', 'Pasir silika', S(V(-0.62, 0.75, 0.03)), 29.7, 99, { kiri: true });
+penanda('•', 'Garnet', S(V(-0.62, 0.43, 0.03)), 34.4, 99, { kiri: true });
+penanda('•', 'Kerikil penyangga', S(V(-0.62, 0.25, 0.03)), 35.4, 99, { kiri: true });
+kartu({ k: 'LAPISAN ATAS', tt: 'Antrasit', rows: [['Ukuran butir', '0,8–1,2 mm', 'TIPIKAL'], ['Fungsi', 'menahan partikel & flok']], x: 1360, y: 210, t0: 23.6, t1: 29.4, anchor: S(V(0.45, 1.25, 0.03)) });
+kartu({ k: 'LAPISAN TENGAH', tt: 'Pasir Silika', rows: [['Ukuran butir', '0,4–0,6 mm', 'TIPIKAL'], ['Fungsi', 'penyaringan lebih halus']], x: 1360, y: 210, t0: 29.9, t1: 34.1, anchor: S(V(0.45, 0.75, 0.03)) });
+kartu({ k: 'LAPISAN BAWAH', tt: 'Garnet & Kerikil', rows: [['Garnet', 'media halus & berat'], ['Kerikil', 'penyangga & distribusi aliran']], x: 1360, y: 210, t0: 34.6, t1: 37.9, anchor: S(V(0.45, 0.38, 0.03)) });
+kartu({ k: 'ALIRAN', tt: 'Atas → Bawah', rows: [['Kecepatan filtrasi', '8–12 m/jam', 'TIPIKAL']], x: 1360, y: 210, t0: 38.3, t1: 44.6 });
+kartu({ k: 'HASIL', tt: 'Partikel Tertahan', rows: [['Ukuran', '± 10–20 µm', 'TIPIKAL'], ['Lokasi', 'di sela butiran media']], x: 1360, y: 210, t0: 45.2, t1: 51.8, anchor: S(V(0.1, 1.42, 0.04)) });
+kartu({ k: 'PERAWATAN', tt: 'Backwash', rows: [['Arah aliran', 'bawah → atas'], ['Hasil', 'kotoran terangkat & dibuang']], x: 1360, y: 210, t0: 52.6, t1: 99 });
+
+window.renderFrame = (tl) => {
+  const t = tl + T0;
+  camAt(t);
+  const bw = easeInOut(prog(t, 52.6, 1.6));
+  updateGrains(t, bw);
+  updateParticles(t, bw);
+  wv.material.color.set(bw > 0.5 ? '#6b7a6a' : '#3a8fd8'); wv.material.opacity = 0.28 + 0.12 * bw;
+  render();
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

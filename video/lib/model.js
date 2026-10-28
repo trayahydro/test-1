@@ -165,7 +165,7 @@ function pipe(pts, r, mat, { fit = 'grooved', fitMat, parent = ROOT, name } = {}
       });
     }
   });
-  pipes.push({ name, path, r });
+  pipes.push({ name, path, r, mesh: m });
   return { mesh: m, path };
 }
 
@@ -574,9 +574,9 @@ function buildExterior(M, refs, logos) {
   motor(-0.95, -0.5, yg + 0.3, -0.6, 0.12, M, G);
   multistagePump(-1.32, -0.97, yg + 0.3, -0.6, 0.1, M, G);
   // basket strainer
-  cyl(0.13, V(-1.75, yg + 0.1, -0.6), V(-1.75, yg + 0.62, -0.6), M.ss, G, 32);
+  refs.strainerBody = cyl(0.13, V(-1.75, yg + 0.1, -0.6), V(-1.75, yg + 0.62, -0.6), M.ss, G, 32);
   ring(0.16, 0.04, V(-1.75, yg + 0.62, -0.6), UP, M.duplex, G, 32);
-  const lid = add(new THREE.SphereGeometry(0.14, 32, 10, 0, Math.PI * 2, 0, Math.PI / 2), M.ss, G); lid.position.set(-1.75, yg + 0.64, -0.6); lid.scale.y = 0.5;
+  const lid = add(new THREE.SphereGeometry(0.14, 32, 10, 0, Math.PI * 2, 0, Math.PI / 2), M.ss, G); lid.position.set(-1.75, yg + 0.64, -0.6); lid.scale.y = 0.5; refs.strainerLid = lid;
   const hw = add(new THREE.TorusGeometry(0.07, 0.008, 8, 24), M.red, G); hw.position.set(-1.75, yg + 0.78, -0.6); hw.rotation.x = Math.PI / 2;
   gauge(V(-1.75, yg + 0.45, -0.73), V(0, 0, -1), { ...M, gauge: M.gaugeLP }, 0.04, G);
   refs.hot.strainer = V(-1.75, yg + 0.4, -0.6);
