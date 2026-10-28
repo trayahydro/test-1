@@ -43,7 +43,7 @@ def kelompok_adegan():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--vo', default='/home/user/tts/out', help='folder adegan_XX.wav')
+    ap.add_argument('--vo', default=os.path.join(ROOT, '..', 'tts', 'vo'), help='folder adegan_XX.flac / .wav')
     ap.add_argument('--crf', type=int, default=20)
     ap.add_argument('--maks-mb', type=float, default=95)
     ap.add_argument('--out', default=os.path.join(ROOT, 'out', 'SWRO-Traya-Hydro-Indonesia.mp4'))
@@ -68,7 +68,7 @@ def main():
         if len(parts) == 1:
             adegan.append(parts[0]); continue
         lst = os.path.join(WORK, f'adegan_{no:02d}.txt')
-        open(lst, 'w').write(''.join(f"file '{p}'\n" for p in parts))
+        open(lst, 'w').write(''.join(f"file '{os.path.abspath(p).replace(os.sep, '/')}'\n" for p in parts))
         sh(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', dst])
         adegan.append(dst)
     D = [durasi(f) for f in adegan]
@@ -86,7 +86,7 @@ def main():
     inp, fc = [], []
     for f in adegan:
         inp += ['-i', f]
-    vo = [os.path.join(a.vo, f'adegan_{no:02d}.wav') for no in nos]
+    vo = [next(f for f in (os.path.join(a.vo, f'adegan_{no:02d}.{e}') for e in ('flac', 'wav')) if os.path.exists(f)) for no in nos]
     for f in vo:
         inp += ['-i', f]
     inp += ['-i', musik]

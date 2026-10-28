@@ -26,7 +26,12 @@ function serve(root) {
   const fps = Number(fpsArg || 30);
   const f0 = Math.round(Number(startArg || 0) * fps);
 
-  const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  // GPU=1 memakai kartu grafis (default di Windows/Mac); GPU=0 memakai emulasi CPU SwiftShader (server tanpa GPU).
+  const gpu = (process.env.GPU ?? (['win32', 'darwin'].includes(process.platform) ? '1' : '0')) === '1';
+  const args = gpu
+    ? ['--enable-gpu', '--ignore-gpu-blocklist', '--enable-gpu-rasterization', ...(process.platform === 'win32' ? ['--use-angle=d3d11'] : [])]
+    : ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
+  const browser = await chromium.launch({ args, headless: process.env.HEADED !== '1' });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   page.on('console', (m) => console.log('[page]', m.text()));
   page.on('pageerror', (e) => console.error('[pageerror]', e));
@@ -35,6 +40,11 @@ function serve(root) {
   await page.goto(`http://127.0.0.1:${srv.address().port}/${path.relative(root, path.resolve(html))}`);
   await page.evaluate(() => window.ready);
   await page.evaluate(() => document.fonts.ready);
+  const gl = await page.evaluate(() => {
+    const g = document.createElement('canvas').getContext('webgl2'), e = g && g.getExtension('WEBGL_debug_renderer_info');
+    return g ? (e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER)) : 'tanpa WebGL2';
+  });
+  console.log(`[grafis] ${gl}`);
   const durasi = dur === 'auto' ? await page.evaluate(() => window.DURASI) : Number(dur);
   const frames = Math.round(durasi * fps);
 
@@ -48,6 +58,7 @@ function serve(root) {
     const dst = chunked ? path.join(out, `c${String(c0 / CH).padStart(4, '0')}.mp4`) : out;
     if (chunked && fs.existsSync(dst) && fs.statSync(dst).size > 0) continue;
     const tmp = chunked ? dst.replace(/\.mp4$/, '.part.mp4') : dst;
+    const tc = Date.now();
     const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
     for (let i = c0; i < c1; i++) {
@@ -59,6 +70,7 @@ function serve(root) {
     ff.stdin.end();
     await new Promise((r) => ff.on('close', r));
     if (chunked) fs.renameSync(tmp, dst);
+    console.log(`\n[potongan] ${path.basename(dst)} ${((Date.now() - tc) / 1000 / (c1 - c0)).toFixed(2)} dtk/frame`);
   }
   await browser.close();
   srv.close();
