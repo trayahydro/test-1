@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 10a: Pressure vessel RO</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const POTONG = 15.2;
+const A = await siapkanAdegan(10, { ke: POTONG });
+const P = await panggungKontainer();
+const { scene, cam, refs, M } = P;
+P.setEnv(true); P.setDinding(1);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const fHp = aliranPipa(refs, 'hp', WARNA.hp, { parent: scene, speed: 1.6 });
+
+// vessel baris tengah kolom depan dibuat transparan → terlihat 6 elemen seri di dalamnya
+const VS = refs.vesselMeshes.find((v) => Math.abs(v.y - 1.31) < 0.01 && v.z < 0.8);
+const vm = VS.mesh; vm.material = new THREE.MeshPhysicalMaterial({ color: '#f4f6f8', roughness: 0.15, transparent: true, opacity: 1, depthWrite: true, clearcoat: 1 });
+const elemG = new THREE.Group(); scene.add(elemG);
+const wrapTex = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 128; const g = c.getContext('2d'); g.fillStyle = '#efe7cf'; g.fillRect(0, 0, 512, 128); g.strokeStyle = 'rgba(160,140,100,.35)'; g.lineWidth = 3; for (let x = -128; x < 512; x += 22) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x + 128, 128); g.stroke(); } const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; return t; })();
+const elMat = new THREE.MeshStandardMaterial({ map: wrapTex, roughness: 0.7 });
+const atdMat = new THREE.MeshStandardMaterial({ color: '#6b4f33', roughness: 0.6 });
+const EL = 6, span = (VS.x1 - VS.x0 - 0.3) / EL;
+for (let i = 0; i < EL; i++) {
+  const x0 = VS.x0 + 0.15 + i * span, x1 = x0 + span - 0.02;
+  const e = new THREE.Mesh(new THREE.CylinderGeometry(0.105, 0.105, x1 - x0, 40), elMat); e.rotation.z = Math.PI / 2; e.position.set((x0 + x1) / 2, VS.y, VS.z); elemG.add(e);
+  [x0, x1].forEach((x) => { const a = new THREE.Mesh(new THREE.CylinderGeometry(0.108, 0.108, 0.03, 40), atdMat); a.rotation.z = Math.PI / 2; a.position.set(x, VS.y, VS.z); elemG.add(a); });
+}
+const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, VS.x1 - VS.x0 + 0.1, 16), new THREE.MeshStandardMaterial({ color: '#8f99a3' })); tube.rotation.z = Math.PI / 2; tube.position.set((VS.x0 + VS.x1) / 2, VS.y, VS.z); elemG.add(tube);
+elemG.visible = false;
+// partikel di dalam vessel: umpan (biru) di celah, brine (oranye) menuju ujung, permeat (putih) di pipa pusat
+const R = rng(10), N = 360;
+const pM = new THREE.InstancedMesh(new THREE.SphereGeometry(0.012, 8, 6), new THREE.MeshBasicMaterial({ toneMapped: false }), N); pM.visible = false; scene.add(pM);
+const PD = Array.from({ length: N }, (_, i) => ({ ph: R(), th: R() * Math.PI * 2, k: i % 4 === 0 ? 'p' : 'f' }));
+const cF = new THREE.Color(WARNA.hp), cB = new THREE.Color(WARNA.brine), cP = new THREE.Color('#e8fbff'), _c = new THREE.Color(), _m = new THREE.Matrix4();
+function partikel(t) {
+  PD.forEach((p, i) => {
+    const u = (p.ph + t * 0.07) % 1;
+    const x = lerp(VS.x1 - 0.1, VS.x0 + 0.1, u);   // umpan masuk dari ujung pintu (x besar) → ujung brine
+    if (p.k === 'p') { _m.makeTranslation(x, VS.y + Math.cos(p.th) * 0.01, VS.z + Math.sin(p.th) * 0.01); _c.copy(cP); }
+    else { const r = 0.112 + 0.004 * Math.sin(p.th * 3); _m.makeTranslation(x, VS.y + Math.cos(p.th) * r, VS.z - Math.abs(Math.sin(p.th)) * r); _c.copy(cF).lerp(cB, u); }
+    pM.setMatrixAt(i, _m); pM.setColorAt(i, _c);
+  });
+  pM.instanceMatrix.needsUpdate = true; pM.instanceColor.needsUpdate = true;
+}
+
+const camAt = kamera(cam, [
+  { t: 0, p: [11.4, 1.7, -2.4], l: [8.4, 1.3, 0.6], f: 44 },
+  { t: 7.6, p: [9.6, 1.55, -1.6], l: [7.6, 1.3, 0.62], f: 42 },
+  { t: POTONG, p: [8.6, 1.42, -1.05], l: [7.2, 1.31, 0.62], f: 40 },
+]);
+chip('6', 'Membran Reverse Osmosis', 'Pressure vessel & elemen', 6, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'RUMAH MEMBRAN', tt: 'Pressure Vessel FRP', rows: [['Tekanan desain', 'hingga 1.000 psi'], ['Material', 'fiberglass (FRP)'], ['Rak', '8 vessel (2 × 4)']], x: 110, y: 200, t0: 0.9, t1: 8.0, anchor: S(V(9.5, 1.69 + 0.13, 0.62)) });
+kartu({ k: 'DI DALAM VESSEL', tt: '6–7 Elemen Seri', rows: [['Ukuran elemen', '8" × 40"'], ['Konstruksi', 'spiral-wound'], ['Jenis', 'poliamida TFC air laut']], x: 110, y: 200, t0: 8.6, t1: 99, anchor: S(V(8.0, VS.y + 0.11, VS.z)) });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  fHp.set(t, 1, 1);
+  const k = easeInOut(prog(t, 7.9, 1.4));
+  vm.material.opacity = 1 - 0.8 * k; vm.material.depthWrite = k < 0.5;
+  elemG.visible = k > 0.05; pM.visible = k > 0.3;
+  partikel(t);
+  P.render();
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

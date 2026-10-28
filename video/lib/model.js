@@ -335,8 +335,9 @@ export function buildSWRO(M, logos) {
   posts.forEach((x) => rows.forEach((y) => box(0.05, 0.04, 0.77, M.frame, x, y - vr - 0.02, 0.79)));
   [0.08, 1.93].forEach((y) => [0.43, 1.15].forEach((zz) => box(vx1 - vx0 - 0.3, 0.05, 0.05, M.frame, (vx0 + vx1) / 2, y, zz)));
   posts.forEach((x) => box(0.12, 0.01, 0.82, M.frame, x, 0.005, 0.79));
+  refs.vesselMeshes = [];
   rows.forEach((y) => cols.forEach((zz) => {
-    cyl(vr, V(vx0 + 0.06, y, zz), V(vx1 - 0.06, y, zz), M.frp, E, 48);
+    refs.vesselMeshes.push({ mesh: cyl(vr, V(vx0 + 0.06, y, zz), V(vx1 - 0.06, y, zz), M.frp, E, 48), y, z: zz, x0: vx0, x1: vx1, r: vr });
     [vx0, vx1].forEach((x, k) => {
       const d = k ? 1 : -1;
       cyl(vr + 0.012, V(x - d * 0.08, y, zz), V(x, y, zz), M.frp, E, 48, vr);   // ujung melebar

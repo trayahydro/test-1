@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 10c: Rejeksi & recovery</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .rec { position: absolute; left: 50%; top: 770px; transform: translateX(-50%); width: 1300px; opacity: 0; }
+  .rec .bar { display: flex; height: 64px; border-radius: 14px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+  .rec .bar div { display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; }
+  .rec .p { background: linear-gradient(90deg, #8fe3ff, #c8f4ff); color: #0c2342; }
+  .rec .b { background: linear-gradient(90deg, #ff9a52, #ff7a3d); color: #2a1206; }
+  .rec .lbl { display: flex; justify-content: space-between; margin-top: 10px; font-size: 20px; color: #bfe3ff; font-weight: 600; }
+  .big2 { position: absolute; left: 110px; top: 190px; opacity: 0; }
+  .big2 .n { font-size: 120px; font-weight: 800; line-height: 1; letter-spacing: -3px; }
+  .big2 .n small { font-size: 48px; }
+  .big2 .k { font-size: 18px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+  .big2 .s { font-size: 22px; color: #d6ecff; margin-top: 6px; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, latarStudio } from './lib/dunia.js';
+import { siapkanAdegan, chip, bug, el, muncul, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+import { WARNA } from './lib/aliran.js';
+
+const T0 = 48.4;
+const A = await siapkanAdegan(10, { dari: T0 });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.14, exposure: 0.95 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#dcecff', '#223344', 0.6));
+const key = new THREE.DirectionalLight('#ffffff', 2.0); key.position.set(2, 4, 5); scene.add(key);
+const R = rng(111);
+// vessel transparan dengan 6 elemen
+const VL = 3.6, VR = 0.16;
+const vessel = new THREE.Mesh(new THREE.CylinderGeometry(VR, VR, VL, 64, 1, true), new THREE.MeshPhysicalMaterial({ color: '#eef2f6', roughness: 0.1, transparent: true, opacity: 0.18, depthWrite: false, side: THREE.DoubleSide }));
+vessel.rotation.z = Math.PI / 2; scene.add(vessel);
+const capM = new THREE.MeshStandardMaterial({ color: '#1e88e5', metalness: 0.4, roughness: 0.35 });
+[-1, 1].forEach((s) => { const c = new THREE.Mesh(new THREE.CylinderGeometry(VR + 0.02, VR + 0.02, 0.08, 64), capM); c.rotation.z = Math.PI / 2; c.position.x = s * VL / 2; scene.add(c); });
+const elM = new THREE.MeshStandardMaterial({ color: '#d9cfb4', roughness: 0.7, transparent: true, opacity: 0.2, depthWrite: false });
+for (let i = 0; i < 6; i++) { const e = new THREE.Mesh(new THREE.CylinderGeometry(VR - 0.02, VR - 0.02, VL / 6 - 0.05, 48), elM); e.rotation.z = Math.PI / 2; e.position.x = -VL / 2 + (i + 0.5) * VL / 6; scene.add(e); }
+const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, VL + 0.5, 20), new THREE.MeshStandardMaterial({ color: '#9aa3ab' })); tube.rotation.z = Math.PI / 2; scene.add(tube);
+// partikel: umpan masuk kiri (biru) → brine keluar kanan (oranye); permeat di pipa pusat keluar kanan (putih)
+const N = 520, pM = new THREE.InstancedMesh(new THREE.SphereGeometry(0.014, 8, 6), new THREE.MeshBasicMaterial({ toneMapped: false }), N); scene.add(pM);
+const PD = Array.from({ length: N }, (_, i) => ({ ph: R(), th: R() * 6.28, rr: 0.05 + R() * 0.08, p: i % 3 === 0 }));
+const cF = new THREE.Color(WARNA.hp), cB = new THREE.Color(WARNA.brine), cP = new THREE.Color('#e8fbff'), _c = new THREE.Color(), _m = new THREE.Matrix4();
+const camAt = kamera(cam, [
+  { t: 48.4, p: [0.6, 1.1, 4.2], l: [0, 0.05, 0], f: 40 },
+  { t: A.durasi, p: [-0.6, 0.95, 4.0], l: [0, 0.1, 0], f: 40 },
+]);
+chip('6', 'Membran Reverse Osmosis', 'Hasil pemisahan', 6, T0 + 0.2);
+bug(T0);
+const b1 = el('<div class="k">REJEKSI GARAM</div><div class="n">99,7<small>%</small></div><div class="s">tipikal · membran air laut modern</div>', 'big2');
+muncul(b1, 48.8);
+const rec = el('<div class="lbl" style="margin:0 0 10px"><span>100 bagian air laut masuk</span><span>tingkat perolehan sistem ± 35–45% (tipikal)</span></div><div class="bar"><div class="p" style="width:40%">AIR PRODUK ± 35–45%</div><div class="b" style="width:60%">BRINE ± 55–65%</div></div>', 'rec');
+const recP = rec.querySelector('.p'), recB = rec.querySelector('.b');
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  PD.forEach((p, i) => {
+    const u = (p.ph + t * 0.1) % 1, x = lerp(-VL / 2 - 0.6, VL / 2 + 0.6, u);
+    let y, z;
+    if (p.p && x > -VL / 2) { y = Math.cos(p.th) * 0.012; z = Math.sin(p.th) * 0.012; _c.copy(cP); }
+    else { const r = x < -VL / 2 || x > VL / 2 ? p.rr * 0.5 : p.rr; y = Math.cos(p.th + t) * r; z = Math.sin(p.th + t) * r; _c.copy(cF).lerp(cB, Math.min(1, Math.max(0, (x + VL / 2) / VL))); }
+    if (p.p && x > VL / 2) { y = 0.35 * (x - VL / 2) + Math.cos(p.th) * 0.01; }
+    _m.makeTranslation(x, y + 0.0, z); pM.setMatrixAt(i, _m); pM.setColorAt(i, _c);
+  });
+  pM.instanceMatrix.needsUpdate = true; pM.instanceColor.needsUpdate = true;
+  render();
+  const a = easeOut(prog(t, 54.9, 0.8)); rec.style.opacity = a;
+  const w = lerp(0, 40, easeInOut(prog(t, 55.2, 1.6))); recP.style.width = w + '%'; recB.style.width = (100 - w) + '%';
+  perbarui(t);
+};
+window._ready();
+</script></body></html>
