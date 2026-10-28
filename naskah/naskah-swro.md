@@ -1,4 +1,4 @@
-# Naskah Video Promosi SWRO: PT. TRAYA Water Solution
+# Naskah Video Promosi SWRO: PT Traya Hydro Indonesia
 
 **Status:** DRAF v1, menunggu persetujuan
 **Format:** 16:9 · 1920×1080 · 30 fps · target ±7–9 menit (timecode per adegan masih perkiraan)
@@ -157,7 +157,7 @@ Catatan visual hanya garis besar; rinciannya ada di tahap storyboard.
 ## Adegan 12: Keunggulan Sistem Traya (±8:30–9:25)
 *Visual: tiga kartu ikon muncul bergantian: Desain Custom · Hemat Energi · Instalasi & Perawatan.*
 
-> PT. TRAYA Water Solution menghadirkan sistem SWRO yang dirancang untuk kebutuhan Anda.
+> PT Traya Hydro Indonesia menghadirkan sistem SWRO yang dirancang untuk kebutuhan Anda.
 >
 > Pertama, desain custom. Setiap sistem dirancang berdasarkan analisis kualitas air
 > baku, kapasitas yang dibutuhkan, dan kondisi lokasi, sesuai skala kebutuhan Anda.
@@ -173,7 +173,7 @@ Catatan visual hanya garis besar; rinciannya ada di tahap storyboard.
 ## Adegan 13: Penutup (±9:25–9:55)
 *Visual: laut berubah menjadi air jernih di gelas; logo Traya + kontak lengkap di layar (tahan ±8 detik tanpa narasi di akhir).*
 
-> Dari laut yang luas, menjadi air bersih yang menghidupi. PT. TRAYA Water Solution,
+> Dari laut yang luas, menjadi air bersih yang menghidupi. PT Traya Hydro Indonesia,
 > mitra Anda untuk solusi air bersih dari air laut.
 >
 > Hubungi kami di The Smith Alam Sutera, SOHO-D/10/1009, Tangerang.
@@ -181,7 +181,7 @@ Catatan visual hanya garis besar; rinciannya ada di tahap storyboard.
 
 **Teks di layar penutup:**
 ```
-PT. TRAYA Water Solution
+PT Traya Hydro Indonesia
 The Smith Alam Sutera SOHO-D/10/1009, Tangerang
 +62 823 110 110 29 · www.trayahydro.com
 ```
@@ -192,7 +192,7 @@ The Smith Alam Sutera SOHO-D/10/1009, Tangerang
 
 | Subtitle | Dibaca TTS |
 |---|---|
-| PT. TRAYA Water Solution | pe-te traya woter solusyen |
+| PT Traya Hydro Indonesia | pe-te traya haidro indonesia |
 | SWRO | es-we-er-o |
 | Sea Water Reverse Osmosis | si woter river osmosis |
 | RO | er-o |
