@@ -1,6 +1,7 @@
 // Render halaman HTML beranimasi menjadi MP4, frame demi frame.
 // Halaman wajib menyediakan window.ready (Promise) dan window.renderFrame(t) (detik).
-// Pemakaian: node render.js <file.html> <durasi_detik> <output.mp4> [fps]
+// Pemakaian: node render.js <file.html> <durasi_detik> <output.mp4> [fps] [mulai_detik]
+// (mulai_detik + durasi memungkinkan render dipecah ke beberapa proses lalu disambung)
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const path = require('path');
@@ -20,8 +21,9 @@ function serve(root) {
 }
 
 (async () => {
-  const [html, dur, out, fpsArg] = process.argv.slice(2);
+  const [html, dur, out, fpsArg, startArg] = process.argv.slice(2);
   const fps = Number(fpsArg || 30);
+  const f0 = Math.round(Number(startArg || 0) * fps);
   const frames = Math.round(Number(dur) * fps);
 
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
@@ -38,7 +40,7 @@ function serve(root) {
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out], { stdio: ['pipe', 'inherit', 'inherit'] });
 
   for (let i = 0; i < frames; i++) {
-    await page.evaluate((t) => window.renderFrame(t), i / fps);
+    await page.evaluate((t) => window.renderFrame(t), (f0 + i) / fps);
     const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
     if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
     if (i % 30 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kontainer SWRO 40 ft</title>
+<link rel="stylesheet" href="lib/common.css">
+<style>
+  body { background: #000; color: #fff; }
+  canvas { position: absolute; inset: 0; }
+  #lines { position: absolute; inset: 0; pointer-events: none; }
+  .card { position: absolute; width: 440px; padding: 22px 26px 20px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.92), rgba(8,22,44,.88)); border: 1px solid rgba(110,190,255,.35); box-shadow: 0 24px 60px rgba(0,0,0,.45); opacity: 0; }
+  .card .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+  .card .tt { font-size: 32px; font-weight: 800; margin: 6px 0 14px; letter-spacing: -.3px; }
+  .card .row { display: flex; justify-content: space-between; gap: 18px; padding: 9px 0; border-top: 1px solid rgba(110,190,255,.18); font-size: 19px; }
+  .card .row span:first-child { color: #a9c7e4; }
+  .card .row b { font-weight: 700; text-align: right; }
+  .card .row b em { font-style: normal; font-weight: 600; font-size: 14px; color: #6ec3ff; margin-left: 6px; letter-spacing: 1px; }
+  .title { position: absolute; left: 96px; bottom: 170px; opacity: 0; }
+  .title img { height: 110px; display: block; margin-bottom: 18px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.5)); }
+  .title .k { font-size: 20px; font-weight: 700; letter-spacing: 6px; color: #9fd8ff; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+  .title .tt { font-size: 74px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; text-shadow: 0 4px 24px rgba(0,0,0,.55); }
+  .chip { position: absolute; left: 96px; top: 76px; display: flex; align-items: center; gap: 16px; opacity: 0; }
+  .chip .no { font-weight: 800; font-size: 22px; color: #0c2342; background: #6ec3ff; border-radius: 8px; padding: 6px 12px; }
+  .chip .tt { font-weight: 700; font-size: 28px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+  .bug { position: absolute; right: 70px; top: 56px; height: 70px; opacity: .92; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); }
+  .subs { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; }
+  #sub { display: inline-block; font-weight: 600; font-size: 40px; padding: 10px 30px; border-radius: 12px; background: rgba(5,15,32,.72); opacity: 0; }
+  .fade { position: absolute; inset: 0; background: #000; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<svg id="lines" width="1920" height="1080"></svg>
+<img class="bug" id="bug" src="../logo/traya-logo-putih.png" alt="">
+<div id="grad" style="position:absolute;inset:0;background:linear-gradient(20deg, rgba(4,14,30,.7) 0%, rgba(4,14,30,.25) 38%, transparent 60%);opacity:0"></div>
+<div class="title" id="title"><img src="../logo/traya-logo-putih.png" alt=""><div class="k">CONTAINERIZED SWRO</div><div class="tt">Air Tawar dari Laut,<br>Siap dalam Kontainer 40 ft</div></div>
+<div class="chip" id="chip"><div class="no">SWRO</div><div class="tt">Kontainer 40 ft High Cube</div></div>
+
+<div class="card" id="cHPP"><div class="k">TEKANAN TINGGI</div><div class="tt">Pompa Tekanan Tinggi</div>
+  <div class="row"><span>Material</span><b>Stainless steel duplex</b></div>
+  <div class="row"><span>Tekanan kerja</span><b>55–70 bar<em>TIPIKAL</em></b></div>
+  <div class="row"><span>Penggerak</span><b>Motor listrik efisiensi tinggi</b></div></div>
+<div class="card" id="cERD"><div class="k">HEMAT ENERGI</div><div class="tt">Energy Recovery Device</div>
+  <div class="row"><span>Tipe</span><b>Isobaric pressure exchanger</b></div>
+  <div class="row"><span>Efisiensi transfer</span><b>&gt; 95%<em>TIPIKAL</em></b></div></div>
+<div class="card" id="cCF"><div class="k">PERLINDUNGAN MEMBRAN</div><div class="tt">Cartridge Filter</div>
+  <div class="row"><span>Rating filtrasi</span><b>5 µm</b></div>
+  <div class="row"><span>Media</span><b>Polypropylene melt-blown</b></div>
+  <div class="row"><span>Housing</span><b>FRP, tahan air laut</b></div></div>
+<div class="card" id="cRO"><div class="k">INTI PROSES</div><div class="tt">Membran RO Spiral-Wound</div>
+  <div class="row"><span>Ukuran elemen</span><b>8" × 40"</b></div>
+  <div class="row"><span>Jenis</span><b>Poliamida TFC air laut</b></div>
+  <div class="row"><span>Rejeksi garam</span><b>99,7%<em>TIPIKAL</em></b></div>
+  <div class="row"><span>Pressure vessel</span><b>FRP 1000 psi</b></div></div>
+
+<div class="subs"><span id="sub"></span></div>
+<div class="fade" id="fade"></div>
+
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { Sky } from 'three/addons/objects/Sky.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { makeMaterials, buildSWRO, EX } from './lib/kontainer/model.js';
+import { rng } from './lib/kontainer/tekstur.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+
+const W = 1920, H = 1080;
+const $ = (id) => document.getElementById(id);
+const loadImg = (src) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+
+const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
+renderer.setSize(W, H);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.95;
+renderer.localClippingEnabled = true;
+$('stage').appendChild(renderer.domElement);
+RectAreaLightUniformsLib.init();
+
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(40, W / H, 0.05, 4000);
+const pmrem = new THREE.PMREMGenerator(renderer);
+
+// ---------- Langit, laut, daratan ----------
+// Kubah langit gradasi biru (lebih terkendali daripada model atmosfer) + kilau matahari
+const sunDir = new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - 26), THREE.MathUtils.degToRad(-150));
+function skyDome(radius) {
+  return new THREE.Mesh(new THREE.SphereGeometry(radius, 48, 24), new THREE.ShaderMaterial({
+    side: THREE.BackSide, depthWrite: false,
+    uniforms: { top: { value: new THREE.Color('#0f4c9a') }, mid: { value: new THREE.Color('#4f95d8') }, hor: { value: new THREE.Color('#dcebf7') }, sun: { value: sunDir } },
+    vertexShader: 'varying vec3 vD; void main(){ vD = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `uniform vec3 top, mid, hor, sun; varying vec3 vD;
+      void main(){ float h = vD.y; vec3 c = mix(hor, mid, smoothstep(0.0, 0.22, h)); c = mix(c, top, smoothstep(0.22, 0.85, h));
+        if (h < 0.0) c = hor * 0.85;
+        float s = max(dot(normalize(vD), normalize(sun)), 0.0);
+        c += vec3(1.0, 0.95, 0.85) * pow(s, 900.0) * 6.0 + vec3(1.0, 0.92, 0.78) * pow(s, 12.0) * 0.35;
+        gl_FragColor = vec4(c, 1.0); }`,
+  }));
+}
+const sky = skyDome(1500); scene.add(sky);
+const skyScene = new THREE.Scene(); skyScene.add(skyDome(50));
+const envSky = pmrem.fromScene(skyScene, 0.02).texture;
+
+function waveNormal() {
+  const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d');
+  const r = rng(5); g.fillStyle = '#8080ff'; g.fillRect(0, 0, 512, 512);
+  for (let i = 0; i < 1400; i++) { const x = r() * 512, y = r() * 512, w = 20 + r() * 60; const gr = g.createLinearGradient(x, y - 4, x, y + 4); gr.addColorStop(0, 'rgba(128,100,255,.5)'); gr.addColorStop(1, 'rgba(128,156,255,.5)'); g.fillStyle = gr; g.fillRect(x - w / 2, y - 3, w, 6); }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(60, 60); return t;
+}
+const seaN = waveNormal();
+const sea = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), new THREE.MeshStandardMaterial({ color: '#1b5c8c', roughness: 0.12, metalness: 0.2, normalMap: seaN, normalScale: new THREE.Vector2(0.6, 0.6) }));
+sea.rotation.x = -Math.PI / 2; sea.position.y = -0.9; scene.add(sea);
+const land = new THREE.Mesh(new THREE.PlaneGeometry(90, 40), new THREE.MeshStandardMaterial({ color: '#c9c2b2', roughness: 0.95 }));
+land.rotation.x = -Math.PI / 2; land.position.set(6, -0.37, -8); land.receiveShadow = true; scene.add(land);
+
+// ---------- Model ----------
+const logos = { dark: await loadImg('../logo/traya-logo-putih.png'), light: await loadImg('../traya-logo.png') };
+await document.fonts.ready;
+const M = makeMaterials(logos);
+const { root, refs } = buildSWRO(M, logos);
+scene.add(root);
+// Dinding sisi lorong memakai material tersendiri + bidang potong agar bisa "turun" saat cutaway
+const clip = new THREE.Plane(new THREE.Vector3(0, 1, 0), -EX.y0 + 0.001);
+refs.nearWall.traverse((o) => { if (o.isMesh) { o.material = o.material.clone(); o.material.clippingPlanes = [clip]; } });
+
+// ---------- Cahaya ----------
+const sun = new THREE.DirectionalLight('#fff3e2', 3.2);
+sun.position.copy(sunDir).multiplyScalar(30).add(new THREE.Vector3(6, 0, 0)); sun.target.position.set(6, 0, 0);
+sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096);
+Object.assign(sun.shadow.camera, { left: -11, right: 11, top: 8, bottom: -8, near: 1, far: 80 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+const hemi = new THREE.HemisphereLight('#cfe6ff', '#6b6458', 0.5); scene.add(hemi);
+refs.lights.forEach((p) => {
+  const l = new THREE.RectAreaLight('#f4f8ff', 9, 1.18, 0.25);
+  l.position.copy(p); l.lookAt(p.x, 0, p.z); scene.add(l);
+});
+[[3.0, 0.2], [7.0, 0.3], [10.4, 0.3]].forEach(([x, z]) => {
+  const s = new THREE.SpotLight('#ffffff', 9, 6, 1.25, 0.9, 1.6);
+  s.position.set(x, 2.62, z); s.target.position.set(x, 0, z + 0.3);
+  s.castShadow = true; s.shadow.mapSize.set(1024, 1024); s.shadow.bias = -0.0005; s.shadow.radius = 5;
+  scene.add(s, s.target);
+});
+
+// Peta lingkungan interior: tangkap dari dalam kontainer
+const cubeRT = new THREE.WebGLCubeRenderTarget(256, { type: THREE.HalfFloatType });
+const cubeCam = new THREE.CubeCamera(0.05, 50, cubeRT);
+cubeCam.position.set(7, 1.3, -0.4); scene.add(cubeCam);
+scene.environment = null; sky.visible = true;
+cubeCam.update(renderer, scene);
+const envInterior = pmrem.fromCubemap(cubeRT.texture).texture;
+
+// ---------- Post-processing ----------
+const rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, samples: 4 });
+const composer = new EffectComposer(renderer, rt);
+composer.addPass(new RenderPass(scene, cam));
+const ao = new GTAOPass(scene, cam, W, H);
+ao.updateGtaoMaterial({ radius: 0.35, distanceExponent: 1.5, thickness: 1.0, scale: 1.0, samples: 12 });
+ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 12 });
+ao.blendIntensity = 0.9;
+composer.addPass(ao);
+const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.18, 0.5, 0.92);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// ---------- Kamera: keyframe ----------
+const K = [
+  { t: 0.0, p: [19.5, 0.9, -10.5], l: [6.5, 1.0, 0], f: 38, sx: -300 },
+  { t: 3.6, p: [15.5, 2.0, -8.8], l: [6.2, 1.1, 0], f: 38, sx: -300 },
+  { t: 7.0, p: [7.6, 1.75, -4.9], l: [7.4, 1.0, 0.45], f: 40, sx: 0 },
+  { t: 8.4, p: [8.9, 1.6, -2.7], l: [8.4, 0.5, 0.2], f: 50, sx: 0 },
+  { t: 10.9, p: [8.45, 1.45, -2.45], l: [8.1, 0.5, 0.2], f: 50, sx: 0 },
+  { t: 12.3, p: [5.0, 1.3, -1.45], l: [4.15, 0.85, 0.15], f: 42, sx: 0 },
+  { t: 13.3, p: [4.85, 1.28, -1.38], l: [4.15, 0.85, 0.15], f: 42, sx: 0 },
+  { t: 16.0, p: [11.85, 1.5, -0.78], l: [6.0, 1.15, 0.75], f: 50, sx: 0 },
+];
+const V3 = (a) => new THREE.Vector3(...a);
+function camAt(t) {
+  let i = 0; while (i < K.length - 2 && t > K[i + 1].t) i++;
+  const a = K[i], b = K[i + 1];
+  const u = easeInOut(clamp((t - a.t) / (b.t - a.t)));
+  cam.position.copy(V3(a.p).lerp(V3(b.p), u));
+  cam.lookAt(V3(a.l).lerp(V3(b.l), u));
+  cam.fov = lerp(a.f, b.f, u);
+  // geser bingkai horizontal (lens shift) agar komposisi menyisakan ruang untuk teks
+  cam.setViewOffset(W, H, lerp(a.sx, b.sx, u), 0, W, H);
+  cam.updateProjectionMatrix();
+}
+
+// ---------- Overlay ----------
+const NS = 'http://www.w3.org/2000/svg';
+const svg = $('lines');
+function mkLine() { const g = document.createElementNS(NS, 'g'); const l = document.createElementNS(NS, 'polyline'); l.setAttribute('fill', 'none'); l.setAttribute('stroke', '#6ec3ff'); l.setAttribute('stroke-width', '2'); const c = document.createElementNS(NS, 'circle'); c.setAttribute('r', '9'); c.setAttribute('fill', '#6ec3ff'); const c2 = document.createElementNS(NS, 'circle'); c2.setAttribute('fill', 'none'); c2.setAttribute('stroke', '#6ec3ff'); c2.setAttribute('stroke-width', '2'); g.append(l, c, c2); svg.appendChild(g); return { g, l, c, c2 }; }
+const CARDS = [
+  { el: $('cHPP'), anchor: refs.hot.hpp, t0: 8.6, t1: 10.9, x: 110, y: 170 },
+  { el: $('cERD'), anchor: refs.hot.erd, t0: 9.2, t1: 10.9, x: 1370, y: 190 },
+  { el: $('cCF'), anchor: refs.hot.cartridge, t0: 12.2, t1: 13.6, x: 1360, y: 210 },
+  { el: $('cRO'), anchor: new THREE.Vector3(9.0, 1.69, 0.5), t0: 14.4, t1: 99, x: 1360, y: 300 },
+].map((c) => ({ ...c, ln: mkLine() }));
+function screen(p) { const v = p.clone().project(cam); return [(v.x + 1) / 2 * W, (1 - v.y) / 2 * H, v.z]; }
+function cards(t) {
+  CARDS.forEach(({ el, anchor, t0, t1, x, y, ln }) => {
+    const a = easeOut(prog(t, t0, 0.5)) * (1 - prog(t, t1, 0.35));
+    el.style.opacity = a; el.style.left = x + 'px'; el.style.top = (y + (1 - a) * 20) + 'px';
+    const [sx, sy] = screen(anchor);
+    const cx = x < 960 ? x + el.offsetWidth : x, cy = y + 50;
+    const k = easeOut(prog(t, t0 + 0.15, 0.5));
+    const mx = lerp(sx, cx, k), my = lerp(sy, cy, k);
+    const elbowX = lerp(sx, sx + (cx - sx) * 0.35, k);
+    ln.l.setAttribute('points', `${sx},${sy} ${elbowX},${my} ${mx},${my}`);
+    ln.c.setAttribute('cx', sx); ln.c.setAttribute('cy', sy);
+    const pulse = (t * 1.2) % 1; ln.c2.setAttribute('cx', sx); ln.c2.setAttribute('cy', sy); ln.c2.setAttribute('r', 9 + pulse * 18); ln.c2.setAttribute('opacity', (1 - pulse) * a);
+    ln.g.setAttribute('opacity', a);
+  });
+}
+const SUBS = [
+  { a: 0.4, b: 3.9, text: 'Sistem SWRO Traya hadir dalam kontainer 40 kaki yang siap dipasang.' },
+  { a: 4.1, b: 8.2, text: 'Seluruh proses tersusun rapi di dalamnya, dari pretreatment hingga membran.' },
+  { a: 8.4, b: 11.0, text: 'Pompa tekanan tinggi dan energy recovery device bekerja efisien.' },
+  { a: 11.2, b: 13.8, text: 'Cartridge filter 5 mikron melindungi pompa dan membran.' },
+  { a: 14.0, b: 16.6, text: 'Membran RO spiral-wound menghasilkan air tawar berkualitas.' },
+];
+function subtitle(t) {
+  const c = SUBS.find((c) => t >= c.a && t < c.b), el = $('sub');
+  if (!c) { el.style.opacity = 0; return; }
+  el.textContent = c.text; el.style.opacity = Math.min(prog(t, c.a, 0.2), 1 - prog(t, c.b - 0.2, 0.2));
+}
+
+window.renderFrame = (t) => {
+  camAt(t);
+  // cutaway: dinding sisi lorong turun ke bawah landasan
+  const cut = easeInOut(prog(t, 3.9, 2.4));
+  refs.nearWall.position.y = -cut * 3.0;
+  refs.nearWall.visible = cut < 0.999;
+  // pintu terbuka di awal
+  scene.environment = t < 5.2 ? envSky : envInterior;
+  seaN.offset.set(t * 0.004, t * 0.002);
+  composer.render();
+
+  $('fade').style.opacity = 1 - easeOut(prog(t, 0, 0.8));
+  const ti = easeOut(prog(t, 0.6, 0.8)) * (1 - prog(t, 3.4, 0.5));
+  $('title').style.opacity = ti; $('grad').style.opacity = ti; $('title').style.transform = `translateY(${(1 - ti) * 20}px)`;
+  $('chip').style.opacity = easeOut(prog(t, 6.4, 0.6));
+  $('bug').style.opacity = 0.92 * prog(t, 4.0, 0.6);
+  cards(t);
+  subtitle(t);
+};
+window._ready();
+</script>
+</body>
+</html>
