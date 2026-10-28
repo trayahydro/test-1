@@ -1,0 +1,45 @@
+@font-face { font-family: 'Jakarta'; font-weight: 400; src: url('../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 600; src: url('../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 700; src: url('../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jakarta'; font-weight: 800; src: url('../node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-800-normal.woff2') format('woff2'); }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; color: #fff; font-family: 'Jakarta', sans-serif; }
+#stage, #stage canvas, #stage svg.full { position: absolute; inset: 0; }
+#ov { position: absolute; inset: 0; pointer-events: none; }
+#ov svg.lines { position: absolute; inset: 0; }
+
+.card { position: absolute; width: 450px; padding: 22px 26px 18px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); box-shadow: 0 24px 60px rgba(0,0,0,.45); opacity: 0; }
+.card .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+.card .tt { font-size: 31px; font-weight: 800; margin: 6px 0 12px; letter-spacing: -.3px; }
+.card .row { display: flex; justify-content: space-between; gap: 18px; padding: 9px 0; border-top: 1px solid rgba(110,190,255,.18); font-size: 19px; }
+.card .row span:first-child { color: #a9c7e4; white-space: nowrap; }
+.card .row b { font-weight: 700; text-align: right; }
+.card .row b em { font-style: normal; font-weight: 600; font-size: 13px; color: #6ec3ff; margin-left: 6px; letter-spacing: 1px; }
+
+.chip { position: absolute; left: 90px; top: 74px; display: flex; align-items: center; gap: 16px; opacity: 0; }
+.chip .no { font-weight: 800; font-size: 22px; color: #0c2342; background: #6ec3ff; border-radius: 8px; padding: 6px 12px; min-width: 28px; text-align: center; }
+.chip .tt { font-weight: 700; font-size: 30px; text-shadow: 0 2px 12px rgba(0,0,0,.65); }
+.chip .sub { font-weight: 500; font-size: 18px; color: #bfe3ff; text-shadow: 0 2px 10px rgba(0,0,0,.6); margin-top: 2px; }
+
+.bug { position: absolute; right: 64px; top: 50px; height: 66px; opacity: 0; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); }
+
+.rail { position: absolute; left: 50%; top: 1000px; transform: translateX(-50%); display: none; }
+.subs { position: absolute; left: 0; right: 0; bottom: 64px; text-align: center; }
+.subs span { display: inline-block; max-width: 1500px; font-weight: 600; font-size: 40px; line-height: 1.3; padding: 10px 30px; border-radius: 12px; background: rgba(5,15,32,.74); opacity: 0; }
+
+/* rel progres proses: di bawah chip */
+.prog { position: absolute; left: 90px; top: 136px; display: flex; gap: 6px; align-items: center; opacity: 0; }
+.prog i { display: block; height: 6px; width: 34px; border-radius: 3px; background: rgba(255,255,255,.22); }
+.prog i.done { background: rgba(110,195,255,.65); }
+.prog i.on { background: #6ec3ff; width: 54px; box-shadow: 0 0 12px rgba(110,195,255,.8); }
+.prog b { font-size: 15px; font-weight: 700; letter-spacing: 3px; color: #bfe3ff; margin-left: 10px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+
+.big { position: absolute; opacity: 0; }
+.big .k { font-size: 20px; font-weight: 700; letter-spacing: 6px; color: #9fd8ff; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+.big .tt { font-size: 74px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; text-shadow: 0 4px 24px rgba(0,0,0,.55); }
+.big .sub { font-size: 26px; font-weight: 500; color: #d6ecff; margin-top: 14px; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+.shade { position: absolute; inset: 0; opacity: 0; }
+
+.pn { position: absolute; display: flex; align-items: center; gap: 10px; opacity: 0; transform-origin: 22px 22px; }
+.pn.kiri { flex-direction: row-reverse; transform-origin: calc(100% - 22px) 22px; }
+.pn-no { width: 44px; height: 44px; border-radius: 50%; background: #6ec3ff; color: #0c2342; font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 6px rgba(110,195,255,.28), 0 6px 18px rgba(0,0,0,.4); }
+.pn-lb { font-size: 21px; font-weight: 700; padding: 8px 14px; border-radius: 10px; background: rgba(8,24,48,.86); border: 1px solid rgba(110,190,255,.35); white-space: nowrap; }

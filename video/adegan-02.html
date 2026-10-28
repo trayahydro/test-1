@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 2: Solusi Kontainer</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, aliran, rangkaian, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, judulBesar, penanda, bug, perbarui } from './lib/overlay.js';
+import { prog, easeInOut } from './lib/common.js';
+
+const A = await siapkanAdegan(2);
+const P = await panggungKontainer();
+const { scene, cam, refs, M } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+
+// Kotak panel listrik eksternal + konduit (koneksi daya)
+const box = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.5, 0.4), M.cabinet); box.position.set(-0.15, 1.3, -0.95); box.castShadow = true; scene.add(box);
+const conduitPath = new THREE.CatmullRomCurve3([V(-0.15, 1.05, -0.95), V(-0.2, 0.2, -0.95), V(-0.35, -0.3, -1.0), V(-0.8, -0.34, -1.6), V(-3, -0.34, -3.5)]);
+const conduit = new THREE.Mesh(new THREE.TubeGeometry(conduitPath, 60, 0.025, 10), M.black); conduit.castShadow = true; scene.add(conduit);
+
+// Aliran
+const F = (n, w, o = {}) => aliranPipa(refs, n, w, { parent: scene, ...o });
+const masuk = rangkaian([F('intake', WARNA.laut), F('feedOut', WARNA.laut), F('feed', WARNA.laut)]);
+const proses = rangkaian([F('pre', WARNA.pre), F('lp', WARNA.pre), F('hp', WARNA.hp, { speed: 1.2 })]);
+const produk = rangkaian([F('permeate', WARNA.produk), F('permOut', WARNA.produk), F('calOut', WARNA.produk), F('uvOut', WARNA.produk), F('dist', WARNA.produk)]);
+const brine = rangkaian([F('brine', WARNA.brine), F('brineOut', WARNA.brine)]);
+const listrik = aliran(conduitPath, 0.025, '#ffcc33', { parent: scene, speed: -1.2, spacing: 0.18 });
+
+const D = A.durasi;
+const camAt = kamera(cam, [
+  { t: 0, p: [19.5, 0.9, -10.5], l: [6.5, 1.0, 0], f: 38, sx: -300 },
+  { t: 8.6, p: [15.5, 2.0, -8.8], l: [6.2, 1.1, 0], f: 38, sx: -300 },
+  { t: 11.2, p: [7.0, 2.2, -6.6], l: [6.6, 0.9, 0.4], f: 42 },
+  { t: 14.0, p: [6.0, 10.5, -8.2], l: [6.0, 0.3, 0.25], f: 40 },
+  { t: 21.0, p: [6.6, 10.2, -7.6], l: [6.0, 0.3, 0.25], f: 40 },
+  { t: 23.2, p: [-10.5, 4.4, -9.0], l: [-1.9, 0.9, 0.1], f: 40 },
+  { t: 29.8, p: [-9.8, 4.8, -8.0], l: [-2.0, 0.9, 0.2], f: 40 },
+  { t: 32.6, p: [4.0, 11.5, -9.5], l: [4.6, 0.3, 0.2], f: 42 },
+  { t: D, p: [5.4, 10.8, -8.2], l: [5.1, 0.3, 0.25], f: 42 },
+]);
+
+judulBesar({ k: 'PT TRAYA HYDRO INDONESIA', tt: 'SWRO dalam<br>Kontainer 40 ft', sub: 'Sea Water Reverse Osmosis · Containerized', t0: 1.0, t1: 8.6 });
+bug(9.0);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+penanda(1, 'Multimedia filter', S(V(0.55, 2.2, 0.66)), 11.9, 21.4, { kiri: true });
+penanda(2, 'Dosing kimia', S(V(2.06, 0.95, 0.86)), 12.5, 21.4);
+penanda(3, 'Cartridge filter 5 µm', S(V(4.18, 1.4, 0.12)), 13.1, 21.4);
+penanda(4, 'Pompa tekanan tinggi', S(V(9.4, 0.65, 0.14)), 13.7, 21.4, { kiri: true });
+penanda(5, 'Membran RO (8 vessel)', S(V(8.0, 1.85, 0.8)), 15.0, 21.4);
+penanda(6, 'ERD + booster pump', S(V(6.9, 0.65, 0.16)), 16.6, 21.4);
+penanda(7, 'Unit CIP', S(V(1.95, 1.3, -0.5)), 17.4, 21.4, { kiri: true });
+penanda(8, 'Panel kontrol PLC', S(V(3.38, 2.15, 0.92)), 18.2, 21.4);
+penanda('≈', 'Air laut masuk', S(V(-1.75, 0.5, -0.6)), 23.6, 30.0, { kiri: true });
+penanda('⚡', 'Listrik', S(V(-0.15, 1.6, -0.95)), 25.4, 30.0);
+penanda('↓', 'Air produk', S(V(-4.0, 2.2, 1.95)), 27.4, 30.0, { kiri: true });
+
+window.renderFrame = (t) => {
+  camAt(t);
+  // dinding turun 9,2–11,6 dtk; naik kembali saat shot eksterior depan; turun lagi di akhir
+  const wall = easeInOut(prog(t, 9.2, 2.4)) * (1 - easeInOut(prog(t, 21.2, 1.6))) + easeInOut(prog(t, 30.2, 2.2));
+  P.setDinding(Math.min(1, wall));
+  const top = easeInOut(prog(t, 11.4, 2.4)) * (1 - easeInOut(prog(t, 21.2, 1.4))) + easeInOut(prog(t, 30.6, 2.0));
+  P.setPotong(top > 0.001 ? 2.49 + (1 - Math.min(1, top)) * 2.5 : Infinity);
+  P.setEnv(wall > 0.5);
+  P.sea.update(t);
+  // aliran
+  masuk.set(t, easeInOut(prog(t, 23.0, 3.0)) + 0 * prog(t, 30.6, 1), t > 22.8 ? 1 : 0);
+  listrik.set(t, easeInOut(prog(t, 25.0, 1.4)), prog(t, 25.0, 0.3) * (1 - prog(t, 30.3, 0.5)));
+  produk.set(t, easeInOut(prog(t, 27.0, 2.8)) * (t < 30.6 ? 1 : 0) + easeInOut(prog(t, 35.0, 3.2)) * (t >= 30.6 ? 1 : 0), 1);
+  proses.set(t, easeInOut(prog(t, 32.4, 3.0)), t > 32.3 ? 1 : 0);
+  brine.set(t, easeInOut(prog(t, 34.6, 2.8)), t > 34.5 ? 1 : 0);
+  if (t >= 30.6 && t < 32.3) masuk.set(t, 1, 1);
+  P.render();
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

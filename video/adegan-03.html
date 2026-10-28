@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 3: Prinsip Reverse Osmosis</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"><canvas id="cv" width="1920" height="1080"></canvas></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import { siapkanAdegan, chip, bug, perbarui } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const A = await siapkanAdegan(3);
+await document.fonts.ready;
+chip('i', 'Prinsip Reverse Osmosis', 'Bagaimana garam dipisahkan dari air', -1, 0.3);
+bug(0.2);
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+const R = rng(33);
+const C = { bg0: '#0b2142', bg1: '#06152c', water: 'rgba(56,150,230,0.30)', waterTop: 'rgba(120,200,255,0.75)', h2o: '#9fdcff', na: '#ff9f43', cl: '#ffd54f', mem: '#cfe9ff', txt: '#ffffff', sub: '#a9c7e4', acc: '#6ec3ff' };
+
+// --- geometri tangki ---
+const TX0 = 470, TX1 = 1450, TY0 = 250, TY1 = 820, MX = 960;
+const chamber = (side) => side < 0 ? [TX0 + 14, MX - 14] : [MX + 14, TX1 - 14];
+
+// tinggi muka air (0..1 dari dasar) tiap sisi sebagai fungsi waktu
+function level(t) {
+  const o = easeInOut(prog(t, 4.0, 6.0)), r = easeInOut(prog(t, 13.4, 5.6));
+  const L = 0.62 - 0.14 * o + 0.24 * r, Rr = 0.62 + 0.14 * o - 0.24 * r;
+  return [L, Rr];
+}
+const yOf = (lv) => TY1 - (TY1 - TY0) * lv;
+
+// --- partikel ---
+const water = [];
+for (let i = 0; i < 260; i++) {
+  const side = i < 130 ? -1 : 1;
+  let cross = null;
+  if (side < 0 && R() < 0.42) cross = { dir: 1, t0: 4.2 + R() * 5.2 };      // osmosis: kiri → kanan
+  else if (side > 0 && R() < 0.62) cross = { dir: -1, t0: 13.6 + R() * 5.0 }; // RO: kanan → kiri
+  water.push({ side, u: R(), v: R(), u2: R(), v2: R(), my: R(), ph: R() * 6.28, cross });
+}
+const ions = [];
+for (let i = 0; i < 46; i++) ions.push({ na: i % 2 === 0, u: R(), v: R(), ph: R() * 6.28 });
+
+function posInChamber(side, u, v, t, ph, lv) {
+  const [x0, x1] = chamber(side);
+  const top = yOf(lv[side < 0 ? 0 : 1]) + 12;
+  const x = lerp(x0, x1, u) + Math.sin(t * 1.3 + ph) * 6;
+  const y = lerp(TY1 - 12, top, v) + Math.cos(t * 1.1 + ph * 1.7) * 6;
+  return [x, y];
+}
+
+function drawMol(x, y, r, col, sign) {
+  g.beginPath(); g.arc(x, y, r, 0, 7); g.fillStyle = col; g.fill();
+  if (sign) { g.fillStyle = '#1a1a1a'; g.font = `800 ${r * 1.5}px Jakarta`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(sign, x, y + 1); }
+}
+function label(txt, x, y, size = 26, col = C.txt, w = 700, align = 'center') {
+  g.font = `${w} ${size}px Jakarta`; g.fillStyle = col; g.textAlign = align; g.textBaseline = 'alphabetic'; g.fillText(txt, x, y);
+}
+function arrow(x0, y0, x1, y1, col, wdt = 6) {
+  g.strokeStyle = col; g.fillStyle = col; g.lineWidth = wdt; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+  const a = Math.atan2(y1 - y0, x1 - x0);
+  g.beginPath(); g.moveTo(x1 + Math.cos(a) * 8, y1 + Math.sin(a) * 8); g.lineTo(x1 - Math.cos(a - 0.5) * 26, y1 - Math.sin(a - 0.5) * 26); g.lineTo(x1 - Math.cos(a + 0.5) * 26, y1 - Math.sin(a + 0.5) * 26); g.fill();
+}
+
+function background() {
+  const gr = g.createRadialGradient(960, 480, 100, 960, 540, 1200); gr.addColorStop(0, C.bg0); gr.addColorStop(1, C.bg1);
+  g.fillStyle = gr; g.fillRect(0, 0, 1920, 1080);
+  g.strokeStyle = 'rgba(110,195,255,0.06)'; g.lineWidth = 1;
+  for (let x = 0; x <= 1920; x += 60) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 1080); g.stroke(); }
+  for (let y = 0; y <= 1080; y += 60) { g.beginPath(); g.moveTo(0, y); g.lineTo(1920, y); g.stroke(); }
+}
+
+// ---------- Bagian 1–2: tangki osmosis & reverse osmosis ----------
+function tank(t, alpha) {
+  if (alpha <= 0) return;
+  g.save(); g.globalAlpha = alpha;
+  const lv = level(t);
+  // air
+  [[-1, lv[0]], [1, lv[1]]].forEach(([s, l]) => {
+    const [x0, x1] = s < 0 ? [TX0, MX] : [MX, TX1];
+    const y = yOf(l);
+    g.fillStyle = C.water; g.fillRect(x0, y, x1 - x0, TY1 - y);
+    g.fillStyle = C.waterTop; g.fillRect(x0, y - 2, x1 - x0, 4);
+  });
+  // piston (fase RO)
+  const pk = easeOut(prog(t, 12.8, 1.0));
+  if (pk > 0) {
+    const py = yOf(lv[1]) - 18 - (1 - pk) * 140;
+    g.fillStyle = 'rgba(200,215,230,0.95)'; g.fillRect(MX + 8, py - 22, TX1 - MX - 16, 22);
+    g.fillRect((MX + TX1) / 2 - 10, py - 150, 20, 130);
+    const pul = 0.5 + 0.5 * Math.sin(t * 6);
+    arrow((MX + TX1) / 2 + 90, py - 150, (MX + TX1) / 2 + 90, py - 40, `rgba(255,170,90,${0.7 + 0.3 * pul})`, 7);
+    label('TEKANAN', TX1 + 40, py - 100, 26, '#ffb36b', 800, 'left');
+    label('> tekanan osmotik', TX1 + 40, py - 68, 22, '#ffd2a8', 600, 'left');
+  }
+  // dinding tangki
+  g.strokeStyle = 'rgba(207,233,255,0.85)'; g.lineWidth = 6; g.lineJoin = 'round';
+  g.beginPath(); g.moveTo(TX0, TY0 - 40); g.lineTo(TX0, TY1); g.lineTo(TX1, TY1); g.lineTo(TX1, TY0 - 40); g.stroke();
+  // membran semipermeabel
+  g.setLineDash([18, 10]); g.strokeStyle = C.mem; g.lineWidth = 5;
+  g.beginPath(); g.moveTo(MX, TY0 - 30); g.lineTo(MX, TY1); g.stroke(); g.setLineDash([]);
+  label('MEMBRAN SEMIPERMEABEL', MX, TY1 + 46, 20, C.acc, 800);
+  label('AIR TAWAR (ENCER)', (TX0 + MX) / 2, TY0 - 64, 24, C.txt, 800);
+  label('AIR LAUT (PEKAT)', (MX + TX1) / 2, TY0 - 64, 24, C.txt, 800);
+  // ion garam (hanya sisi kanan)
+  ions.forEach((p) => { const [x, y] = posInChamber(1, p.u, p.v * 0.95, t, p.ph, lv); drawMol(x, y, p.na ? 10 : 12, p.na ? C.na : C.cl, p.na ? '+' : '−'); });
+  // molekul air
+  water.forEach((p) => {
+    let side = p.side, x, y;
+    const c = p.cross;
+    if (c) {
+      const k = clamp((t - c.t0) / 1.4);
+      const from = posInChamber(c.dir > 0 ? -1 : 1, p.u, p.v, t, p.ph, lv);
+      const to = posInChamber(c.dir > 0 ? 1 : -1, p.u2, p.v2, t, p.ph, lv);
+      if (k <= 0) [x, y] = from; else if (k >= 1) [x, y] = to;
+      else {
+        const my = lerp(TY1 - 30, yOf(Math.min(lv[0], lv[1])) + 30, p.my);
+        const e = easeInOut(k);
+        x = lerp(from[0], to[0], e); y = e < 0.5 ? lerp(from[1], my, e * 2) : lerp(my, to[1], (e - 0.5) * 2);
+      }
+    } else [x, y] = posInChamber(side, p.u, p.v, t, p.ph, lv);
+    drawMol(x, y, 5, C.h2o);
+  });
+  // label fase + panah arah aliran
+  const o1 = prog(t, 4.0, 0.6) * (1 - prog(t, 12.6, 0.5)), o2 = prog(t, 13.0, 0.6);
+  const pill = (w) => { g.fillStyle = 'rgba(6,21,44,0.85)'; g.beginPath(); g.roundRect(MX - w / 2, 482, w, 52, 12); g.fill(); };
+  if (o1 > 0) { g.globalAlpha = alpha * o1; arrow(MX - 110, 570, MX + 110, 570, '#9fdcff', 8); pill(230); label('OSMOSIS', MX, 520, 34, C.txt, 800); }
+  if (o2 > 0) { g.globalAlpha = alpha * o2; arrow(MX + 110, 570, MX - 110, 570, '#ffb36b', 8); pill(380); label('REVERSE OSMOSIS', MX, 520, 34, C.txt, 800); }
+  g.restore();
+}
+
+// ---------- Bagian 3: close-up membran ----------
+const H2O = [], ION = [];
+for (let i = 0; i < 70; i++) H2O.push({ y: R(), ph: R(), sp: 0.8 + R() * 0.5, pore: Math.floor(R() * 7) });
+for (let i = 0; i < 26; i++) ION.push({ y: R(), ph: R(), sp: 0.5 + R() * 0.4, na: i % 2 === 0 });
+function closeup(t, alpha) {
+  if (alpha <= 0) return;
+  g.save(); g.globalAlpha = alpha;
+  const cx = 960, top = 230, bot = 800;
+  // sisi kiri (permeat) dan kanan (umpan bertekanan)
+  g.fillStyle = 'rgba(120,200,255,0.10)'; g.fillRect(220, top, cx - 40 - 220, bot - top);
+  g.fillStyle = 'rgba(56,150,230,0.22)'; g.fillRect(cx + 40, top, 1700 - cx - 40, bot - top);
+  // membran dengan pori
+  const pores = 7, gap = (bot - top) / pores;
+  g.fillStyle = '#d8ecff';
+  for (let k = 0; k < pores; k++) { const y0 = top + k * gap; g.fillRect(cx - 40, y0 + 16, 80, gap - 32); }
+  label('LAPISAN AKTIF MEMBRAN', cx, top - 52, 22, C.acc, 800);
+  label('celah ± 0,0001 µm', cx, top - 22, 22, C.txt, 700);
+  label('PERMEAT', 470, top - 26, 24, C.txt, 800); label('AIR UMPAN BERTEKANAN', 1450, top - 26, 24, C.txt, 800);
+  // H2O: bergerak dari kanan ke kiri melalui pori
+  H2O.forEach((p) => {
+    const u = ((t * 0.12 * p.sp + p.ph) % 1);
+    const x = lerp(1680, 240, u);
+    const py = top + (p.pore + 0.5) * gap;
+    const fy = top + 30 + p.y * (bot - top - 60);
+    const near = clamp(1 - Math.abs(x - cx) / 260);
+    const y = lerp(fy, py, easeInOut(near));
+    // gambar molekul air: O merah + dua H putih
+    g.beginPath(); g.arc(x, y, 11, 0, 7); g.fillStyle = '#ff6b6b'; g.fill();
+    g.beginPath(); g.arc(x - 10, y - 8, 6, 0, 7); g.arc(x + 10, y - 8, 6, 0, 7); g.fillStyle = '#ffffff'; g.fill();
+  });
+  // ion garam: memantul di permukaan membran
+  ION.forEach((p) => {
+    const w = (t * 0.25 * p.sp + p.ph) % 1;
+    const tri = w < 0.5 ? w * 2 : 2 - w * 2;
+    const x = lerp(1680, cx + 70, tri);
+    const y = top + 40 + p.y * (bot - top - 80) + Math.sin(t * 2 + p.ph * 6) * 10;
+    drawMol(x, y, p.na ? 16 : 19, p.na ? C.na : C.cl, p.na ? '+' : '−');
+  });
+  // legenda
+  const ly = 872;
+  g.beginPath(); g.arc(560, ly - 8, 11, 0, 7); g.fillStyle = '#ff6b6b'; g.fill(); g.beginPath(); g.arc(550, ly - 16, 6, 0, 7); g.arc(570, ly - 16, 6, 0, 7); g.fillStyle = '#fff'; g.fill();
+  label('H₂O: lolos', 590, ly, 24, C.txt, 700, 'left');
+  drawMol(960, ly - 8, 14, C.na, '+'); drawMol(995, ly - 8, 16, C.cl, '−');
+  label('Na⁺  Cl⁻ : tertahan', 1025, ly, 24, C.txt, 700, 'left');
+  g.restore();
+}
+
+// ---------- Bagian 4: perbandingan TDS ----------
+function glass(x, y, w, h, dens, col, t) {
+  g.strokeStyle = 'rgba(207,233,255,0.9)'; g.lineWidth = 5;
+  g.beginPath(); g.moveTo(x, y); g.lineTo(x + 18, y + h); g.lineTo(x + w - 18, y + h); g.lineTo(x + w, y); g.stroke();
+  g.fillStyle = col; g.beginPath(); g.moveTo(x + 4, y + 30); g.lineTo(x + 20, y + h - 4); g.lineTo(x + w - 20, y + h - 4); g.lineTo(x + w - 4, y + 30); g.fill();
+  const r = rng(77);
+  for (let i = 0; i < dens; i++) {
+    const px = x + 30 + r() * (w - 60), py = y + 50 + r() * (h - 70);
+    g.beginPath(); g.arc(px + Math.sin(t + i) * 3, py + Math.cos(t * 1.3 + i) * 3, 5, 0, 7); g.fillStyle = i % 2 ? C.na : C.cl; g.fill();
+  }
+}
+function tds(t, alpha) {
+  if (alpha <= 0) return;
+  g.save(); g.globalAlpha = alpha;
+  const k1 = easeOut(prog(t, 26.0, 1.2)), k2 = easeOut(prog(t, 30.8, 1.2));
+  glass(400, 330, 300, 400, 160, 'rgba(40,110,190,0.55)', t);
+  label('AIR LAUT', 550, 290, 30, C.txt, 800);
+  label(`${Math.round(35000 * k1).toLocaleString('id-ID')}`, 550, 820, 64, C.txt, 800);
+  label('mg/L TDS · tipikal', 550, 860, 22, C.sub, 600);
+  if (k2 > 0) {
+    g.globalAlpha = alpha * k2;
+    arrow(780, 530, 1120, 530, C.acc, 10);
+    g.fillStyle = 'rgba(14,34,66,0.95)'; g.strokeStyle = 'rgba(110,190,255,0.6)'; g.lineWidth = 2;
+    g.beginPath(); g.roundRect(860, 448, 180, 56, 14); g.fill(); g.stroke();
+    label('SWRO', 950, 486, 30, C.txt, 800);
+    glass(1220, 330, 300, 400, 3, 'rgba(160,225,255,0.35)', t);
+    label('AIR PRODUK', 1370, 290, 30, C.txt, 800);
+    label(`< ${Math.round(500 * k2)}`, 1370, 820, 64, '#c8f4ff', 800);
+    label('mg/L TDS · tipikal', 1370, 860, 22, C.sub, 600);
+  }
+  g.restore();
+}
+
+window.renderFrame = (t) => {
+  background();
+  const aTank = easeOut(prog(t, 0.2, 0.8)) * (1 - prog(t, 19.4, 0.6));
+  const aZoom = prog(t, 19.6, 0.6) * (1 - prog(t, 25.5, 0.6));
+  const aTds = prog(t, 25.9, 0.6);
+  tank(t, aTank);
+  closeup(t, aZoom);
+  tds(t, aTds);
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

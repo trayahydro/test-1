@@ -146,6 +146,18 @@ def pecah_cue(kalimat: str, a: float, b: float, maks=84):
             buf = (buf + " " + frag).strip()
     if buf:
         bagian.append(buf)
+    hasil = []
+    for x in bagian:
+        while len(x) > maks:
+            tengah = len(x) // 2
+            kiri, kanan = x.rfind(" ", 0, tengah + 8), x.find(" ", tengah - 8)
+            pos = kiri if kiri > 0 and (kanan < 0 or tengah - kiri <= kanan - tengah) else kanan
+            if pos <= 0:
+                break
+            hasil.append(x[:pos])
+            x = x[pos + 1:]
+        hasil.append(x)
+    bagian = hasil
     total = sum(len(x) for x in bagian)
     cues, t = [], a
     for x in bagian:
