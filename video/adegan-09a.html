@@ -19,6 +19,7 @@ const A = await siapkanAdegan(9, { ke: POTONG });
 const P = await panggungKontainer();
 const { scene, cam, refs } = P;
 P.setEnv(true);
+P.setDinding(1);
 const fLp = aliranPipa(refs, 'lp', WARNA.pre, { parent: scene });
 const fHp = aliranPipa(refs, 'hp', WARNA.hp, { parent: scene, speed: 1.6 });
 const camAt = kamera(cam, [

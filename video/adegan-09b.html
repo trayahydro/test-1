@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 9b: Potongan pompa multistage</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, layar, latarStudio } from './lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from './lib/overlay.js';
+import { dial } from './lib/dial.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const T0 = 12.3;
+const A = await siapkanAdegan(9, { dari: T0 });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.1, exposure: 0.82 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#dcecff', '#223344', 0.55));
+const key = new THREE.DirectionalLight('#ffffff', 2.2); key.position.set(2, 4, 5); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -2, right: 2, top: 1.5, bottom: -1.5, near: 1, far: 20 }); key.shadow.bias = -0.0005; scene.add(key);
+const rim = new THREE.DirectionalLight('#6ec3ff', 1.6); rim.position.set(-3, 2, -3); scene.add(rim);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const R = rng(91);
+const ss = new THREE.MeshStandardMaterial({ color: '#d7dde3', metalness: 1, roughness: 0.28 });
+const ssDark = new THREE.MeshStandardMaterial({ color: '#aeb7c0', metalness: 1, roughness: 0.35 });
+const ssIn = new THREE.MeshStandardMaterial({ color: '#5f6a75', metalness: 0.9, roughness: 0.4, side: THREE.BackSide });
+const add = (geo, mat, x = 0, y = 0, z = 0, parent = scene) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; parent.add(m); return m; };
+const along = (m) => { m.rotation.z = Math.PI / 2; return m; };
+
+// casing dipotong setengah (bagian belakang tersisa)
+const RC = 0.27, X0 = -0.75, X1 = 0.75;
+along(add(new THREE.CylinderGeometry(RC, RC, X1 - X0, 64, 1, true, Math.PI / 2, Math.PI), ss));
+along(add(new THREE.CylinderGeometry(RC - 0.02, RC - 0.02, X1 - X0, 64, 1, true, Math.PI / 2, Math.PI), ssIn));
+for (let i = 0; i <= 6; i++) along(add(new THREE.CylinderGeometry(RC + 0.02, RC + 0.02, 0.035, 64, 1, true, Math.PI / 2, Math.PI), ssDark, X0 + 0.1 + i * 0.215, 0, 0));
+[X0 - 0.06, X1 + 0.06].forEach((x) => along(add(new THREE.CylinderGeometry(RC + 0.05, RC + 0.05, 0.12, 64, 1, false, Math.PI / 2, Math.PI), ssDark, x, 0, 0)));
+// poros
+const shaft = along(add(new THREE.CylinderGeometry(0.035, 0.035, 2.0, 24), new THREE.MeshStandardMaterial({ color: '#c0c7ce', metalness: 1, roughness: 0.2 })));
+// impeler bertingkat (6) + difuser statis
+const imps = [];
+const impMat = new THREE.MeshStandardMaterial({ color: '#c3cbd2', metalness: 1, roughness: 0.22 });
+const vaneMat = new THREE.MeshStandardMaterial({ color: '#c8d0d8', metalness: 1, roughness: 0.3 });
+for (let i = 0; i < 6; i++) {
+  const x = X0 + 0.2 + i * 0.215;
+  const g = new THREE.Group(); g.position.set(x, 0, 0); scene.add(g);
+  const back = add(new THREE.CylinderGeometry(0.21, 0.21, 0.012, 48), impMat, 0.035, 0, 0, g); back.rotation.z = Math.PI / 2;
+  const front = add(new THREE.RingGeometry(0.07, 0.21, 48), impMat, -0.035, 0, 0, g); front.rotation.y = -Math.PI / 2; front.material = impMat.clone(); front.material.side = THREE.DoubleSide; front.material.transparent = true; front.material.opacity = 0.35;
+  for (let k = 0; k < 7; k++) {
+    const a = k / 7 * Math.PI * 2;
+    const vane = add(new THREE.BoxGeometry(0.06, 0.01, 0.13), vaneMat, 0, 0, 0, g);
+    vane.position.set(0, Math.cos(a) * 0.13, Math.sin(a) * 0.13); vane.rotation.x = a + 0.6;
+  }
+  const hub = add(new THREE.CylinderGeometry(0.06, 0.06, 0.08, 24), impMat, 0, 0, 0, g); hub.rotation.z = Math.PI / 2;
+  imps.push(g);
+  // difuser (cincin statis dengan sudu) di antara impeler
+  const d = along(add(new THREE.CylinderGeometry(0.245, 0.245, 0.03, 48, 1, true, Math.PI / 2, Math.PI), ssDark, x + 0.1, 0, 0));
+}
+// nosel hisap & tekan
+const pipeM = new THREE.MeshStandardMaterial({ color: '#c9cfd5', metalness: 1, roughness: 0.3 });
+add(new THREE.CylinderGeometry(0.075, 0.075, 0.45, 24), pipeM, X0 + 0.02, 0.48, -0.02);
+add(new THREE.CylinderGeometry(0.06, 0.06, 0.45, 24), pipeM, X1 - 0.02, 0.48, -0.02);
+
+// partikel air: masuk di mata impeler, terlempar ke tepi, kembali lewat difuser ke tahap berikut
+const N = 360;
+const wM = new THREE.InstancedMesh(new THREE.SphereGeometry(0.011, 8, 6), new THREE.MeshBasicMaterial({ toneMapped: false }), N); scene.add(wM);
+const WD = Array.from({ length: N }, () => ({ ph: R(), th: Math.PI * (0.55 + R() * 0.9), sp: 0.85 + R() * 0.3 }));
+const c0 = new THREE.Color('#38b6ff'), c1 = new THREE.Color('#e4f8ff'), _c = new THREE.Color(), _m = new THREE.Matrix4();
+function partikel(t) {
+  WD.forEach((w, i) => {
+    const u = (w.ph + t * 0.09 * w.sp) % 1;        // 0..1 sepanjang pompa
+    const s = u * 6, st = Math.floor(s), f = s - st;
+    const x = X0 + 0.12 + u * (X1 - X0 - 0.2);
+    const r = f < 0.5 ? lerp(0.07, 0.2, f / 0.5) : lerp(0.2, 0.07, (f - 0.5) / 0.5);
+    const th = w.th + t * 2.2 * (1 + st * 0.15);
+    _m.makeTranslation(x, Math.cos(th) * r, -Math.abs(Math.sin(th)) * r); wM.setMatrixAt(i, _m);
+    _c.copy(c0).lerp(c1, u); wM.setColorAt(i, _c);
+  });
+  wM.instanceMatrix.needsUpdate = true; wM.instanceColor.needsUpdate = true;
+}
+
+const camAt = kamera(cam, [
+  { t: 12.3, p: [0.6, 0.55, 2.2], l: [0, 0, -0.05], f: 40 },
+  { t: 19.2, p: [-0.5, 0.45, 1.9], l: [0, 0, -0.05], f: 38 },
+  { t: 22.0, p: [0.35, 0.25, 1.05], l: [0.1, 0, -0.05], f: 36 },
+  { t: A.durasi, p: [0.9, 0.6, 2.4], l: [0, 0, -0.05], f: 40 },
+]);
+
+chip('5', 'Pompa Tekanan Tinggi', 'Potongan pompa multistage', 5, T0 + 0.2);
+bug(T0);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+penanda('•', 'Impeler bertingkat', S(V(X0 + 0.2 + 2 * 0.215, 0.2, -0.02)), 13.0, 99);
+penanda('•', 'Poros', S(V(X1 + 0.2, 0, 0)), 13.6, 19.0);
+kartu({ k: 'MATERIAL', tt: 'Duplex / Super Duplex', rows: [['Bagian basah', 'stainless steel tahan korosi'], ['Lingkungan', 'air laut, klorida tinggi']], x: 1340, y: 200, t0: 12.7, t1: 19.4, w: 470 });
+kartu({ k: 'JANTUNG SISTEM', tt: 'Operasi Kontinu', rows: [['Pola kerja', 'terus-menerus'], ['Efisiensi', 'tinggi'], ['Tekanan', '55–70 bar', 'TIPIKAL']], x: 1340, y: 200, t0: 19.6, t1: 99 });
+const g = dial({ x: 110, y: 200, judul: 'TEKANAN PER TAHAP' });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  const rot = t * 14;
+  imps.forEach((m) => (m.rotation.x = rot)); shaft.rotation.x = rot;
+  partikel(t);
+  render();
+  // tekanan naik bertahap (6 tingkat) mengikuti siklus partikel
+  const stage = Math.min(6, Math.floor(((t - 12.3) * 0.9) % 7));
+  g.set(2.5 + stage * (59.5 / 6), easeOut(prog(t, 12.6, 0.6)) * (1 - prog(t, 19.2, 0.5)));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>
