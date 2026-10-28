@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { kamera, layar } from './lib/dunia.js';
 import { panggungKontainer } from './lib/panggung.js';
 import { aliranPipa, aliran, rangkaian, WARNA } from './lib/aliran.js';
-import { siapkanAdegan, judulBesar, penanda, bug, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, judulBesar, penanda, bug, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeInOut } from './lib/common.js';
 
 const A = await siapkanAdegan(2);
@@ -59,7 +59,8 @@ penanda('≈', 'Air laut masuk', S(V(-1.75, 0.5, -0.6)), 23.6, 30.0, { kiri: tru
 penanda('⚡', 'Listrik', S(V(-0.15, 1.6, -0.95)), 25.4, 30.0);
 penanda('↓', 'Air produk', S(V(-4.0, 2.2, 1.95)), 27.4, 30.0, { kiri: true });
 
-window.renderFrame = (t) => {
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
   camAt(t);
   // dinding turun 9,2–11,6 dtk; naik kembali saat shot eksterior depan; turun lagi di akhir
   const wall = easeInOut(prog(t, 9.2, 2.4)) * (1 - easeInOut(prog(t, 21.2, 1.6))) + easeInOut(prog(t, 30.2, 2.2));

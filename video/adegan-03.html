@@ -6,7 +6,7 @@
 <script>window.ready = new Promise((r) => (window._ready = r));</script>
 <script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
 <script type="module">
-import { siapkanAdegan, chip, bug, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -211,7 +211,8 @@ function tds(t, alpha) {
   g.restore();
 }
 
-window.renderFrame = (t) => {
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
   background();
   const aTank = easeOut(prog(t, 0.2, 0.8)) * (1 - prog(t, 19.4, 0.6));
   const aZoom = prog(t, 19.6, 0.6) * (1 - prog(t, 25.5, 0.6));

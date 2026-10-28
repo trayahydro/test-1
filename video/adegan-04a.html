@@ -11,7 +11,7 @@ import { buatDunia, kamera, layar, latarStudio, loadImg } from './lib/dunia.js';
 import { buatDiorama, kelapa, h, DZ, SEA } from './lib/diorama.js';
 import { makeMaterials, buildSWRO } from './lib/model.js';
 import { aliran, WARNA } from './lib/aliran.js';
-import { siapkanAdegan, chip, bug, penanda, kartu, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, penanda, kartu, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -103,7 +103,7 @@ penanda('B', 'Sumur pantai', S(V(XW, YW + 0.38, FZ - 0.1)), 9.0, 99);
 penanda('•', 'Pasir = penyaring alami', S(V(1.7, -1.75, FZ)), 10.4, 99);
 
 window.renderFrame = (tl) => {
-  const t = tl + A.T0;
+  const t = waktu(tl);
   camAt(t);
   dio.update(t);
   fIntake.set(t, 1, prog(t, 2.8, 0.6));

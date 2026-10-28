@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { kamera, layar } from './lib/dunia.js';
 import { panggungKontainer } from './lib/panggung.js';
 import { aliranPipa, rangkaian, WARNA } from './lib/aliran.js';
-import { siapkanAdegan, chip, bug, kartu, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, kartu, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -56,7 +56,7 @@ kartu({ k: 'POMPA UMPAN', tt: 'Feed Pump', rows: [['Fungsi', 'mengalirkan air la
 kartu({ k: 'PELINDUNG AWAL', tt: 'Basket Strainer', rows: [['Menahan', 'sampah & rumput laut'], ['Ukuran', 'partikel kasar (milimeter)'], ['Perawatan', 'keranjang dibersihkan berkala']], x: 1340, y: 190, t0: 18.8, t1: 26.0, anchor: S(V(SX, yg + 0.45, SZ)) });
 
 window.renderFrame = (tl) => {
-  const t = tl + T0;
+  const t = waktu(tl);
   camAt(t);
   P.sea.update(t);
   masuk.set(t, 0.25 + 0.75 * easeInOut(prog(t, 14.2, 3.6)), 1);

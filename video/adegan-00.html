@@ -13,7 +13,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { buatDunia, langit, laut, kamera } from './lib/dunia.js';
-import { siapkanAdegan, el, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, el, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -51,7 +51,8 @@ const hero = el(`<img src="../logo/traya-logo-putih.png" alt=""><div class="tt">
 const vg = el('', 'shade'); vg.style.background = 'radial-gradient(ellipse 900px 420px at 50% 42%, rgba(4,16,36,.72), rgba(4,16,36,.3) 60%, transparent 85%)';
 const fade = el('', 'shade'); fade.style.background = '#000';
 
-window.renderFrame = (t) => {
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
   camAt(t);
   sea.update(t * 2);
   render();

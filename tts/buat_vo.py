@@ -5,18 +5,23 @@
 - Disintesis per kalimat agar timing subtitle diketahui persis.
 
 Pemakaian:
-  python buat_vo.py <naskah.md> <model.onnx> <folder_output> [length_scale]
+  python buat_vo.py <naskah.md> <folder_output> --mesin piper --model <model.onnx> [--ls 1.0]
+  python buat_vo.py <naskah.md> <folder_output> --mesin google [--suara id-ID-Chirp3-HD-Charon]
+    (Google Cloud Text-to-Speech; API key dibaca dari variabel lingkungan GOOGLE_TTS_API_KEY)
 Hasil: adegan_XX.wav, timing.json (durasi & cue subtitle per adegan), vo_draf.mp3 (semua adegan).
 """
+import argparse
+import base64
 import io
 import json
+import os
+import urllib.request
 import re
 import subprocess
 import sys
 import wave
 from pathlib import Path
 
-from piper import PiperVoice, SynthesisConfig
 
 JEDA_KALIMAT = 0.28   # detik antar kalimat
 JEDA_PARAGRAF = 0.70  # detik antar paragraf
@@ -167,30 +172,67 @@ def pecah_cue(kalimat: str, a: float, b: float, maks=84):
     return cues
 
 
+class MesinPiper:
+    def __init__(self, model, ls):
+        from piper import PiperVoice, SynthesisConfig
+        self.voice = PiperVoice.load(model)
+        self.cfg = SynthesisConfig(length_scale=ls)
+        self.sr = self.voice.config.sample_rate
+
+    def pcm(self, teks):
+        buf = io.BytesIO()
+        with wave.open(buf, "wb") as wf:
+            self.voice.synthesize_wav(teks, wf, syn_config=self.cfg)
+        with wave.open(io.BytesIO(buf.getvalue()), "rb") as rf:
+            return rf.readframes(rf.getnframes())
+
+
+class MesinGoogle:
+    """Google Cloud Text-to-Speech (REST). Suara neural Chirp 3 HD terdengar paling natural."""
+    sr = 24000
+
+    def __init__(self, suara, rate=1.0):
+        self.key = os.environ.get("GOOGLE_TTS_API_KEY")
+        if not self.key:
+            sys.exit("GOOGLE_TTS_API_KEY belum diatur di environment.")
+        self.suara, self.rate = suara, rate
+
+    def pcm(self, teks):
+        # akronim berejaan "es-we-er-o" dibaca lebih luwes tanpa tanda hubung
+        teks = re.sub(r"(?<=\w)-(?=\w)", " ", teks)
+        body = {"input": {"text": teks}, "voice": {"languageCode": "id-ID", "name": self.suara},
+                "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": self.sr, "speakingRate": self.rate}}
+        req = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize",
+                                     data=json.dumps(body).encode(), headers={"Content-Type": "application/json", "X-Goog-Api-Key": self.key})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            wavb = base64.b64decode(json.load(r)["audioContent"])
+        with wave.open(io.BytesIO(wavb), "rb") as rf:
+            return rf.readframes(rf.getnframes())
+
+
 def main():
-    naskah, model, out = Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3])
-    ls = float(sys.argv[4]) if len(sys.argv) > 4 else 1.0
+    ap = argparse.ArgumentParser()
+    ap.add_argument("naskah"); ap.add_argument("out")
+    ap.add_argument("--mesin", default="piper", choices=["piper", "google"])
+    ap.add_argument("--model"); ap.add_argument("--ls", type=float, default=1.0)
+    ap.add_argument("--suara", default="id-ID-Chirp3-HD-Charon"); ap.add_argument("--rate", type=float, default=1.0)
+    args = ap.parse_args()
+    naskah, out = Path(args.naskah), Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    voice = PiperVoice.load(model)
-    cfg = SynthesisConfig(length_scale=ls)
-    sr = voice.config.sample_rate
+    mesin = MesinPiper(args.model, args.ls) if args.mesin == "piper" else MesinGoogle(args.suara, args.rate)
+    sr = mesin.sr
     hasil = []
     for a in baca_naskah(naskah):
         pcm, t, cues = bytearray(), 0.0, []
         for pi, par in enumerate(a["paragraf"]):
             for kal in pecah_kalimat(par):
-                buf = io.BytesIO()
-                with wave.open(buf, "wb") as wf:
-                    voice.synthesize_wav(ke_ucapan(kal), wf, syn_config=cfg)
-                with wave.open(io.BytesIO(buf.getvalue()), "rb") as rf:
-                    frames = rf.readframes(rf.getnframes())
+                frames = mesin.pcm(ke_ucapan(kal))
                 d = len(frames) / 2 / sr
                 cues += pecah_cue(kal, t, t + d)
                 pcm += frames
                 t += d
-                gap = JEDA_KALIMAT
-                pcm += b"\x00\x00" * int(gap * sr)
-                t += gap
+                pcm += b"\x00\x00" * int(JEDA_KALIMAT * sr)
+                t += JEDA_KALIMAT
             if pi < len(a["paragraf"]) - 1:
                 extra = JEDA_PARAGRAF - JEDA_KALIMAT
                 pcm += b"\x00\x00" * int(extra * sr)
@@ -203,9 +245,7 @@ def main():
     (out / "timing.json").write_text(json.dumps(hasil, ensure_ascii=False, indent=1), encoding="utf-8")
     total = sum(h["durasi"] for h in hasil)
     print(f"Total narasi: {total:.1f} dtk ({total / 60:.2f} menit)")
-    # pratinjau gabungan
-    lst = out / "daftar.txt"
-    sil = out / "jeda.wav"
+    lst, sil = out / "daftar.txt", out / "jeda.wav"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", f"anullsrc=r={sr}:cl=mono", "-t", str(JEDA_ADEGAN), sil], check=True)
     lst.write_text("".join(f"file '{h['wav']}'\nfile 'jeda.wav'\n" for h in hasil))
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c:a", "libmp3lame", "-b:a", "128k", out / "vo_draf.mp3"], check=True)

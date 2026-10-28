@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 8a: Cartridge di kontainer</title>
+<link rel="stylesheet" href="lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, perbarui, waktu } from './lib/overlay.js';
+import { prog } from './lib/common.js';
+
+const POTONG = 5.25;
+const A = await siapkanAdegan(8, { ke: POTONG });
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+P.setEnv(true);
+const fPre = aliranPipa(refs, 'pre', WARNA.pre, { parent: scene });
+const fLp = aliranPipa(refs, 'lp', WARNA.pre, { parent: scene });
+const camAt = kamera(cam, [
+  { t: 0, p: [5.6, 1.5, -1.0], l: [4.2, 0.85, 0.1], f: 42 },
+  { t: POTONG, p: [5.0, 1.3, -1.25], l: [4.18, 0.8, 0.12], f: 40 },
+]);
+chip('4', 'Cartridge Filter', 'Pengaman terakhir sebelum HPP', 4, 0.3);
+bug(0.2);
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.sea.update(t);
+  fPre.set(t, 1, 0.7); fLp.set(t, 1, 0.7 * prog(t, 1.0, 0.6));
+  P.render(); perbarui(t);
+};
+window._ready();
+</script></body></html>

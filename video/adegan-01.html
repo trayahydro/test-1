@@ -16,7 +16,7 @@ import * as THREE from 'three';
 import { buatDunia, kamera, layar, latarStudio, loadImg } from './lib/dunia.js';
 import { buatDiorama, rumah, kelapa, sumur, truk, resor, pabrik, dermaga, h, DZ } from './lib/diorama.js';
 import { makeMaterials, buildSWRO } from './lib/model.js';
-import { siapkanAdegan, chip, bug, penanda, kartu, el, muncul, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, penanda, kartu, el, muncul, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp } from './lib/common.js';
 
 const A = await siapkanAdegan(1);
@@ -87,7 +87,8 @@ const ik2 = el('<div><i>+</i><b>Kesehatan</b><span>air payau tak layak</span></d
 const fade = (node, a0, a1, kids) => [...node.children].forEach((c, i) => muncul(c, a0 + i * 0.7, a1));
 fade(ik1, 8.0, 14.3); fade(ik2, 19.0, 24.8);
 
-window.renderFrame = (t) => {
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
   camAt(t);
   dio.update(t);
   // truk tangki melaju di jalan

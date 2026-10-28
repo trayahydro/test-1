@@ -10,27 +10,46 @@ const NS = 'http://www.w3.org/2000/svg';
 let ov, svg, subEl, cues = [];
 const items = [];
 
-// Sub-adegan: { dari, ke } dalam detik waktu-adegan (termasuk PRE). Halaman tetap memakai waktu
-// adegan global; renderFrame menerima waktu lokal dan menambahkan T0 (lihat tg()).
+// Timing: animasi dirancang terhadap tts/timing_desain.json. Suara final (tts/timing_vo.json) bisa
+// berbeda durasinya; waktu nyata dipetakan ke waktu desain secara linear per kalimat (time-warp),
+// sehingga animasi tetap sinkron dengan narasi tanpa mengubah halaman adegan.
+// Sub-adegan: { dari, ke } dalam detik waktu desain (termasuk PRE).
+let kD = [0, 1], kR = [0, 1], T0R = 0;
+const interp = (x, xs, ys) => {
+  if (x <= xs[0]) return ys[0] + (x - xs[0]);
+  for (let i = 1; i < xs.length; i++) if (x <= xs[i]) return ys[i - 1] + (ys[i] - ys[i - 1]) * (x - xs[i - 1]) / Math.max(1e-6, xs[i] - xs[i - 1]);
+  return ys[ys.length - 1] + (x - xs[xs.length - 1]);
+};
+export const keDesain = (tr) => interp(tr, kR, kD);
+export const keNyata = (td) => interp(td, kD, kR);
 export async function siapkanAdegan(no, { pre = PRE, post = POST, extra = 0, dari = 0, ke = null } = {}) {
-  const res = await fetch('../tts/timing_v2.json');
-  const data = await res.json();
-  const sc = data.find((d) => d.no === no);
-  cues = sc.cues.map((c) => ({ ...c, a: c.a + pre, b: c.b + pre }));
-  const full = +(pre + sc.durasi + post + extra).toFixed(3);
-  const akhir = ke == null ? full : ke;
-  window.DURASI = +(akhir - dari).toFixed(3);
-  window.T0 = dari;
+  const [des, vo] = await Promise.all(['../tts/timing_desain.json', '../tts/timing_vo.json'].map((u) => fetch(u).then((r) => r.json())));
+  const sd = des.find((d) => d.no === no), sv = vo.find((d) => d.no === no);
+  cues = sv.cues.map((c) => ({ ...c, a: c.a + pre, b: c.b + pre }));
+  const fullD = +(pre + sd.durasi + post + extra).toFixed(3), fullR = +(pre + sv.durasi + post + extra).toFixed(3);
+  if (sd.cues.length === sv.cues.length) {
+    kD = [0]; kR = [0];
+    sd.cues.forEach((c, i) => { kD.push(pre + c.a, pre + c.b); kR.push(pre + sv.cues[i].a, pre + sv.cues[i].b); });
+    kD.push(fullD); kR.push(fullR);
+  } else { kD = [0, fullD]; kR = [0, fullR]; }
+  const akhirD = ke == null ? fullD : ke;
+  T0R = keNyata(dari);
+  window.DURASI = +(keNyata(akhirD) - T0R).toFixed(3);
+  window.T0 = T0R;
   window.AUDIO_OFFSET = pre;
   ov = document.createElement('div'); ov.id = 'ov'; document.body.appendChild(ov);
   svg = document.createElementNS(NS, 'svg'); svg.setAttribute('class', 'lines'); svg.setAttribute('width', 1920); svg.setAttribute('height', 1080); ov.appendChild(svg);
   const subs = document.createElement('div'); subs.className = 'subs'; subEl = document.createElement('span'); subs.appendChild(subEl); ov.appendChild(subs);
-  return { durasi: full, lokal: window.DURASI, T0: dari, narasi: sc.durasi, cues, pre };
+  return { durasi: fullD, durasiNyata: fullR, lokal: window.DURASI, T0: dari, narasi: sd.durasi, cues, pre };
 }
 
 export function el(html, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.innerHTML = html; ov.insertBefore(d, ov.lastChild); return d; }
 
+let tNyata = null;
+// Ubah waktu lokal halaman (detik sejak awal klip) menjadi waktu desain adegan.
+export function waktu(tl) { tNyata = tl + T0R; return keDesain(tNyata); }
 export function subtitle(t) {
+  if (tNyata != null) t = tNyata;
   const c = cues.find((c) => t >= c.a && t < c.b + 0.15);
   if (!c) { subEl.style.opacity = 0; return; }
   if (subEl.textContent !== c.text) subEl.textContent = c.text;

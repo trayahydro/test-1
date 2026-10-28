@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 7: Antiscalant & SMBS</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  #inset { position: absolute; left: 1290px; top: 300px; width: 480px; height: 480px; border-radius: 50%; border: 3px solid rgba(255,213,79,.85); box-shadow: 0 0 0 10px rgba(255,213,79,.14), 0 30px 60px rgba(0,0,0,.5); overflow: hidden; opacity: 0; }
+  #inset canvas { width: 100%; height: 100%; }
+  #insetLbl { position: absolute; left: 1250px; width: 560px; top: 795px; text-align: center; font-size: 22px; font-weight: 700; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,.7); }
+</style></head>
+<body><div id="stage"></div>
+<div id="inset"><canvas id="cv" width="480" height="480"></canvas></div><div id="insetLbl"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from './lib/dunia.js';
+import { panggungKontainer } from './lib/panggung.js';
+import { aliranPipa, aliran, WARNA } from './lib/aliran.js';
+import { siapkanAdegan, chip, bug, kartu, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const A = await siapkanAdegan(7);
+const D = A.durasi;
+const P = await panggungKontainer();
+const { scene, cam, refs } = P;
+P.setEnv(true);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const AS = refs.dosing.ANTISCALANT, SM = refs.dosing.SMBS;
+const fAS = aliran(AS.tube, 0.006, WARNA.kimia, { parent: scene, speed: 0.6, spacing: 0.12, scale: 2.2 });
+const fSM = aliran(SM.tube, 0.006, '#ffe9a0', { parent: scene, speed: 0.6, spacing: 0.12, scale: 2.2 });
+const fPre = aliranPipa(refs, 'pre', WARNA.pre, { parent: scene });
+const ledA = AS.led.material = AS.led.material.clone(), ledS = SM.led.material = SM.led.material.clone();
+
+const camAt = kamera(cam, [
+  { t: 0, p: [3.5, 2.0, -0.95], l: [2.5, 0.85, 0.55], f: 48 },
+  { t: 6.0, p: [3.1, 1.75, -0.85], l: [2.0, 0.85, 0.65], f: 44 },
+  { t: 13.6, p: [3.3, 1.7, -0.85], l: [2.5, 0.8, 0.6], f: 44 },
+  { t: D, p: [3.7, 1.25, -0.6], l: [3.35, 0.65, 0.35], f: 44 },
+]);
+
+chip('3', 'Dosing Kimia', 'Antiscalant & SMBS', 3, 0.3);
+bug(0.2);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'ANTI KERAK', tt: 'Antiscalant', rows: [['Mencegah', 'kerak CaCO₃ & CaSO₄'], ['Diinjeksikan', 'sebelum cartridge filter']], x: 110, y: 200, t0: 6.3, t1: 13.4, anchor: S(V(AS.pump.x, AS.pump.y + 0.06, AS.pump.z - 0.06)) });
+kartu({ k: 'PELINDUNG MEMBRAN', tt: 'SMBS', rows: [['Nama', 'sodium metabisulfit'], ['Fungsi', 'menetralkan sisa klorin'], ['Alasan', 'membran poliamida peka oksidator']], x: 110, y: 200, t0: 14.0, t1: 99, w: 480, anchor: S(V(SM.pump.x, SM.pump.y + 0.06, SM.pump.z - 0.06)) });
+
+// inset: (1) kerak tanpa/ dengan antiscalant, (2) klorin dinetralkan SMBS
+const cv = document.getElementById('cv'), g = cv.getContext('2d');
+const R = rng(7);
+const ions = Array.from({ length: 80 }, (_, i) => ({ x: R() * 480, y: 60 + R() * 300, ca: i % 2 === 0, ph: R() * 6, lx: 120 + (i % 10) * 24, ly: 390 - Math.floor(i / 10) * 22 }));
+const cls = Array.from({ length: 36 }, () => ({ x: 40 + R() * 400, y: 40 + R() * 400, ph: R() * 6, t: 15.0 + R() * 6 }));
+function inset(t) {
+  g.fillStyle = '#123c66'; g.fillRect(0, 0, 480, 480);
+  if (t < 13.7) {
+    // permukaan membran di bawah
+    g.fillStyle = '#d8ecff'; g.fillRect(0, 410, 480, 70);
+    const kGrow = easeInOut(prog(t, 6.6, 2.6)) * (1 - easeInOut(prog(t, 9.6, 1.6)));
+    const kAS = easeInOut(prog(t, 9.4, 1.6));
+    ions.forEach((p) => {
+      const fx = p.x + Math.sin(t * 1.5 + p.ph) * 10, fy = p.y + Math.cos(t * 1.2 + p.ph) * 10;
+      const x = lerp(fx, p.lx, kGrow), y = lerp(fy, p.ly, kGrow);
+      g.beginPath(); g.arc(x, y, 9, 0, 7); g.fillStyle = p.ca ? '#9be37a' : '#ff8a65'; g.fill();
+      if (kAS > 0) { g.globalAlpha = kAS; g.strokeStyle = '#ffd54f'; g.lineWidth = 4; g.beginPath(); g.arc(x, y, 14, 0, 7); g.stroke(); g.globalAlpha = 1; }
+    });
+    if (kGrow > 0.3) { g.globalAlpha = kGrow; g.fillStyle = '#fff'; g.font = '800 26px Jakarta'; g.textAlign = 'center'; g.fillText('KERAK', 240, 200); g.globalAlpha = 1; }
+  } else {
+    // molekul klorin (hijau) dinetralkan SMBS (kuning) menjadi tidak berbahaya (abu)
+    cls.forEach((c) => {
+      const k = easeInOut(clamp((t - c.t) / 1.2));
+      const x = c.x + Math.sin(t * 1.3 + c.ph) * 12, y = c.y + Math.cos(t * 1.1 + c.ph) * 12;
+      g.beginPath(); g.arc(x, y, 13, 0, 7); g.fillStyle = k < 0.5 ? '#66e08a' : '#9aa3ab'; g.fill();
+      g.fillStyle = '#0d2a1a'; g.font = '800 13px Jakarta'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(k < 0.5 ? 'Cl' : '✓', x, y + 1);
+      if (k > 0 && k < 1) { const sx = lerp(x - 70, x - 14, k); g.beginPath(); g.arc(sx, y, 9, 0, 7); g.fillStyle = '#ffd54f'; g.fill(); }
+    });
+  }
+}
+const lbl = document.getElementById('insetLbl'), box = document.getElementById('inset');
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  P.sea.update(t);
+  ledA.emissiveIntensity = t > 1 && Math.sin(t * 9) > 0 ? 2 : 0.2;
+  ledS.emissiveIntensity = t > 1 && Math.sin(t * 9 + 1.5) > 0 ? 2 : 0.2;
+  fAS.set(t, easeInOut(prog(t, 0.8, 2.6)), 1);
+  fSM.set(t, easeInOut(prog(t, 1.4, 2.6)), 1);
+  fPre.set(t, 1, 1);
+  P.render();
+  const a = easeOut(prog(t, 6.2, 0.6)) * (1 - prog(t, D - 1.2, 0.5));
+  box.style.opacity = a; lbl.style.opacity = a;
+  lbl.textContent = t < 9.5 ? 'Tanpa antiscalant: mineral membentuk kerak' : t < 13.7 ? 'Dengan antiscalant: kerak tidak terbentuk' : 'SMBS menetralkan sisa klorin';
+  if (a > 0) inset(t);
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

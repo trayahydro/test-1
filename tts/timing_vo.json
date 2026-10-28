@@ -1,0 +1,886 @@
+[
+ {
+  "no": 0,
+  "judul": "Pembuka",
+  "durasi": 14.273,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.286,
+    "text": "Laut menutupi sebagian besar permukaan bumi."
+   },
+   {
+    "a": 3.566,
+    "b": 7.008,
+    "text": "Namun bagi masyarakat dan industri di wilayah pesisir,"
+   },
+   {
+    "a": 7.008,
+    "b": 9.94,
+    "text": "air tawar justru sering menjadi barang langka."
+   },
+   {
+    "a": 10.22,
+    "b": 13.993,
+    "text": "Bagaimana jika laut itu sendiri menjadi sumber air bersih?"
+   }
+  ],
+  "wav": "adegan_00.wav"
+ },
+ {
+  "no": 1,
+  "judul": "Tantangan Air Bersih di Pesisir",
+  "durasi": 31.77,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.795,
+    "text": "Di banyak daerah pesisir dan pulau kecil,"
+   },
+   {
+    "a": 2.795,
+    "b": 6.885,
+    "text": "air tanah dangkal terintrusi air laut sehingga terasa payau."
+   },
+   {
+    "a": 7.165,
+    "b": 9.232,
+    "text": "Sumber air permukaan terbatas,"
+   },
+   {
+    "a": 9.232,
+    "b": 13.643,
+    "text": "sementara pasokan dari luar daerah mahal dan tidak selalu andal."
+   },
+   {
+    "a": 13.923,
+    "b": 18.033,
+    "text": "Bagi permukiman, resor, pelabuhan, hingga kawasan industri,"
+   },
+   {
+    "a": 18.033,
+    "b": 22.561,
+    "text": "kondisi ini berdampak langsung pada kesehatan, biaya operasional,"
+   },
+   {
+    "a": 22.561,
+    "b": 24.093,
+    "text": "dan pertumbuhan usaha."
+   },
+   {
+    "a": 24.373,
+    "b": 27.483,
+    "text": "Dibutuhkan solusi yang andal, cepat dipasang,"
+   },
+   {
+    "a": 27.483,
+    "b": 31.49,
+    "text": "dan mampu mengolah air laut menjadi air tawar berkualitas."
+   }
+  ],
+  "wav": "adegan_01.wav"
+ },
+ {
+  "no": 2,
+  "judul": "Solusi SWRO Traya dalam Kontainer 40 ft",
+  "durasi": 38.005,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.845,
+    "text": "Inilah sistem SWRO dari PT Traya Hydro Indonesia,"
+   },
+   {
+    "a": 3.845,
+    "b": 8.475,
+    "text": "Sea Water Reverse Osmosis dalam kontainer empat puluh kaki."
+   },
+   {
+    "a": 8.755,
+    "b": 13.053,
+    "text": "Seluruh peralatan, mulai dari pretreatment, pompa tekanan tinggi,"
+   },
+   {
+    "a": 13.053,
+    "b": 17.945,
+    "text": "membran reverse osmosis, perangkat pemulihan energi, hingga panel kontrol,"
+   },
+   {
+    "a": 17.945,
+    "b": 20.656,
+    "text": "terpasang rapi dalam satu unit kontainer."
+   },
+   {
+    "a": 20.936,
+    "b": 26.61,
+    "text": "Sistem ini siap dikirim ke lokasi, dihubungkan ke saluran air laut, listrik,"
+   },
+   {
+    "a": 26.61,
+    "b": 29.597,
+    "text": "dan jalur air produk, lalu dioperasikan."
+   },
+   {
+    "a": 29.877,
+    "b": 34.501,
+    "text": "Mari kita ikuti perjalanan air laut di dalamnya, tahap demi tahap,"
+   },
+   {
+    "a": 34.501,
+    "b": 37.725,
+    "text": "hingga menjadi air produk yang siap digunakan."
+   }
+  ],
+  "wav": "adegan_02.wav"
+ },
+ {
+  "no": 3,
+  "judul": "Prinsip Reverse Osmosis",
+  "durasi": 35.697,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.287,
+    "text": "Prinsipnya adalah osmosis balik."
+   },
+   {
+    "a": 2.567,
+    "b": 3.482,
+    "text": "Secara alami,"
+   },
+   {
+    "a": 3.482,
+    "b": 9.324,
+    "text": "air bergerak dari larutan encer menuju larutan pekat melalui membran semipermeabel."
+   },
+   {
+    "a": 9.604,
+    "b": 11.926,
+    "text": "Proses ini disebut osmosis."
+   },
+   {
+    "a": 12.206,
+    "b": 16.751,
+    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik air laut,"
+   },
+   {
+    "a": 16.751,
+    "b": 18.557,
+    "text": "arah aliran tersebut dibalik."
+   },
+   {
+    "a": 18.837,
+    "b": 21.373,
+    "text": "Molekul air dipaksa menembus membran,"
+   },
+   {
+    "a": 21.373,
+    "b": 24.595,
+    "text": "sementara garam terlarut dan pengotor tertahan."
+   },
+   {
+    "a": 24.875,
+    "b": 29.506,
+    "text": "Air laut dengan TDS tipikal sekitar 35.000 mg/L"
+   },
+   {
+    "a": 29.506,
+    "b": 35.417,
+    "text": "dapat diolah menjadi air tawar dengan TDS di bawah 500 mg/L."
+   }
+  ],
+  "wav": "adegan_03.wav"
+ },
+ {
+  "no": 4,
+  "judul": "Intake & Pompa Umpan",
+  "durasi": 26.801,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 1.985,
+    "text": "Perjalanan dimulai dari intake."
+   },
+   {
+    "a": 2.265,
+    "b": 7.484,
+    "text": "Air laut diambil melalui pipa intake terbuka yang dilengkapi saringan di ujungnya,"
+   },
+   {
+    "a": 7.484,
+    "b": 12.703,
+    "text": "atau melalui sumur pantai yang memanfaatkan lapisan pasir sebagai penyaring alami."
+   },
+   {
+    "a": 12.983,
+    "b": 17.151,
+    "text": "Pompa umpan kemudian mengalirkan air laut menuju kontainer."
+   },
+   {
+    "a": 17.431,
+    "b": 23.087,
+    "text": "Sebuah strainer menahan sampah, rumput laut, dan partikel kasar berukuran milimeter,"
+   },
+   {
+    "a": 23.087,
+    "b": 26.521,
+    "text": "sehingga peralatan di tahap berikutnya terlindungi."
+   }
+  ],
+  "wav": "adegan_04.wav"
+ },
+ {
+  "no": 5,
+  "judul": "Koagulasi & Multimedia Filter",
+  "durasi": 60.375,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.38,
+    "text": "Tahap berikutnya adalah pretreatment."
+   },
+   {
+    "a": 2.66,
+    "b": 6.526,
+    "text": "Pompa dosing menginjeksikan koagulan ke dalam aliran air."
+   },
+   {
+    "a": 6.806,
+    "b": 10.109,
+    "text": "Partikel halus dan koloid yang semula tersebar saling"
+   },
+   {
+    "a": 10.109,
+    "b": 12.913,
+    "text": "mengikat dan membentuk flok yang lebih besar,"
+   },
+   {
+    "a": 12.913,
+    "b": 14.782,
+    "text": "sehingga lebih mudah disaring."
+   },
+   {
+    "a": 15.482,
+    "b": 18.118,
+    "text": "Air lalu masuk ke multimedia filter."
+   },
+   {
+    "a": 18.398,
+    "b": 22.658,
+    "text": "Di dalam tangki ini terdapat beberapa lapisan media:"
+   },
+   {
+    "a": 22.658,
+    "b": 28.967,
+    "text": "antrasit dengan ukuran butir tipikal 0,8 sampai 1,2 milimeter di bagian atas,"
+   },
+   {
+    "a": 28.967,
+    "b": 33.718,
+    "text": "pasir silika sekitar 0,4 sampai 0,6 milimeter di bawahnya,"
+   },
+   {
+    "a": 33.718,
+    "b": 37.159,
+    "text": "lalu lapisan garnet dan kerikil penyangga."
+   },
+   {
+    "a": 37.439,
+    "b": 40.188,
+    "text": "Air mengalir dari atas ke bawah dengan"
+   },
+   {
+    "a": 40.188,
+    "b": 44.022,
+    "text": "kecepatan filtrasi tipikal 8 sampai 12 meter per jam."
+   },
+   {
+    "a": 44.302,
+    "b": 48.213,
+    "text": "Partikel tersuspensi hingga ukuran sekitar 10 sampai"
+   },
+   {
+    "a": 48.213,
+    "b": 51.071,
+    "text": "20 mikron tertahan di sela-sela media."
+   },
+   {
+    "a": 51.771,
+    "b": 55.062,
+    "text": "Secara berkala, filter dibersihkan dengan backwash,"
+   },
+   {
+    "a": 55.062,
+    "b": 60.095,
+    "text": "yaitu aliran balik dari bawah ke atas yang mengangkat kotoran dan membuangnya."
+   }
+  ],
+  "wav": "adegan_05.wav"
+ },
+ {
+  "no": 6,
+  "judul": "Opsi Ultrafiltrasi",
+  "durasi": 27.729,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.733,
+    "text": "Untuk air baku dengan kekeruhan tinggi,"
+   },
+   {
+    "a": 2.733,
+    "b": 7.779,
+    "text": "multimedia filter dapat dilengkapi atau digantikan dengan ultrafiltrasi."
+   },
+   {
+    "a": 8.059,
+    "b": 11.188,
+    "text": "Membran UF berupa ribuan serat berongga"
+   },
+   {
+    "a": 11.188,
+    "b": 15.279,
+    "text": "dengan ukuran pori tipikal 0,01 sampai 0,03 mikron,"
+   },
+   {
+    "a": 15.279,
+    "b": 21.457,
+    "text": "cukup kecil untuk menahan partikel koloid, bakteri, dan sebagian besar virus."
+   },
+   {
+    "a": 21.737,
+    "b": 27.449,
+    "text": "Hasilnya, air umpan menjadi sangat stabil dengan nilai SDI tipikal di bawah 3."
+   }
+  ],
+  "wav": "adegan_06.wav"
+ },
+ {
+  "no": 7,
+  "judul": "Dosing Antiscalant & SMBS",
+  "durasi": 22.655,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.213,
+    "text": "Sebelum menuju membran, dua bahan kimia diinjeksikan dalam dosis kecil."
+   },
+   {
+    "a": 5.493,
+    "b": 9.595,
+    "text": "Antiscalant mencegah mineral seperti kalsium karbonat dan kalsium"
+   },
+   {
+    "a": 9.595,
+    "b": 12.877,
+    "text": "sulfat mengendap menjadi kerak di permukaan membran."
+   },
+   {
+    "a": 13.157,
+    "b": 18.153,
+    "text": "Sementara itu, sodium metabisulfit, atau SMBS, menetralkan sisa klorin,"
+   },
+   {
+    "a": 18.153,
+    "b": 22.375,
+    "text": "karena membran poliamida sangat sensitif terhadap oksidator."
+   }
+  ],
+  "wav": "adegan_07.wav"
+ },
+ {
+  "no": 8,
+  "judul": "Cartridge Filter 5 Mikron",
+  "durasi": 29.009,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 4.481,
+    "text": "Pengaman terakhir sebelum pompa tekanan tinggi adalah cartridge filter."
+   },
+   {
+    "a": 4.761,
+    "b": 7.76,
+    "text": "Di dalam housing ini terpasang beberapa elemen"
+   },
+   {
+    "a": 7.76,
+    "b": 11.344,
+    "text": "filter polypropylene melt-blown dengan rating 5 mikron."
+   },
+   {
+    "a": 11.624,
+    "b": 15.269,
+    "text": "Air mengalir dari sisi luar elemen menuju bagian tengah,"
+   },
+   {
+    "a": 15.269,
+    "b": 19.891,
+    "text": "dan partikel halus yang lolos dari tahap sebelumnya tertangkap di sini."
+   },
+   {
+    "a": 20.171,
+    "b": 23.816,
+    "text": "Perbedaan tekanan masuk dan keluar dipantau terus."
+   },
+   {
+    "a": 24.096,
+    "b": 28.729,
+    "text": "Ketika selisihnya mencapai sekitar 1 bar, elemen filter diganti."
+   }
+  ],
+  "wav": "adegan_08.wav"
+ },
+ {
+  "no": 9,
+  "judul": "Pompa Tekanan Tinggi",
+  "durasi": 26.476,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.194,
+    "text": "Kini air siap diberi tekanan."
+   },
+   {
+    "a": 2.474,
+    "b": 8.516,
+    "text": "Pompa tekanan tinggi menaikkan tekanan air hingga tipikal 55 sampai 70 bar,"
+   },
+   {
+    "a": 8.516,
+    "b": 11.577,
+    "text": "jauh di atas tekanan osmotik air laut."
+   },
+   {
+    "a": 11.857,
+    "b": 15.578,
+    "text": "Bagian yang bersentuhan dengan air laut dibuat dari stainless"
+   },
+   {
+    "a": 15.578,
+    "b": 18.567,
+    "text": "steel duplex atau super duplex yang tahan korosi."
+   },
+   {
+    "a": 18.847,
+    "b": 21.412,
+    "text": "Pompa ini adalah jantung sistem SWRO,"
+   },
+   {
+    "a": 21.412,
+    "b": 26.196,
+    "text": "dan dirancang untuk beroperasi terus-menerus dengan efisiensi tinggi."
+   }
+  ],
+  "wav": "adegan_09.wav"
+ },
+ {
+  "no": 10,
+  "judul": "Membran RO Spiral-Wound",
+  "durasi": 60.259,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.914,
+    "text": "Air bertekanan tinggi kemudian masuk ke pressure vessel FRP"
+   },
+   {
+    "a": 3.914,
+    "b": 6.966,
+    "text": "yang dirancang untuk tekanan hingga 1.000 psi."
+   },
+   {
+    "a": 7.246,
+    "b": 8.159,
+    "text": "Di dalamnya,"
+   },
+   {
+    "a": 8.159,
+    "b": 14.247,
+    "text": "enam hingga tujuh elemen membran berukuran 8 kali 40 inci terpasang secara seri."
+   },
+   {
+    "a": 14.947,
+    "b": 18.523,
+    "text": "Setiap elemen dibuat dengan konstruksi spiral-wound."
+   },
+   {
+    "a": 18.803,
+    "b": 22.675,
+    "text": "Lembaran membran poliamida, spacer umpan berbentuk jaring,"
+   },
+   {
+    "a": 22.675,
+    "b": 27.882,
+    "text": "dan lapisan pembawa permeat digulung mengelilingi sebuah pipa pusat berlubang."
+   },
+   {
+    "a": 28.162,
+    "b": 31.122,
+    "text": "Air laut mengalir sepanjang spacer umpan."
+   },
+   {
+    "a": 31.402,
+    "b": 34.092,
+    "text": "Molekul air menembus lapisan aktif"
+   },
+   {
+    "a": 34.092,
+    "b": 38.049,
+    "text": "membran yang celahnya hanya sekitar 0,0001 mikron,"
+   },
+   {
+    "a": 38.049,
+    "b": 42.954,
+    "text": "lalu mengalir secara spiral menuju pipa pusat sebagai permeat."
+   },
+   {
+    "a": 43.654,
+    "b": 47.764,
+    "text": "Garam dan pengotor tertahan dan terbawa keluar sebagai brine."
+   },
+   {
+    "a": 48.044,
+    "b": 54.148,
+    "text": "Membran air laut modern memiliki rejeksi garam tipikal 99,7 persen,"
+   },
+   {
+    "a": 54.148,
+    "b": 59.979,
+    "text": "dengan tingkat perolehan air sistem sekitar 35 sampai 45 persen."
+   }
+  ],
+  "wav": "adegan_10.wav"
+ },
+ {
+  "no": 11,
+  "judul": "Energy Recovery Device",
+  "durasi": 36.497,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.692,
+    "text": "Brine yang keluar dari membran masih bertekanan sangat tinggi."
+   },
+   {
+    "a": 3.972,
+    "b": 6.087,
+    "text": "Agar energi ini tidak terbuang,"
+   },
+   {
+    "a": 6.087,
+    "b": 11.681,
+    "text": "sistem Traya menggunakan energy recovery device jenis isobaric pressure exchanger."
+   },
+   {
+    "a": 11.961,
+    "b": 12.862,
+    "text": "Di dalamnya,"
+   },
+   {
+    "a": 12.862,
+    "b": 16.315,
+    "text": "rotor keramik berputar dan memindahkan tekanan"
+   },
+   {
+    "a": 16.315,
+    "b": 19.168,
+    "text": "dari brine langsung ke air laut umpan,"
+   },
+   {
+    "a": 19.168,
+    "b": 23.072,
+    "text": "dengan efisiensi transfer tipikal di atas 95 persen."
+   },
+   {
+    "a": 23.352,
+    "b": 28.634,
+    "text": "Booster pump menambahkan sedikit tekanan sebelum air bergabung dengan aliran utama."
+   },
+   {
+    "a": 28.914,
+    "b": 29.599,
+    "text": "Hasilnya,"
+   },
+   {
+    "a": 29.599,
+    "b": 32.337,
+    "text": "konsumsi energi pompa tekanan tinggi"
+   },
+   {
+    "a": 32.337,
+    "b": 36.217,
+    "text": "dapat berkurang hingga sekitar 50 sampai 60 persen."
+   }
+  ],
+  "wav": "adegan_11.wav"
+ },
+ {
+  "no": 12,
+  "judul": "Post-Treatment",
+  "durasi": 31.261,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 4.981,
+    "text": "Air hasil RO sangat murni, namun miskin mineral dan cenderung korosif."
+   },
+   {
+    "a": 5.261,
+    "b": 8.546,
+    "text": "Karena itu, air melewati tahap post-treatment."
+   },
+   {
+    "a": 8.826,
+    "b": 12.906,
+    "text": "Remineralisasi menambahkan kembali kalsium dan alkalinitas,"
+   },
+   {
+    "a": 12.906,
+    "b": 16.709,
+    "text": "misalnya melalui filter kalsit atau dosing bahan kimia."
+   },
+   {
+    "a": 16.989,
+    "b": 22.899,
+    "text": "Nilai pH kemudian disesuaikan ke rentang tipikal 6,5 sampai 8,5."
+   },
+   {
+    "a": 23.179,
+    "b": 23.835,
+    "text": "Terakhir,"
+   },
+   {
+    "a": 23.835,
+    "b": 27.262,
+    "text": "disinfeksi dengan klorin atau sinar ultraviolet"
+   },
+   {
+    "a": 27.262,
+    "b": 30.981,
+    "text": "memastikan air bebas dari mikroorganisme berbahaya."
+   }
+  ],
+  "wav": "adegan_12.wav"
+ },
+ {
+  "no": 13,
+  "judul": "Air Produk & Pembuangan Brine",
+  "durasi": 27.832,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.574,
+    "text": "Hasil akhirnya adalah air produk dengan TDS tipikal di bawah 500 mg/L,"
+   },
+   {
+    "a": 5.574,
+    "b": 11.149,
+    "text": "siap disimpan dan didistribusikan untuk kebutuhan domestik, komersial,"
+   },
+   {
+    "a": 11.149,
+    "b": 12.423,
+    "text": "maupun industri."
+   },
+   {
+    "a": 12.703,
+    "b": 16.089,
+    "text": "Brine, dengan kadar garam sekitar dua kali air laut,"
+   },
+   {
+    "a": 16.089,
+    "b": 18.76,
+    "text": "dikembalikan ke laut melalui pipa outfall"
+   },
+   {
+    "a": 18.76,
+    "b": 21.886,
+    "text": "dan difuser yang dirancang agar cepat bercampur,"
+   },
+   {
+    "a": 21.886,
+    "b": 24.361,
+    "text": "sehingga dampaknya terhadap lingkungan"
+   },
+   {
+    "a": 24.361,
+    "b": 27.552,
+    "text": "dapat diminimalkan sesuai ketentuan yang berlaku."
+   }
+  ],
+  "wav": "adegan_13.wav"
+ },
+ {
+  "no": 14,
+  "judul": "Rekap Skala Filtrasi",
+  "durasi": 32.725,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.146,
+    "text": "Mari kita lihat kembali perjalanan air laut ini."
+   },
+   {
+    "a": 3.426,
+    "b": 6.584,
+    "text": "Strainer menahan partikel berukuran milimeter."
+   },
+   {
+    "a": 6.864,
+    "b": 11.436,
+    "text": "Multimedia filter menangkap partikel hingga sekitar 10 mikron,"
+   },
+   {
+    "a": 11.436,
+    "b": 13.795,
+    "text": "lebih kecil dari sehelai rambut."
+   },
+   {
+    "a": 14.075,
+    "b": 17.059,
+    "text": "Cartridge filter menyaring hingga 5 mikron."
+   },
+   {
+    "a": 17.339,
+    "b": 24.828,
+    "text": "Ultrafiltrasi, bila digunakan, menahan bakteri dan virus pada skala 0,01 mikron."
+   },
+   {
+    "a": 25.108,
+    "b": 32.445,
+    "text": "Dan akhirnya, membran RO memisahkan ion garam pada skala sekitar 0,0001 mikron."
+   }
+  ],
+  "wav": "adegan_14.wav"
+ },
+ {
+  "no": 15,
+  "judul": "CIP & Monitoring",
+  "durasi": 33.301,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.825,
+    "text": "Agar kinerja tetap optimal selama bertahun-tahun, sistem dilengkapi unit CIP,"
+   },
+   {
+    "a": 5.825,
+    "b": 7.338,
+    "text": "atau clean-in-place."
+   },
+   {
+    "a": 7.618,
+    "b": 10.156,
+    "text": "Larutan pembersih khusus disirkulasikan"
+   },
+   {
+    "a": 10.156,
+    "b": 13.735,
+    "text": "melalui membran tanpa perlu membongkar pressure vessel,"
+   },
+   {
+    "a": 13.735,
+    "b": 17.184,
+    "text": "untuk mengangkat kerak, endapan organik, dan biofilm."
+   },
+   {
+    "a": 17.464,
+    "b": 23.657,
+    "text": "Seluruh proses dipantau oleh panel kontrol berbasis PLC dengan layar HMI: tekanan,"
+   },
+   {
+    "a": 23.657,
+    "b": 28.943,
+    "text": "laju aliran, konduktivitas, pH, dan suhu ditampilkan secara real-time,"
+   },
+   {
+    "a": 28.943,
+    "b": 33.021,
+    "text": "sehingga penurunan kinerja dapat dideteksi sejak dini."
+   }
+  ],
+  "wav": "adegan_15.wav"
+ },
+ {
+  "no": 16,
+  "judul": "Keunggulan SWRO Traya",
+  "durasi": 36.208,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.971,
+    "text": "Mengapa memilih SWRO dari PT Traya Hydro Indonesia?"
+   },
+   {
+    "a": 4.251,
+    "b": 5.93,
+    "text": "Pertama, desain custom:"
+   },
+   {
+    "a": 5.93,
+    "b": 10.529,
+    "text": "setiap sistem dirancang berdasarkan analisis kualitas air baku,"
+   },
+   {
+    "a": 10.529,
+    "b": 13.887,
+    "text": "kapasitas yang dibutuhkan, dan kondisi lokasi."
+   },
+   {
+    "a": 14.167,
+    "b": 19.658,
+    "text": "Kedua, konsep kontainer yang ringkas, mudah dipindahkan, dan cepat dipasang."
+   },
+   {
+    "a": 19.938,
+    "b": 20.385,
+    "text": "Ketiga,"
+   },
+   {
+    "a": 20.385,
+    "b": 25.302,
+    "text": "hemat energi berkat perangkat pemulihan energi dan pompa berefisiensi tinggi."
+   },
+   {
+    "a": 25.582,
+    "b": 30.83,
+    "text": "Keempat, material tahan air laut seperti stainless steel duplex dan FRP."
+   },
+   {
+    "a": 31.11,
+    "b": 35.928,
+    "text": "Dan kelima, layanan instalasi serta perawatan berkala dari tim kami."
+   }
+  ],
+  "wav": "adegan_16.wav"
+ },
+ {
+  "no": 17,
+  "judul": "Penutup",
+  "durasi": 26.929,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.738,
+    "text": "Dari laut yang luas, menjadi air bersih yang menghidupi."
+   },
+   {
+    "a": 4.018,
+    "b": 9.87,
+    "text": "PT Traya Hydro Indonesia, mitra Anda untuk solusi air bersih dari air laut."
+   },
+   {
+    "a": 10.15,
+    "b": 16.21,
+    "text": "Hubungi kami di The Smith Alam Sutera, SOHO-D/10/1009, Tangerang."
+   },
+   {
+    "a": 16.49,
+    "b": 26.649,
+    "text": "Telepon +62 823 110 110 29, atau kunjungi www.trayahydro.com."
+   }
+  ],
+  "wav": "adegan_17.wav"
+ }
+]

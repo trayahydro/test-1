@@ -374,6 +374,11 @@ export function buildSWRO(M, logos) {
   const guard = add(new THREE.CylinderGeometry(0.12, 0.12, 0.2, 32, 1, true, 0, Math.PI), M.ss);
   guard.rotation.z = Math.PI / 2; guard.position.set(9.85, py, pz); guard.rotation.x = 0; guard.rotation.set(0, 0, Math.PI / 2);
   cyl(0.06, V(9.75, py, pz), V(9.95, py, pz), M.yellow, E, 16);
+  // kopling berputar (terlihat di bawah pelindung)
+  const kop = new THREE.Group(); kop.position.set(9.85, py, pz); E.add(kop);
+  const kd = add(new THREE.CylinderGeometry(0.085, 0.085, 0.07, 24), M.duplex, kop); kd.rotation.z = Math.PI / 2;
+  for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2; const b = add(new THREE.BoxGeometry(0.09, 0.018, 0.018), M.black, kop); b.position.set(0, Math.cos(a) * 0.07, Math.sin(a) * 0.07); }
+  refs.hppKopling = kop;
   multistagePump(8.95, 9.72, py, pz, 0.14, M);
   refs.hot.hpp = V(9.4, py + 0.1, pz);
   refs.hot.motor = V(10.4, py + 0.2, pz);

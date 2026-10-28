@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 8b: Cartridge filter (potongan)</title>
+<link rel="stylesheet" href="lib/overlay.css">
+<style>
+  .dp { position: absolute; left: 110px; top: 200px; width: 450px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+  .dp .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+  .dp .row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-top: 1px solid rgba(110,190,255,.18); font-size: 20px; }
+  .dp .row b { font-size: 30px; font-weight: 800; }
+  .dp .bar { height: 14px; border-radius: 7px; background: rgba(255,255,255,.12); margin-top: 8px; position: relative; overflow: hidden; }
+  .dp .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: #6ec3ff; border-radius: 7px; }
+  .dp .bar u { position: absolute; top: -4px; bottom: -4px; width: 3px; background: #ff7a59; left: 90%; }
+  .dp .note { margin-top: 12px; font-size: 19px; font-weight: 700; color: #ffb199; }
+</style></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, kamera, layar, latarStudio } from './lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from './lib/overlay.js';
+import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
+import { rng } from './lib/tekstur.js';
+
+const T0 = 5.25;
+const A = await siapkanAdegan(8, { dari: T0 });
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.12, exposure: 0.95 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#dcecff', '#223344', 0.55));
+const key = new THREE.DirectionalLight('#ffffff', 2.1); key.position.set(2.5, 4, 5); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -2, right: 2, top: 2.5, bottom: -1, near: 1, far: 20 }); key.shadow.bias = -0.0005; scene.add(key);
+const rim = new THREE.DirectionalLight('#6ec3ff', 1.4); rim.position.set(-3, 3, -3); scene.add(rim);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const R = rng(81);
+const add = (geo, mat, x = 0, y = 0, z = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; scene.add(m); return m; };
+
+// housing biru dipotong setengah
+const RH = 0.34, Y0 = 0.25, Y1 = 1.55;
+const blue = new THREE.MeshPhysicalMaterial({ color: '#1f6fd0', roughness: 0.28, clearcoat: 0.8 });
+const innerM = new THREE.MeshStandardMaterial({ color: '#c9d6e3', roughness: 0.6, side: THREE.BackSide });
+const whiteM = new THREE.MeshStandardMaterial({ color: '#f2f4f6', roughness: 0.45 });
+// bukaan 90° menghadap kamera (θ = −45°…45°), sisa 270° tetap terlihat biru dari luar
+const TS = Math.PI / 4, TL = Math.PI * 1.5;
+add(new THREE.CylinderGeometry(RH, RH, Y1 - Y0, 64, 1, true, TS, TL), blue, 0, (Y0 + Y1) / 2);
+add(new THREE.CylinderGeometry(RH - 0.015, RH - 0.015, Y1 - Y0, 64, 1, true, TS, TL), innerM, 0, (Y0 + Y1) / 2);
+[TS, TS + TL].forEach((th) => { const f = add(new THREE.BoxGeometry(0.015, Y1 - Y0, 0.01), new THREE.MeshStandardMaterial({ color: '#cfd8e2' }), Math.sin(th) * (RH - 0.0075), (Y0 + Y1) / 2, Math.cos(th) * (RH - 0.0075)); f.rotation.y = th; });
+const bd = add(new THREE.SphereGeometry(RH, 64, 14, Math.PI * 0.75, Math.PI * 1.5, Math.PI / 2, Math.PI / 2), blue, 0, Y0); bd.scale.y = 0.45;
+add(new THREE.CylinderGeometry(RH + 0.03, RH + 0.03, 0.06, 64, 1, false, TS, TL), whiteM, 0, Y1 + 0.03);
+const td = add(new THREE.SphereGeometry(RH + 0.01, 64, 14, Math.PI * 0.75, Math.PI * 1.5, 0, Math.PI / 2), whiteM, 0, Y1 + 0.06); td.scale.y = 0.38;
+for (let i = 0; i < 8; i++) { const a = TS + (i + 0.5) / 8 * TL; add(new THREE.CylinderGeometry(0.012, 0.012, 0.16, 8), new THREE.MeshStandardMaterial({ color: '#c9d1d8', metalness: 0.9, roughness: 0.3 }), Math.sin(a) * (RH + 0.045), Y1 + 0.02, Math.cos(a) * (RH + 0.045)); }
+// nosel masuk (samping atas) & keluar (bawah)
+const pipeM = new THREE.MeshStandardMaterial({ color: '#202327', roughness: 0.42 });
+const nin = add(new THREE.CylinderGeometry(0.06, 0.06, 0.3, 24), pipeM, -RH - 0.12, 1.3, -0.05); nin.rotation.z = Math.PI / 2;
+add(new THREE.CylinderGeometry(0.05, 0.05, 0.35, 24), pipeM, 0, Y0 - 0.25, 0);
+[[-0.2, -0.15], [0.2, -0.15], [0, -0.28]].forEach(([x, z]) => add(new THREE.CylinderGeometry(0.012, 0.012, 0.3, 8), new THREE.MeshStandardMaterial({ color: '#c9d1d8', metalness: 0.9 }), x, 0.0, z));
+
+// elemen cartridge: 4 utuh di belakang + 1 di tengah yang terpotong memperlihatkan lapisan & inti
+const EY0 = 0.42, EY1 = 1.42, ER = 0.062;
+const fib = (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 512; const g = c.getContext('2d'); g.fillStyle = '#f4ecd8'; g.fillRect(0, 0, 256, 512); for (let i = 0; i < 9000; i++) { g.strokeStyle = `rgba(150,130,100,${0.05 + R() * 0.1})`; g.lineWidth = 0.6; const x = R() * 256, y = R() * 512, a = R() * 6.28; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * 8, y + Math.sin(a) * 8); g.stroke(); } const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const elMat = new THREE.MeshStandardMaterial({ map: fib, roughness: 0.95, color: '#ffffff' });
+const capM = new THREE.MeshStandardMaterial({ color: '#7d878f', roughness: 0.5 });
+const pos = [[-0.19, -0.1], [0.19, -0.1], [-0.1, -0.24], [0.1, -0.24]];
+pos.forEach(([x, z]) => { add(new THREE.CylinderGeometry(ER, ER, EY1 - EY0, 40), elMat, x, (EY0 + EY1) / 2, z); [EY0, EY1].forEach((y) => add(new THREE.CylinderGeometry(ER + 0.004, ER + 0.004, 0.025, 40), capM, x, y, z)); });
+add(new THREE.CylinderGeometry(ER, ER, EY1 - EY0, 40, 1, true, Math.PI / 2, Math.PI), elMat, 0, (EY0 + EY1) / 2, 0);
+[EY0, EY1].forEach((y) => add(new THREE.CylinderGeometry(ER + 0.004, ER + 0.004, 0.025, 40, 1, false, Math.PI / 2, Math.PI), capM, 0, y, 0));
+// muka potong: gradasi lapisan luar (kasar) → dalam (halus), inti tengah berlubang
+const fc = document.createElement('canvas'); fc.width = 256; fc.height = 1024; const fg = fc.getContext('2d');
+for (let x = 0; x < 256; x++) { const d = Math.abs(x - 128) / 128; const v = Math.round(lerp(236, 210, d)); fg.fillStyle = `rgb(${v},${v - 10},${v - 30})`; fg.fillRect(x, 0, 1, 1024); }
+for (let i = 0; i < 7000; i++) { const x = R() * 256, d = Math.abs(x - 128) / 128; if (d < 0.27) continue; fg.fillStyle = `rgba(140,115,80,${0.12 + 0.25 * d})`; fg.beginPath(); fg.arc(x, R() * 1024, 0.5 + d * 2.2, 0, 7); fg.fill(); }
+fg.fillStyle = '#9aa3ab'; fg.fillRect(128 - 34, 0, 68, 1024); fg.fillStyle = '#2b3036'; for (let y = 10; y < 1024; y += 26) { fg.fillRect(128 - 28, y, 14, 9); fg.fillRect(128 + 14, y + 13, 14, 9); }
+const faceTex = new THREE.CanvasTexture(fc); faceTex.colorSpace = THREE.SRGBColorSpace;
+add(new THREE.PlaneGeometry(ER * 2, EY1 - EY0), new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.9 }), 0, (EY0 + EY1) / 2, 0.001);
+
+// partikel air (luar → dalam → turun di inti) & kotoran yang tertangkap
+const wM = new THREE.InstancedMesh(new THREE.SphereGeometry(0.0055, 8, 6), new THREE.MeshBasicMaterial({ color: '#8fdcff', toneMapped: false }), 260); scene.add(wM);
+const WD = Array.from({ length: 260 }, () => ({ s: R() < 0.5 ? -1 : 1, y: EY0 + 0.05 + R() * (EY1 - EY0 - 0.1), ph: R(), sp: 0.8 + R() * 0.4 }));
+const dM = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.006, 0), new THREE.MeshStandardMaterial({ color: '#7a5a38', roughness: 0.9 }), 220); scene.add(dM);
+const DD = Array.from({ length: 220 }, () => ({ s: R() < 0.5 ? -1 : 1, y: EY0 + 0.03 + R() * (EY1 - EY0 - 0.06), ts: 12.2 + R() * 13, dep: R() * 0.022 }));
+const _m = new THREE.Matrix4();
+function partikel(t, ganti) {
+  WD.forEach((w, i) => {
+    const u = (w.ph + t * 0.14 * w.sp) % 1; let x, y = w.y;
+    if (u < 0.45) x = w.s * lerp(0.3, ER, u / 0.45);
+    else if (u < 0.7) x = w.s * lerp(ER, 0.012, (u - 0.45) / 0.25);
+    else { x = w.s * 0.008; y = lerp(w.y, EY0 - 0.1, (u - 0.7) / 0.3); }
+    _m.makeTranslation(x, y, 0.012); wM.setMatrixAt(i, _m);
+  });
+  wM.instanceMatrix.needsUpdate = true;
+  DD.forEach((d, i) => {
+    let x = 99;
+    if (t > d.ts && !ganti) { const k = clamp((t - d.ts) / 1.6); x = d.s * lerp(0.3, ER - d.dep, easeOut(k)); }
+    _m.makeTranslation(x, d.y, 0.014); dM.setMatrixAt(i, _m);
+  });
+  dM.instanceMatrix.needsUpdate = true;
+}
+
+const camAt = kamera(cam, [
+  { t: 5.25, p: [0.45, 1.25, 2.9], l: [0, 0.88, -0.05], f: 38 },
+  { t: 11.6, p: [0.35, 1.1, 2.1], l: [0, 0.9, -0.05], f: 36 },
+  { t: 12.6, p: [0.22, 1.0, 0.62], l: [0, 0.9, 0], f: 36 },
+  { t: 20.4, p: [0.18, 0.95, 0.55], l: [0, 0.88, 0], f: 36 },
+  { t: 22.0, p: [0.55, 1.2, 2.9], l: [0.12, 0.88, 0], f: 38 },
+  { t: A.durasi, p: [0.4, 1.15, 2.7], l: [0.12, 0.88, 0], f: 38 },
+]);
+
+chip('4', 'Cartridge Filter 5 µm', 'Polypropylene melt-blown', 4, T0 + 0.2);
+bug(T0);
+const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+kartu({ k: 'ELEMEN FILTER', tt: 'PP Melt-blown', rows: [['Rating', '5 µm'], ['Panjang', '40" (± 1 m)', 'TIPIKAL'], ['Jumlah', 'beberapa elemen / housing']], x: 1360, y: 200, t0: 5.7, t1: 12.0, anchor: S(V(0.19, 1.1, -0.04)) });
+kartu({ k: 'ARAH ALIRAN', tt: 'Luar → Dalam', rows: [['Partikel halus', 'tertangkap di media'], ['Air tersaring', 'keluar lewat inti tengah']], x: 1360, y: 200, t0: 12.8, t1: 20.6 });
+penanda('•', 'Lapisan luar (kasar)', S(V(0.05, 1.2, 0.01)), 13.4, 20.6);
+penanda('•', 'Lapisan dalam (halus)', S(V(0.025, 1.05, 0.01)), 14.2, 20.6);
+penanda('•', 'Inti berlubang', S(V(0.0, 0.7, 0.01)), 15.0, 20.6, { kiri: true });
+const dp = el('<div class="k">PEMANTAUAN TEKANAN</div><div class="row"><span>Masuk</span><b id="pin">2,5 bar</b></div><div class="row"><span>Keluar</span><b id="pout">2,4 bar</b></div><div class="row"><span>Selisih (ΔP)</span><b id="dpv">0,1 bar</b></div><div class="bar"><i id="dpb"></i><u></u></div><div class="note" id="dpn"></div>', 'dp');
+const $ = (id) => document.getElementById(id);
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  const ganti = t > 26.6;
+  const load = ganti ? 0 : easeInOut(prog(t, 13.0, 12.5));
+  elMat.color.setRGB(lerp(1, 0.78, load), lerp(1, 0.68, load), lerp(1, 0.52, load));
+  partikel(t, ganti);
+  render();
+  const a = easeOut(prog(t, 20.9, 0.6));
+  dp.style.opacity = a; dp.style.transform = `translateY(${(1 - a) * 16}px)`;
+  const dpv = ganti ? 0.1 : lerp(0.1, 1.0, easeInOut(prog(t, 21.0, 4.2)));
+  $('pout').textContent = (2.5 - dpv).toFixed(1).replace('.', ',') + ' bar';
+  $('dpv').textContent = dpv.toFixed(1).replace('.', ',') + ' bar';
+  $('dpb').style.width = (dpv / 1.1 * 100) + '%'; $('dpb').style.background = dpv > 0.9 ? '#ff7a59' : '#6ec3ff';
+  $('dpn').textContent = ganti ? '✓ Elemen baru terpasang, ΔP kembali normal' : dpv > 0.9 ? 'ΔP ± 1 bar → saatnya ganti elemen' : '';
+  $('dpn').style.color = ganti ? '#8ff0b0' : '#ffb199';
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

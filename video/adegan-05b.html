@@ -8,7 +8,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { buatDunia, kamera, layar, latarStudio } from './lib/dunia.js';
-import { siapkanAdegan, chip, bug, kartu, penanda, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -166,7 +166,7 @@ kartu({ k: 'HASIL', tt: 'Partikel Tertahan', rows: [['Ukuran', '± 10–20 µm',
 kartu({ k: 'PERAWATAN', tt: 'Backwash', rows: [['Arah aliran', 'bawah → atas'], ['Hasil', 'kotoran terangkat & dibuang']], x: 1360, y: 210, t0: 52.6, t1: 99 });
 
 window.renderFrame = (tl) => {
-  const t = tl + T0;
+  const t = waktu(tl);
   camAt(t);
   const bw = easeInOut(prog(t, 52.6, 1.6));
   updateGrains(t, bw);

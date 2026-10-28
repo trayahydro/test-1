@@ -15,7 +15,7 @@ import * as THREE from 'three';
 import { kamera, layar } from './lib/dunia.js';
 import { panggungKontainer } from './lib/panggung.js';
 import { aliranPipa, aliran, rangkaian, WARNA } from './lib/aliran.js';
-import { siapkanAdegan, chip, bug, kartu, perbarui } from './lib/overlay.js';
+import { siapkanAdegan, chip, bug, kartu, perbarui, waktu } from './lib/overlay.js';
 import { prog, easeOut, easeInOut, lerp, clamp } from './lib/common.js';
 import { rng } from './lib/tekstur.js';
 
@@ -66,7 +66,8 @@ function inset(t) {
 }
 const lbl = document.getElementById('insetLbl'), box = document.getElementById('inset');
 
-window.renderFrame = (t) => {
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
   camAt(t);
   P.sea.update(t);
   // LED pompa berkedip saat memompa; cairan kuning mengalir di selang
