@@ -36,6 +36,11 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 17 | OpenMontage | https://github.com/calesthio/OpenMontage | Video/montage dengan agent skills | screenshot |
 | 18 | animate | https://github.com/cth9191/animate | belum dicek (open source) | link |
 | 19 | motionmaxxing | https://github.com/tejashmakwana/motionmaxxing | belum dicek (open source) | link |
+| 20 | Three.js Skills | https://github.com/CloudAI-X/threejs-skills | Skill: 3D web (Three.js) | screenshot (sumber: @rifqieh) |
+| 21 | GSAP Skill | https://github.com/greensock/gsap-skills | Skill resmi: animasi web GSAP | screenshot (@rifqieh) |
+| 22 | Design DNA | https://github.com/zanwei/design-dna | Skill: ekstrak & tiru gaya desain web | screenshot (@rifqieh) |
+| 23 | Motion Design Skill | https://github.com/lottiefiles/motion-design-skill | Skill: animasi Lottie/SVG | screenshot (@rifqieh) |
+| 24 | Genjutsu | https://github.com/AThevon/genjutsu | Skill: UI kreatif kelas premium | screenshot (@rifqieh) |
 
 ## Detail per item
 
@@ -164,6 +169,35 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 - **Link:** https://github.com/tejashmakwana/motionmaxxing (open source)
 - **Fungsi:** belum dicek. Dari namanya terkait motion/animasi.
 
+### Kumpulan skill web dari @rifqieh ("Build web and mobile apps")
+Lima skill di bawah berasal dari satu video carousel. **Sangat relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]**, karena semuanya membuat website buatan Claude terlihat premium.
+
+### 20. Three.js Skills (CloudAI-X/threejs-skills)
+- **Isi:** skill untuk membuat 3D di web dengan Three.js: interactive 3D scene, camera controls, model GLTF, lighting setup, particle effects.
+- **Catatan:** video SWRO Traya juga dibuat dengan Three.js.
+- **Relevan untuk:** website premium dengan hero 3D (produk berputar, scene interaktif).
+
+### 21. GSAP Skill (greensock/gsap-skills)
+- **Isi:** **skill resmi dari GreenSock** untuk GSAP ("Animate anything", library animasi JavaScript profesional): timeline animation, ScrollTrigger (animasi saat scroll), text reveal effects, integrasi React.
+- **Relevan untuk:** animasi scroll dan teks di landing page klien. Ini standar website agensi.
+
+### 22. Design DNA (zanwei/design-dna)
+- **Isi:** agent skill untuk **mengekstrak, menyusun, dan menerapkan identitas visual** sebuah website sebagai "Design DNA" yang bisa dibaca mesin, dalam 3 dimensi: design tokens, gaya kualitatif, dan efek visual.
+- **Contoh:** "Apply the style of thekrakentraining to Deno", yaitu menerapkan gaya satu website ke website lain.
+- **Fitur:** reverse engineer design, copy UI style, color palette, typography, layout analysis.
+- **Relevan untuk:** "buatkan website seperti referensi ini" dari klien. Sangat berguna untuk jualan website.
+
+### 23. Motion Design Skill (lottiefiles/motion-design-skill)
+- **Isi:** dari LottieFiles. Mencakup animasi Lottie, animasi SVG, timeline & keyframes, interactive states, alur kerja motion dengan AI, export JSON & dotLottie.
+- **Relevan untuk:** ikon dan ilustrasi beranimasi yang ringan di website klien.
+
+### 24. Genjutsu (AThevon/genjutsu)
+- **Tagline:** *"The art of illusion. Cast motion. Paint signatures. Zero AI slop."*
+- **Isi:** skill creative coding untuk **Claude Code dan claude.ai**. Mengubah antarmuka dari sekadar berfungsi menjadi luar biasa lewat motion design, pola interaksi, dan sistem visual. Mendukung Web (React, Vue, Svelte, vanilla CSS, Three.js, Canvas), Android (Jetpack Compose), dan Apple (SwiftUI iOS + macOS).
+- **Catatan versi:** v3.0 adalah rebrand dari plugin `creative-excellence`. Skill `/creative-excellence:creative-excellence` dan `/creative-excellence:design-excellence` sekarang bernama `/genjutsu:cast` dan `/genjutsu:paint`.
+- **Fitur:** UI kelas award, layout modern, animasi premium, creative direction, visual polish.
+- **Relevan untuk:** membuat website klien tidak terlihat "template AI". Kandidat utama.
+
 ## Prompt simpanan
 
 ### Prompt "versi yang lebih dalam"
@@ -181,4 +215,5 @@ Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks a
 - [ ] Cari link huashu-motion, Agent Reach, Concat, sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
-- [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]].
+- [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]. Kandidat awal: #20–24 (skill web), #14 hyperframes, #13 diagram-design, #12 skills.
+- [ ] Pasang skill web (#20–24) di Claude Code PC lokal, lalu uji di satu contoh landing page.
