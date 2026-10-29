@@ -67,6 +67,12 @@ Link per repo belum ada, cari namanya di GitHub. GSAP Skills = #21 dan Emil Kowa
 - **threeui (MengTo)**: https://github.com/MengTo/threeui. MengTo adalah kreator Design+Code. Dari namanya, UI berbasis Three.js/3D. Belum dicek.
 - **Orca** dan **Oh-my-pi**: disebut sebagai *coding agent*. Link belum ada, cari namanya.
 
+## Claude Code + Figcraft vs Google Stitch
+- Klaim dari video TikTok: **Claude Code + Figcraft lebih bagus dari Google Stitch** untuk membuat desain UI.
+- **Google Stitch:** tool desain UI berbasis AI dari Google.
+- **Figcraft:** link dan cara kerjanya belum dicatat. Dari namanya kemungkinan terkait Figma (desain di Figma dikerjakan oleh Claude Code). *Cek di PC lokal.*
+- **Ide uji:** buat satu landing page yang sama dengan Claude Code + Figcraft dan dengan Google Stitch, lalu bandingkan.
+
 ## Rekomendasi setup awal (untuk dicoba di PC lokal)
 1. Frontend Design (resmi Anthropic)
 2. Taste Skill atau Impeccable (pilih salah satu dulu)

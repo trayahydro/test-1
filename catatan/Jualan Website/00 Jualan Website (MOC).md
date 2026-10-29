@@ -8,6 +8,13 @@ tags: [jualan-website, moc]
 
 # Jualan Website
 
+> **Status materi TikTok: lengkap** (semua video yang disimpan sudah dicatat per 2026-10-29).
+> **Untuk Claude di PC lokal, mulai dari sini:**
+> 1. Baca catatan di tabel bawah, lalu [[00 Simpanan Tools AI (MOC)]] (31 tools/repo/skill).
+> 2. Kerjakan checklist "Yang perlu dicek nanti" di catatan simpanan (link yang belum ada, repo yang belum dicek).
+> 3. Pasang setup desain + skill web, lalu uji di satu landing page contoh.
+> 4. Lanjut isi topik bisnis yang masih kosong (cari klien, harga, portofolio).
+
 Halaman induk project jualan jasa pembuatan website. Materi dikumpulkan dari video TikTok/IG
 yang disimpan user, dalam bentuk screenshot.
 
@@ -17,7 +24,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Prompt - 8 Prompt Wajib Sebelum Vibecoding]] | PRD, design brief, audit keamanan, debug, E2E test, cleanup, commit, task→skill | lengkap 8/8 |
 | [[Stack - 20 Dolar per Bulan Startup Stack]] | 14 layanan (Claude, Supabase, Vercel, dst.) ± $20/bulan, plus catatan versi Indonesia | lengkap |
 | [[Referensi Desain - Sumber Inspirasi Website]] | Refero Styles, Motionsites, Pinterest, claude-web-design-skills | lengkap |
-| [[Skill Desain - Perbaiki UI Buatan AI]] | Setup desain 5 lapis, 12 repo perbaiki UI AI, Taste Skill, Figma×Playwright MCP | lengkap |
+| [[Skill Desain - Perbaiki UI Buatan AI]] | Setup desain 5 lapis, 12 repo perbaiki UI AI, Taste Skill, Figma×Playwright MCP, Figcraft vs Google Stitch | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP.
