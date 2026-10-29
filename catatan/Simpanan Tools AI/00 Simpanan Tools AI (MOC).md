@@ -8,7 +8,7 @@ tags: [simpanan, tools-ai, github, inbox]
 
 # Simpanan Tools AI
 
-Daftar tools dan repo yang disimpan dari TikTok/Instagram. **Bukan khusus untuk project jualan website.**
+Daftar tools, repo, dan prompt yang disimpan dari TikTok/Instagram. **Bukan khusus untuk project jualan website.**
 Status: dicatat dari screenshot dan link yang dikirim user, isi repo **belum dicek langsung**
 (sesi cloud tidak punya akses ke repo-repo ini). Deskripsi di bawah hanya berdasarkan teks yang
 terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsinya.
@@ -30,6 +30,12 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 11 | rea | https://github.com/morluto/rea | MCP: reverse engineering aplikasi | screenshot |
 | 12 | skills (Matt Pocock) | https://github.com/mattpocock/skills | Agent skills untuk Claude | screenshot |
 | 13 | diagram-design | https://github.com/cathrynlavery/diagram-design | Skill: 44 jenis diagram HTML+SVG | screenshot |
+| 14 | hyperframes | https://github.com/heygen-com/hyperframes | Video dari HTML untuk AI agent | screenshot |
+| 15 | openGym | https://github.com/DuarteSantos8/openGym | Aplikasi tracker gym (self-hosted) | screenshot |
+| 16 | 20 Claude Animation Styles | belum ada link | Gaya animasi buatan Claude | screenshot |
+| 17 | OpenMontage | https://github.com/calesthio/OpenMontage | Video/montage dengan agent skills | screenshot |
+| 18 | animate | https://github.com/cth9191/animate | belum dicek (open source) | link |
+| 19 | motionmaxxing | https://github.com/tejashmakwana/motionmaxxing | belum dicek (open source) | link |
 
 ## Detail per item
 
@@ -115,9 +121,64 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
   ```
 - **Relevan untuk:** diagram alur di website klien, proposal, dan presentasi (misalnya diagram proses SWRO).
 
+### 14. hyperframes (heygen-com/hyperframes)
+- **Tagline:** *"Write HTML. Render video. Built for AI agents."* Video ditulis sebagai HTML lalu dirender, dibuat untuk AI agent. Konsepnya sama dengan cara video SWRO Traya dibuat (halaman HTML dirender per frame).
+- **Angka:** ★ 64.718, +5.318 minggu ini, lisensi Apache-2.0. Dari HeyGen.
+- **Contoh gaya:** "Paper, ink & yellow" (editorial) dan "Loud, bordered, a little crooked" (neo-brutalism).
+- **Cara pasang:**
+  ```
+  npx skills add heygen-com/hyperframes
+  ```
+- **Relevan untuk:** video promosi, konten TikTok/IG, video untuk klien website. Ini kandidat kuat.
+
+### 15. openGym (DuarteSantos8/openGym)
+- **Tagline:** *"Self-hosted gym and body-weight tracker. Your data stays yours."* Pencatat latihan gym dan berat badan yang di-host sendiri.
+- **Fitur yang terlihat:** jadwal latihan mingguan, check-in di gym, grafik berat badan dan target, statistik (streak, aktivitas 12 bulan, muscle balance, fatigue, strength).
+- **Angka:** ★ 12.465, +4.471 minggu ini, AGPL-3.0.
+- **Cara jalan:**
+  ```
+  docker compose up
+  ```
+- **Relevan untuk:** pribadi, atau contoh/inspirasi desain aplikasi untuk jualan website.
+
+### 16. 20 Insane Claude Animation Styles
+- Video yang memamerkan 20 gaya animasi buatan Claude dalam 28 detik:
+  1 Particles · 2 Liquid morph · 3 Neon glow · 4 Y2K chrome · 5 Kinetic type · 6 Paper cutout ·
+  7 Holographic · 8 Isometric · 9 ASCII art · 10 Clay 3D · 11 Retro VHS · 12 Comic book ·
+  13 Split-flap · 14 Hand-drawn · 15 Blueprint · 16 Physics · 17 Pixel art · 18 Bauhaus ·
+  19 Art deco · 20 Neo-brutalism
+- Contoh di video: kartu neo-brutalism "SHIP IT. / 98% FASTER / CLICK ME".
+- **Link:** belum ada. Kemungkinan terkait dengan item 18 atau 19, perlu dicek.
+- **Relevan untuk:** pilihan gaya visual website dan konten. Bisa jadi menu gaya untuk ditawarkan ke klien.
+
+### 17. OpenMontage (calesthio/OpenMontage)
+- **Link:** https://github.com/calesthio/OpenMontage (publik, 97 issues, 245 pull request, aktif)
+- **Isi yang terlihat:** folder `.agents/skills`, berarti berbasis agent skills. Ada PR dengan kata "wan2", kemungkinan model video Wan 2.x.
+- **Fungsi:** belum dicek. Dari namanya kemungkinan untuk membuat montage/video otomatis dengan AI agent.
+
+### 18. animate (cth9191/animate)
+- **Link:** https://github.com/cth9191/animate (open source)
+- **Fungsi:** belum dicek. Dari namanya terkait animasi, mungkin sumber item 16.
+
+### 19. motionmaxxing (tejashmakwana/motionmaxxing)
+- **Link:** https://github.com/tejashmakwana/motionmaxxing (open source)
+- **Fungsi:** belum dicek. Dari namanya terkait motion/animasi.
+
+## Prompt simpanan
+
+### Prompt "versi yang lebih dalam"
+Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks asli:
+
+> I want a deeper version of this task, not a bigger one. Before rewriting it: (1) say what a top professional in this field would do here that I'm not asking for; (2) name the rawest material they would start from instead of what has already been digested for me; (3) name the specific methods and tools they would use; (4) say what, other than you or me, would show the result is right. Then rewrite my prompt to ask for exactly that.
+
+**Terjemahan bebas:**
+> Saya ingin versi yang lebih dalam dari tugas ini, bukan yang lebih besar. Sebelum menulis ulang: (1) sebutkan apa yang akan dilakukan seorang profesional top di bidang ini yang tidak saya minta; (2) sebutkan bahan paling mentah yang akan dia pakai sebagai titik awal, bukan bahan yang sudah dicerna untuk saya; (3) sebutkan metode dan alat spesifik yang akan dia pakai; (4) sebutkan apa (selain kamu atau saya) yang bisa membuktikan hasilnya benar. Lalu tulis ulang prompt saya supaya meminta persis itu.
+
+**Kapan dipakai:** sebelum mengerjakan tugas penting, misalnya desain website klien, riset pasar, atau proposal.
+
 ## Yang perlu dicek nanti (di PC lokal)
-- [ ] Buka 3 link tanpa deskripsi (harvey, freefield, voicebox), lalu isi fungsinya.
-- [ ] Cari link huashu-motion, Agent Reach, Concat, dan sumber "20 Video Effects".
+- [ ] Buka link tanpa deskripsi (harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing), lalu isi fungsinya.
+- [ ] Cari link huashu-motion, Agent Reach, Concat, sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
 - [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]].
