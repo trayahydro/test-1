@@ -41,6 +41,10 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 22 | Design DNA | https://github.com/zanwei/design-dna | Skill: ekstrak & tiru gaya desain web | screenshot (@rifqieh) |
 | 23 | Motion Design Skill | https://github.com/lottiefiles/motion-design-skill | Skill: animasi Lottie/SVG | screenshot (@rifqieh) |
 | 24 | Genjutsu | https://github.com/AThevon/genjutsu | Skill: UI kreatif kelas premium | screenshot (@rifqieh) |
+| 25 | academic-research-skills | https://github.com/Imbad0202/academic-research-skills | Skill: pipeline riset & penulisan | screenshot |
+| 26 | ai-job-search | https://github.com/MadsLorentzen/ai-job-search | Pipeline cari kerja di Claude Code | screenshot |
+| 27 | emilkowalski/skills | https://github.com/emilkowalski/skills | Skill: detail UI, animasi, transisi | screenshot |
+| 28 | Cybersecurity Skills | https://github.com/mukul975/Anthropic-Cybersecurity-Skills (nama terpotong, cek) | Skill: 817 skill keamanan | screenshot |
 
 ## Detail per item
 
@@ -198,6 +202,34 @@ Lima skill di bawah berasal dari satu video carousel. **Sangat relevan untuk [[0
 - **Fitur:** UI kelas award, layout modern, animasi premium, creative direction, visual polish.
 - **Relevan untuk:** membuat website klien tidak terlihat "template AI". Kandidat utama.
 
+### Kumpulan skill dari carousel "#1–#5"
+Satu carousel berisi 5 repo. #5 di carousel adalah **diagram-design**, sudah tercatat sebagai item 13.
+
+### 25. academic-research-skills (Imbad0202/academic-research-skills)
+- **Isi:** pipeline riset lengkap dalam bentuk skill untuk Claude Code: cari literatur → tulis draf → review → revisi → finalisasi. Claude bekerja seperti satu kelompok riset, bukan sekadar asisten menulis.
+- **Angka:** 43k stars, 3k fork, 22 kontributor.
+- **Catatan:** huruf pertama nama akun (I atau l) kurang jelas di screenshot.
+- **Relevan untuk:** riset pasar, artikel/konten website klien, dokumen teknis (misalnya SWRO).
+
+### 26. ai-job-search (MadsLorentzen/ai-job-search)
+- **Isi:** pencarian kerja sebagai pipeline lokal di mesin sendiri. Membaca lowongan, menilai kecocokan dengan profil sendiri, menyesuaikan CV, dan menyusun lamaran. Framework berbasis Claude Code.
+- **Angka:** 33k stars, 12k fork, 54 kontributor.
+- **Relevan untuk:** pola pipelinenya bisa ditiru untuk **cari klien website** (membaca prospek → menilai kecocokan → menyusun penawaran).
+
+### 27. emilkowalski/skills
+- **Isi:** "Skills for Designers and Engineers". Keahlian menyusun antarmuka yang ditulis oleh desainer berpengalaman: animasi, transisi, dan detail kecil yang membedakan produk jadi dari sekadar demo.
+- **Angka:** 32k stars, 2k fork.
+- **Relevan untuk:** kualitas detail website klien. Cocok dipakai bersama [[#24. Genjutsu (AThevon/genjutsu)|Genjutsu]] dan GSAP.
+
+### 28. Cybersecurity Skills (mukul975/Anthropic-Cybersecurity-Skills)
+- **Isi:** 817 skill keamanan siber terstruktur untuk AI agent, dipetakan ke 6 framework (MITRE ATT&CK, NIST CSF 2.0, MITRE ATLAS, D3FEND, dan lainnya). Claude memeriksa setup dengan checklist yang sama seperti tim keamanan.
+- **Angka:** 31k stars, 4k fork.
+- **Catatan:** nama repo terpotong di screenshot, perlu dicek.
+- **Relevan untuk:** cek keamanan website klien sebelum diserahkan (nilai tambah saat jualan).
+
+### Catatan tambahan untuk item 13 (diagram-design)
+Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
+
 ## Prompt simpanan
 
 ### Prompt "versi yang lebih dalam"
@@ -215,5 +247,5 @@ Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks a
 - [ ] Cari link huashu-motion, Agent Reach, Concat, sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
-- [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]. Kandidat awal: #20–24 (skill web), #14 hyperframes, #13 diagram-design, #12 skills.
+- [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]. Kandidat awal: #20–24 dan #27 (skill web), #14 hyperframes, #13 diagram-design, #12 skills.
 - [ ] Pasang skill web (#20–24) di Claude Code PC lokal, lalu uji di satu contoh landing page.
