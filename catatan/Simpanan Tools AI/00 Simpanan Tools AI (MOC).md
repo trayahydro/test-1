@@ -25,6 +25,11 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 6 | harvey | https://github.com/ethanplusai/harvey | belum dicek | link |
 | 7 | freefield | https://github.com/neuregex/freefield | belum dicek (open source) | link |
 | 8 | voicebox | https://github.com/jamiepine/voicebox | belum dicek | link |
+| 9 | Adobe_Premiere_Pro_MCP | https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP | Edit video: Premiere Pro × Claude Code | screenshot |
+| 10 | Concat | belum ada link | Editor video gratis (pengganti CapCut) | screenshot |
+| 11 | rea | https://github.com/morluto/rea | MCP: reverse engineering aplikasi | screenshot |
+| 12 | skills (Matt Pocock) | https://github.com/mattpocock/skills | Agent skills untuk Claude | screenshot |
+| 13 | diagram-design | https://github.com/cathrynlavery/diagram-design | Skill: 44 jenis diagram HTML+SVG | screenshot |
 
 ## Detail per item
 
@@ -76,8 +81,43 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 - **Link:** https://github.com/jamiepine/voicebox
 - **Fungsi:** belum dicek. Dari namanya kemungkinan terkait suara/TTS. Kalau benar, bisa jadi alternatif voice-over natural untuk video.
 
+### 9. Adobe_Premiere_Pro_MCP
+- **Link:** https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP (publik, ± 684 stars, 129 fork). Nama pemilik dibaca dari URL di screenshot.
+- **Fungsi:** MCP untuk Adobe Premiere Pro, sehingga Premiere bisa dikendalikan dari **Claude Code**.
+- **Catatan:** mirip dengan item 3 (premiere-pro-mcp). Nanti bandingkan mana yang lebih bagus.
+
+### 10. Concat
+- **Tagline:** *"The free, open-source, cross-platform CapCut replacement."* Editor video gratis dan open source, jalan di Windows, Mac, dan Linux, sebagai pengganti CapCut.
+- **Tampilan:** mirip CapCut (timeline, teks, panel tipografi).
+- **Link:** belum ada, cari "Concat CapCut replacement" di GitHub.
+- **Relevan untuk:** edit konten TikTok/IG tanpa langganan CapCut Pro.
+
+### 11. rea (morluto/rea)
+- **Tagline:** *"One MCP that lets your AI agent reverse engineer apps, all the way down to the binary."* Satu MCP yang memungkinkan AI agent membongkar (reverse engineer) aplikasi sampai level binary.
+- **Angka di screenshot:** ★ 275.523, +239.477 minggu ini, MIT. Angkanya tidak wajar, jadi perlu dicek ulang.
+- **Relevan untuk:** keperluan teknis/riset. Kemungkinan tidak terlalu relevan untuk jualan website.
+
+### 12. skills (mattpocock/skills)
+- **Tagline:** *"Agent skills straight from a working engineer's own setup."* Kumpulan agent skill dari setup pribadi seorang engineer ("AI Skills for Real Engineers").
+- **Angka:** ★ 293.108, +12.147 minggu ini, MIT.
+- **Cara pasang di Claude Code:**
+  ```
+  claude plugin install mattpocock-skills@claude-plugins-official
+  ```
+- **Relevan untuk:** membuat website dengan Claude Code lebih rapi.
+
+### 13. diagram-design (cathrynlavery/diagram-design)
+- **Tagline:** *"44 diagram types as clean HTML + SVG, for Claude Code, Codex, Cursor and more."* Skill untuk membuat 44 jenis diagram yang rapi ("Editorial diagrams your designer won't hate").
+- **Angka:** ★ 56.037, +10.237 minggu ini, MIT.
+- **Cara pasang:**
+  ```
+  npx skills add cathrynlavery/diagram-design
+  ```
+- **Relevan untuk:** diagram alur di website klien, proposal, dan presentasi (misalnya diagram proses SWRO).
+
 ## Yang perlu dicek nanti (di PC lokal)
 - [ ] Buka 3 link tanpa deskripsi (harvey, freefield, voicebox), lalu isi fungsinya.
-- [ ] Cari link huashu-motion, Agent Reach, dan sumber "20 Video Effects".
+- [ ] Cari link huashu-motion, Agent Reach, Concat, dan sumber "20 Video Effects".
+- [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
 - [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]].
