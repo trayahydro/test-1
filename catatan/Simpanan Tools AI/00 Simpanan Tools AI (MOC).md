@@ -45,6 +45,9 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 26 | ai-job-search | https://github.com/MadsLorentzen/ai-job-search | Pipeline cari kerja di Claude Code | screenshot |
 | 27 | emilkowalski/skills | https://github.com/emilkowalski/skills | Skill: detail UI, animasi, transisi | screenshot |
 | 28 | Cybersecurity Skills | https://github.com/mukul975/Anthropic-Cybersecurity-Skills (nama terpotong, cek) | Skill: 817 skill keamanan | screenshot |
+| 29 | pm-skills | https://github.com/phuryn/pm-skills | Skill: product manager (strategi s/d launch) | screenshot |
+| 30 | book-to-skill | https://github.com/virgiliojr94/book-to-skill | Ubah buku PDF teknis jadi skill Claude | screenshot |
+| 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | belum dicek (skill Instagram) | link |
 
 ## Detail per item
 
@@ -202,8 +205,8 @@ Lima skill di bawah berasal dari satu video carousel. **Sangat relevan untuk [[0
 - **Fitur:** UI kelas award, layout modern, animasi premium, creative direction, visual polish.
 - **Relevan untuk:** membuat website klien tidak terlihat "template AI". Kandidat utama.
 
-### Kumpulan skill dari carousel "#1–#5"
-Satu carousel berisi 5 repo. #5 di carousel adalah **diagram-design**, sudah tercatat sebagai item 13.
+### Kumpulan skill dari carousel "#1–#7"
+Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5 di carousel adalah **diagram-design**, sudah tercatat sebagai item 13.
 
 ### 25. academic-research-skills (Imbad0202/academic-research-skills)
 - **Isi:** pipeline riset lengkap dalam bentuk skill untuk Claude Code: cari literatur → tulis draf → review → revisi → finalisasi. Claude bekerja seperti satu kelompok riset, bukan sekadar asisten menulis.
@@ -227,6 +230,21 @@ Satu carousel berisi 5 repo. #5 di carousel adalah **diagram-design**, sudah ter
 - **Catatan:** nama repo terpotong di screenshot, perlu dicek.
 - **Relevan untuk:** cek keamanan website klien sebelum diserahkan (nilai tambah saat jualan).
 
+### 29. pm-skills (phuryn/pm-skills)
+- **Isi:** "lapisan product manager": discovery, strategi, spesifikasi, eksekusi. PM Skills Marketplace berisi 100+ agent skill, command, dan plugin dari discovery sampai strategi, eksekusi, launch, dan growth. Tetap berguna walaupun timnya cuma satu orang, karena tetap harus ada yang memutuskan apa yang dibuat.
+- **Angka:** 26k stars, 3k fork.
+- **Relevan untuk:** merencanakan bisnis jualan website (paket, target pasar, launch), juga menyusun spesifikasi website klien.
+
+### 30. book-to-skill (virgiliojr94/book-to-skill)
+- **Isi:** mengubah buku PDF teknis apa pun menjadi skill Claude Code yang siap dipelajari, dirujuk, dan dipakai saat bekerja. Menurut carousel, inilah yang diam-diam bisa menggantikan enam repo lainnya.
+- **Angka:** 24k stars, 3k fork, 34 kontributor.
+- **Relevan untuk:** mengubah buku desain web, copywriting, atau sales menjadi skill. Bisa juga buku teknis SWRO/water treatment untuk Traya.
+
+### 31. instagram-agent-skill (Jakeschincariol/instagram-agent-skill)
+- **Link:** https://github.com/Jakeschincariol/instagram-agent-skill
+- **Fungsi:** belum dicek. Dari namanya, skill agent untuk Instagram.
+- **Relevan untuk:** promosi jasa website lewat IG, kalau fungsinya sesuai.
+
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
 
@@ -243,7 +261,7 @@ Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks a
 **Kapan dipakai:** sebelum mengerjakan tugas penting, misalnya desain website klien, riset pasar, atau proposal.
 
 ## Yang perlu dicek nanti (di PC lokal)
-- [ ] Buka link tanpa deskripsi (harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing), lalu isi fungsinya.
+- [ ] Buka link tanpa deskripsi (harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing, instagram-agent-skill), lalu isi fungsinya.
 - [ ] Cari link huashu-motion, Agent Reach, Concat, sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
