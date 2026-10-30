@@ -27,7 +27,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Referensi Desain - Sumber Inspirasi Website]] | Refero Styles, Motionsites, Pinterest, claude-web-design-skills | lengkap |
 | [[Skill Desain - Perbaiki UI Buatan AI]] | Setup desain 5 lapis, 12 repo perbaiki UI AI, Taste Skill, Figma×Playwright MCP, Figcraft vs Google Stitch | lengkap |
 | [[Keamanan - Checklist Sebelum Launch]] *(IG)* | 20 poin keamanan sebelum launch + security-audit-skill (asal harness Cloudflare) | lengkap |
-| [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done | lengkap |
+| [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done, **3 level pengguna Claude Code** | lengkap |
 | [[Panduan - Jadi AI Engineer & Stack Pilihan]] | Alur kerja per klien, stack utama, tambahan per paket (Basic/Standard/Pro) | lengkap |
 | [[Strategi - Bangun Software & Outreach Otomatis]] *(IG)* | Claude Code + Supabase, outreach DM/email otomatis (GrokBot / harvey) | lengkap |
 | [[Connector - 5 Connector Wajib untuk Claude]] *(IG)* | Perplexity, Firecrawl, Playwright, PostHog, Composio | lengkap |

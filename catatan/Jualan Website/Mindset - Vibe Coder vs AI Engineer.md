@@ -1,6 +1,6 @@
 ---
 tipe: mindset
-sumber: Instagram Reels (@nuhushaik, "Vibe Coder vs AI Engineer in 30 seconds")
+sumber: Instagram Reels (@nuhushaik "Vibe Coder vs AI Engineer"; + video "Three levels of Claude Code")
 dibuat: 2026-10-30
 tags: [jualan-website, mindset, prompt, workflow, sumber-ig]
 ---
@@ -58,3 +58,17 @@ Dianggap selesai kalau: [KRITERIA SELESAI yang bisa dicek]
 - Tiap prompt pakai format **Goal, Context, Constraints, Done when**.
 - Siapkan **daftar pertanyaan untuk klien** sebelum mulai (pembayaran sekali/langganan, payment gateway, fitur, dsb.). Ini sejalan dengan prompt 1 (PRD) yang menyuruh AI bertanya dulu.
 - Polanya sama dengan "Pola di balik 8 prompt": kasih role, paksa jeda, kunci output.
+
+---
+
+## 3 Level Pengguna Claude Code *(IG, video kedua)*
+| Level | Ciri-ciri | Pola |
+|---|---|---|
+| **1. Pemula** | pakai ekstensi Claude Code di VS Code; belum tahu cara memberi konteks, jadi Claude menebak | terjebak **siklus koreksi**: salah, dikoreksi, salah lagi |
+| **2. Menengah** | pindah ke **CLI**; memberi konteks dengan benar lewat file **CLAUDE.md**; paham stack sendiri; bisa debug; mengganti **model & effort** sesuai tugas; memakai **plan mode** dengan efektif | **mengarahkan, bukan mengoreksi** |
+| **3. Ahli** | jago mengelola sumber daya: mengatur konteks dengan **skills**; menjalankan **banyak agent paralel di beberapa git worktree**; memakai **`/remote-control`** supaya tetap membangun saat tidak di depan komputer | tidak ngoding lagi; **mengawasi "anak magang" (agent) bekerja** |
+
+**Peta belajar untuk saya** (semua sudah ada catatannya):
+- Naik ke level 2: CLAUDE.md / AGENTS.md ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder]]), pilih model per tugas ([[Hemat Biaya - Pembagian Model Claude (Opus, Sonnet, Haiku)]]), plan mode + format prompt di atas, debug pakai prompt 4 ([[Prompt - 8 Prompt Wajib Sebelum Vibecoding]]).
+- Naik ke level 3: skills ([[00 Simpanan Tools AI (MOC)]]), handoff untuk mengelola konteks ([[Workflow - Handoff untuk Mencegah Context Rot]]), worktree untuk mengerjakan beberapa project klien sekaligus, remote control untuk memantau dari HP.
+- Catatan: perintah dan nama fitur bisa berubah; cek dokumentasi Claude Code terbaru di PC lokal (`/help`).
