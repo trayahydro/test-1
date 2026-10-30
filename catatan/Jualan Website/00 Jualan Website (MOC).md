@@ -24,7 +24,7 @@ yang disimpan user, dalam bentuk screenshot.
 |---|---|---|
 | [[Prompt - 8 Prompt Wajib Sebelum Vibecoding]] | PRD, design brief, audit keamanan, debug, E2E test, cleanup, commit, task→skill | lengkap 8/8 |
 | [[Stack - 20 Dolar per Bulan Startup Stack]] | 14 layanan (Claude, Supabase, Vercel, dst.) ± $20/bulan, plus catatan versi Indonesia | lengkap |
-| [[Referensi Desain - Sumber Inspirasi Website]] | Refero Styles, Motionsites, Pinterest, claude-web-design-skills | lengkap |
+| [[Referensi Desain - Sumber Inspirasi Website]] | Refero Styles, Motionsites, Pinterest, claude-web-design-skills, Designeer, Realtime Colors, Godly, Watermelon UI, React Spring | lengkap |
 | [[Skill Desain - Perbaiki UI Buatan AI]] | Setup desain 5 lapis, 12 repo perbaiki UI AI, Taste Skill, Figma×Playwright MCP, Figcraft vs Google Stitch | lengkap |
 | [[Keamanan - Checklist Sebelum Launch]] *(IG)* | 20 poin keamanan sebelum launch + pencegahan SQL injection + security-audit-skill (asal harness Cloudflare) | lengkap |
 | [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done, **3 level pengguna Claude Code** | lengkap |

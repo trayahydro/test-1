@@ -71,3 +71,18 @@ Beberapa deskripsi tertutup tulisan "Claude" di video, jadi diisi dari yang terb
   2. Saat menemukan website yang disukai, berikan ke Claude dan sebutkan apa yang mau diambil: **layout, nuansa, animasi**.
   3. Hasilnya terlihat seperti buatan studio desain. Berguna juga kalau belum tahu mau gaya seperti apa.
 - **Kaitan:** mirip konsep Design DNA (#22) dan prompt 8 (ubah task jadi skill) di [[Prompt - 8 Prompt Wajib Sebelum Vibecoding]].
+
+## 6. Top 5 website untuk vibe coder *(IG, transkrip)*
+Nama ditulis dari **transkrip suara**; yang meragukan diberi *(?)*.
+| Nama | Fungsi (dari video) | Link / catatan |
+|---|---|---|
+| **Watermelon UI** | library open source untuk landing page; lebih cepat dan siap produksi | belum dicek; cari "Watermelon UI" |
+| **"Menace"** *(?)* | tool untuk app/website dengan backend, tanpa perlu pengalaman coding; publish satu klik, ada analytics dan SEO tracker bawaan | nama kemungkinan salah dengar (AI app builder); **cek di video aslinya** |
+| **Realtime Colors** | mencoba palet warna dan font langsung di UI nyata sebelum mulai membangun | kemungkinan **realtimecolors.com** |
+| **React Spring** | library animasi untuk React yang membuat app terasa hidup tanpa re-render berlebihan; siap produksi | kemungkinan **react-spring.dev** |
+| **"Godfly"** *(?)* | galeri langsung website-website terbaik saat ini. *"Kalau AI-mu scroll 10 menit di sini, seleranya langsung naik."* | kemungkinan **Godly** (godly.website), galeri desain web terkenal |
+
+**Cara pakai di alur kerja:**
+- **Realtime Colors** di tahap design brief: pilih palet + font, lalu masukkan ke `DESIGN_SYSTEM.md` ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder]]).
+- **Godly** (bersama Refero, Designeer, Pinterest): referensi gaya untuk diekstrak dengan Design DNA (#22).
+- **Watermelon UI / React Spring:** komponen dan animasi saat membangun. Perhatikan React Spring hanya untuk React/Next.js, sejalan dengan stack pilihan.
