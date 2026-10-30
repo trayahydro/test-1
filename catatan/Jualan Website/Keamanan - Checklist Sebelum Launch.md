@@ -1,6 +1,6 @@
 ---
 tipe: checklist
-sumber: Instagram (@cooked_dev + screenshot repo security-audit-skill)
+sumber: Instagram (@cooked_dev, screenshot repo security-audit-skill, video SQL injection)
 dibuat: 2026-10-30
 tags: [jualan-website, keamanan, checklist, sebelum-launch, sumber-ig]
 ---
@@ -50,6 +50,29 @@ file dan perbaikannya. Jangan ubah kode sebelum saya setujui:
 17 Trim API responses · 18 Add security headers · 19 Force HTTPS · 20 Scan dependencies
 ```
 Prompt ini disusun dari checklist di atas dan bukan bagian dari video aslinya.
+
+## SQL Injection: cara mencegahnya *(IG, video "I'm a hacker…")*
+**Apa itu:** penyerang memasukkan potongan perintah SQL ke kolom input (mis. username/password). Kalau kode server menempelkan input itu langsung ke query, server mengira input sudah selesai dan perintah SQL penyerang ikut dijalankan. Akibatnya data bisa dibaca, diubah, atau dihapus. Termasuk trik tertua, tapi paling merusak.
+
+**3 langkah pencegahan dari video:**
+1. **Validasi input (di sisi pengguna/form):** pastikan isinya sesuai format, mis. username hanya huruf/angka, tanpa kurung kurawal atau karakter yang mirip kode.
+2. **Sanitasi di sisi server:** cek ulang di server karena validasi di browser bisa dilewati.
+3. **Query berparameter (parameterized query):** jangan pernah menempelkan input langsung ke teks query; kirim sebagai parameter terpisah.
+
+**Catatan tambahan (praktik umum keamanan):**
+- Yang **paling utama adalah langkah 3**. Menghapus karakter "berbahaya" saja tidak cukup dan bisa merusak data yang sah (mis. nama dengan tanda kutip, seperti O'Brien). Validasi dan sanitasi adalah lapisan tambahan.
+- Kalau memakai **Supabase client, Prisma, atau ORM lain**, query umumnya sudah berparameter. Risiko muncul saat menulis **SQL mentah** dengan menggabungkan string. Minta Claude mengecek bagian ini.
+- Ditambah **RLS (Row Level Security)** di Supabase (poin #4 di atas), kerusakan bisa dibatasi walaupun ada celah.
+- Scanner seperti **Semgrep** (#34) bisa mendeteksi pola query yang rawan injection.
+
+**Prompt cek cepat:**
+```
+Periksa seluruh codebase untuk risiko SQL injection:
+- tunjukkan semua tempat query database dibuat, terutama SQL mentah atau penggabungan string
+- pastikan semuanya memakai query berparameter / query builder / ORM
+- pastikan input divalidasi di client dan di server (format, panjang, tipe)
+Laporkan file + baris + perbaikannya. Jangan ubah kode sebelum saya setujui.
+```
 
 ## security-audit-skill (repo GitHub)
 - **Deskripsi:** *"A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings."*
