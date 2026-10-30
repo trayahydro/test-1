@@ -27,9 +27,10 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Referensi Desain - Sumber Inspirasi Website]] | Refero Styles, Motionsites, Pinterest, claude-web-design-skills | lengkap |
 | [[Skill Desain - Perbaiki UI Buatan AI]] | Setup desain 5 lapis, 12 repo perbaiki UI AI, Taste Skill, Figma×Playwright MCP, Figcraft vs Google Stitch | lengkap |
 | [[Keamanan - Checklist Sebelum Launch]] *(IG)* | 20 poin keamanan sebelum launch + security-audit-skill (asal harness Cloudflare) | lengkap |
+| [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
-1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP.
+1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
 2. **Design brief**: prompt 2. Cari referensi di Refero / Motionsites / Pinterest, lalu tiru gayanya dengan Design DNA (#22).
 3. **Bangun**: Claude Code + setup desain (lihat [[Skill Desain - Perbaiki UI Buatan AI]]) + skill web: Genjutsu (#24), GSAP (#21), emilkowalski/skills (#27), Three.js (#20) kalau perlu 3D.
 4. **Audit keamanan sebelum serah terima**: prompt 3, [[Keamanan - Checklist Sebelum Launch|checklist 20 poin]], security-audit-skill (#32), Cybersecurity Skills (#28).
