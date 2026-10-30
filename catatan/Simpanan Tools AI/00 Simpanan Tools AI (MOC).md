@@ -53,6 +53,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | 13 skill untuk menjalankan akun Instagram | link |
 | 32 | security-audit-skill | https://github.com/cloudflare/security-audit-skill | Skill: audit keamanan 6 fase | screenshot IG |
 | 33 | VibeWise | belum ketemu (situs: github.com/vibewisehq/vibewise) | Plugin Claude Code: belajar sambil AI menulis kode | screenshot IG |
+| 34 | Semgrep | https://github.com/semgrep/semgrep | Scan keamanan kode (static analysis) | screenshot IG |
 
 ## Detail per item
 
@@ -270,6 +271,13 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - Dari repo turunan yang ditemukan, ini plugin **learning-first**: kita belajar engineering sementara AI menulis kodenya.
 - **Link:** repo utama belum ketemu di pencarian GitHub. Yang ada: [vibewisehq/vibewise](https://github.com/vibewisehq/vibewise) (situs landing resmi), versi opencode (Akshat-2011/vibe-wise-opencode), dan versi Codex (mmlvc/open-wise).
 - **Relevan untuk:** belajar dasar web sambil membuat website klien (sejalan dengan langkah 6 di [[Panduan - Jadi AI Engineer & Stack Pilihan]]).
+
+### 34. Semgrep (sumber: IG, @gracebuilds.ai)
+- **Link:** https://github.com/semgrep/semgrep (publik, sangat aktif: ± 887 issues, 2.151 branch, 371 tag)
+- **Dari video:** *"This GitHub repo can help you create a secure backend."*
+- **Fungsi (pengetahuan umum):** alat **static analysis** open source yang memindai kode di banyak bahasa (JavaScript/TypeScript, Python, Go, dll.) untuk menemukan bug dan celah keamanan (injection, secret bocor, pola berbahaya) berdasarkan aturan (rules). Bisa dijalankan di terminal atau CI. Ada juga fitur SCA (cek dependency rentan).
+- **Pakai:** misalnya `semgrep scan --config auto` di folder project (ikuti README untuk cara instal terbaru).
+- **Relevan untuk:** ⭐ cek keamanan otomatis website klien sebelum serah terima. Lihat [[Keamanan - Checklist Sebelum Launch]].
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.

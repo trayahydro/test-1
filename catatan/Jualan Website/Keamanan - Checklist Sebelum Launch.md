@@ -61,5 +61,6 @@ Prompt ini disusun dari checklist di atas dan bukan bagian dari video aslinya.
   3–6. Belum terlihat di screenshot.
 - **Angka:** ± 50,6k stars, 3,2k fork, MIT, 14 commit, kontributor literally-dan dan CooperSheroy (Sheroy Cooper).
 - **Link:** **https://github.com/cloudflare/security-audit-skill** (milik organisasi Cloudflare, ± 53k★; ketemu lewat pencarian GitHub 2026-10-30).
+- **Semgrep** (#34, https://github.com/semgrep/semgrep, sumber IG): scanner kode otomatis untuk bug & celah keamanan. Cocok dijalankan bersama poin #13–15 dan #20 checklist di atas.
 - Skill keamanan lain yang ditemukan: [trailofbits/skills](https://github.com/trailofbits/skills) (Trail of Bits, ± 7,9k★) dan [raroque/vibe-security-skill](https://github.com/raroque/vibe-security-skill) (± 1,2k★).
 - **Relevan untuk:** audit menyeluruh sebelum serah terima website/aplikasi klien yang punya login atau database.
