@@ -124,6 +124,9 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 - **Tagline:** *"One MCP that lets your AI agent reverse engineer apps, all the way down to the binary."* Satu MCP yang memungkinkan AI agent membongkar (reverse engineer) aplikasi sampai level binary.
 - **Angka di screenshot:** ★ 275.523, +239.477 minggu ini, MIT. Angkanya tidak wajar, jadi perlu dicek ulang.
 - **Relevan untuk:** keperluan teknis/riset. Kemungkinan tidak terlalu relevan untuk jualan website.
+- **Tambahan dari IG (@jackmandeville1, "Claude clones your apps"):** link **terkonfirmasi** `github.com/morluto/rea`. Deskripsi About: *"Reverse engineer anything with agents, from app behavior down to native binaries."* Skill gratis bernama **reverse-engineer-anything**. Caption: *"Would you rather rent your apps or build your own…"*, yaitu membuat versi sendiri dari aplikasi berlangganan.
+- **Kaitan:** = "REA" di [[30 Plugin Claude Terbaik per Peran]] (baris Riset: "lets Claude take apart any app").
+- ⚠️ **Catatan hukum/etika:** membongkar dan mengkloning aplikasi orang lain bisa melanggar lisensi, hak cipta, atau ketentuan layanan. Gunakan untuk aplikasi sendiri, belajar, atau riset yang diizinkan. Untuk jualan website, lebih aman meniru **konsep dan alur**, bukan menyalin kode atau aset.
 
 ### 12. skills (mattpocock/skills)
 - **Tagline:** *"Agent skills straight from a working engineer's own setup."* Kumpulan agent skill dari setup pribadi seorang engineer ("AI Skills for Real Engineers").
