@@ -57,3 +57,32 @@ flowchart TD
 ## Catatan
 - Patuhi aturan WhatsApp (opt-in, template di luar 24 jam). Lihat [[WhatsApp Agent - Kapso]].
 - Data pelanggan dan lokasi harus dijaga keamanannya. Lihat [[Keamanan - Checklist Sebelum Launch]].
+
+---
+
+# Contoh 2: Kontraktor Renovasi Kamar Mandi, "Flywheel" Agent *(IG, transkrip)*
+Satu calon pelanggan diproses dari awal sampai menghasilkan konten & SEO yang **mendatangkan pelanggan berikutnya**.
+
+| Waktu / tahap | Agent | Yang dilakukan |
+|---|---|---|
+| Jam 21.00 | **Website** | pemilik rumah memotret kamar mandi lamanya; dalam 10 detik website memberi **kisaran harga**, lalu menanyakan budget & waktu pengerjaan |
+| +30 detik | **Booking agent** | mengirim SMS dan menjadwalkan telepon untuk hari Kamis |
+| Sebelum telepon | **Nurture agent** | mengirim 3 contoh kamar mandi yang baru dikerjakan **di dekat lokasinya** |
+| Jam 19.00 malam sebelumnya | Nurture agent | mengirim video perkenalan singkat kru, supaya calon pelanggan sudah "hangat" |
+| | **Intake agent** | foto, budget, dan timeline masuk ke satu file di CRM |
+| | **Quote agent** | menyusun draf proposal dari file itu; pemilik datang ke telepon dengan harga siap |
+| Setelah "ya" | **Scheduling agent** | menjadwalkan kru dan memesan material; kerja mulai Senin |
+| Selesai | **Follow-up agent** | SMS terima kasih + tanya kepuasan. Puas: minta **ulasan Google**. Tidak puas: lapor ke pemilik dulu untuk diperbaiki |
+| Ulasan 5★ | **Content agent** | mengambil foto before/after, menulis **studi kasus + blog post**, dan memasangnya di website |
+| | **Social agent** | mengubahnya jadi postingan Instagram & Facebook |
+| | **Strategy agent** | membaca transkrip telepon, menemukan **2 pertanyaan yang belum dijawab website**, menulis artikel FAQ untuk masing-masing |
+| | **SEO agent** | mengecek artikel terhadap praktik terbaik Google **dan ChatGPT** sebelum tayang |
+
+**Hasil akhir:** saat calon pelanggan berikutnya bertanya ke ChatGPT *"berapa lama renovasi kamar mandi?"*, bisnis ini muncul di jawabannya (**GEO**, lihat [[SEO - Checklist Supaya Website Muncul di Google]]). Lalu siklusnya berulang.
+
+## Pelajaran untuk jualan website
+- **Website bukan brosur**, tapi mesin penjualan: kalkulator harga dari foto, form budget & timeline, booking otomatis.
+- **Konten dari pekerjaan nyata** (before/after, studi kasus, FAQ dari pertanyaan pelanggan) memperkuat SEO + GEO tanpa harus memikirkan ide konten.
+- Paket yang bisa ditawarkan bertahap: (1) website + kalkulator estimasi + booking WA, (2) + follow-up & ulasan Google, (3) + mesin konten (studi kasus, blog, sosmed, FAQ).
+- Fitur "harga dari foto" memakai AI vision (mis. Claude) dan hasilnya hanya **kisaran estimasi**; tulis jelas bahwa harga final setelah survei.
+- Versi lokal: SMS diganti **WhatsApp** ([[WhatsApp Agent - Kapso]]); minta izin pelanggan sebelum memakai foto rumahnya untuk konten.

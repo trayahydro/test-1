@@ -35,7 +35,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[SEO - Checklist Supaya Website Muncul di Google]] *(IG)* | Search Console, sitemap, SEO & GEO, meta tag, Google Business Profile | lengkap |
 | [[Hemat Biaya - Pembagian Model Claude (Opus, Sonnet, Haiku)]] *(IG)* | Opus merencanakan, Sonnet membangun, Haiku mencari; `/model opusplan` | lengkap |
 | [[Dokumen Project - 4 Dokumen Wajib Vibe Coder]] *(IG)* | Template AGENTS.md, PRD.md, DESIGN_SYSTEM.md, ARCHITECTURE.md | lengkap |
-| [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]] *(IG)* | Alur automasi booking → konfirmasi → rute → laporan AI → invoice → ulasan; ide paket jasa lapangan | lengkap |
+| [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]] *(IG)* | Contoh 1 plumber (booking → rute → laporan AI → invoice → ulasan) + Contoh 2 renovasi kamar mandi (flywheel 10 agent: estimasi dari foto → booking → proposal → ulasan → konten → FAQ/SEO/GEO) | lengkap |
 | [[Workflow - Handoff untuk Mencegah Context Rot]] *(IG)* | handoff.md (6 bagian) + /clear, lebih baik dari /compact | lengkap |
 | [[Setup Claude Code - 5 Plugin untuk 5 Titik Buta]] *(IG)* | Security Guidance, Frontend Design, Agent Skills (Addy Osmani), Ponytail, Chrome DevTools MCP + perintah pasang | lengkap |
 | [[Automasi - Tim Social Media AI (Iklan, Leads, Sales)]] *(IG)* | Iklan dari riset kompetitor, leads dari komentar/DM, voice agent menelepon dalam 60 detik | lengkap |
