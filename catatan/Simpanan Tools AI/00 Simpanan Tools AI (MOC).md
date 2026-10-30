@@ -13,6 +13,9 @@ Status: dicatat dari screenshot dan link yang dikirim user, isi repo **belum dic
 (sesi cloud tidak punya akses ke repo-repo ini). Deskripsi di bawah hanya berdasarkan teks yang
 terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsinya.
 
+## Catatan terkait
+- [[30 Plugin Claude Terbaik per Peran]] *(IG)*: 30 plugin dikelompokkan per peran (kode, riset, hemat token, desain, menulis/video).
+
 ## Daftar
 
 | # | Nama | Link | Kategori | Sumber |
