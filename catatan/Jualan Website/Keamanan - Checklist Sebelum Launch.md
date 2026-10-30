@@ -1,6 +1,6 @@
 ---
 tipe: checklist
-sumber: Instagram (@cooked_dev, screenshot repo security-audit-skill, video SQL injection)
+sumber: Instagram (@cooked_dev, screenshot repo security-audit-skill, video SQL injection, video 5 celah keamanan)
 dibuat: 2026-10-30
 tags: [jualan-website, keamanan, checklist, sebelum-launch, sumber-ig]
 ---
@@ -50,6 +50,30 @@ file dan perbaikannya. Jangan ubah kode sebelum saya setujui:
 17 Trim API responses · 18 Add security headers · 19 Force HTTPS · 20 Scan dependencies
 ```
 Prompt ini disusun dari checklist di atas dan bukan bagian dari video aslinya.
+
+## 5 celah keamanan paling umum di app vibe-coded *(IG, transkrip)*
+> *"Don't ship your vibe-coded app until you've checked these 5 security holes."*
+
+| # | Celah | Risikonya | Perbaikan | Poin checklist 20 |
+|---|---|---|---|---|
+| 1 | **Database terbuka** (RLS mati) | siapa pun bisa membaca email, nomor telepon, dan data pembayaran pengguna | aktifkan **Row Level Security di setiap tabel**; hanya pemilik yang bisa melihat datanya | #4, #7 |
+| 2 | **File storage publik** | semua foto/KTP yang diunggah pengguna bisa diunduh siapa pun yang punya link | jadikan bucket **privat**, bagikan **link yang kedaluwarsa** (signed URL) | #16 |
+| 3 | **Login yang bisa dilewati** | kalau halaman privat hanya dicek di browser, orang bisa langsung masuk | **cek setiap request di server**, setiap kali | #6 |
+| 4 | **Secret key di frontend** *(paling berbahaya)* | siapa pun bisa membuka browser dan menyalin kuncinya | simpan kunci **hanya di server** (environment variable) | #1, #3 |
+| 5 | **Tanpa rate limit** | satu bot bisa memanggil endpoint AI terus-menerus dan **tagihan membengkak semalaman** | **batasi jumlah request per pengguna** | #11 |
+
+**Untuk stack Supabase:** cek di dashboard bahwa RLS aktif di semua tabel (Supabase menandai tabel tanpa RLS), bucket Storage tidak "public", dan hanya **anon key** yang ada di frontend, sedangkan **service_role key** hanya di server.
+
+**Prompt cek cepat:**
+```
+Sebelum deploy, cek 5 celah ini dan laporkan status tiap poin dengan bukti (file/baris/setting):
+1. RLS aktif di semua tabel Supabase + policy hanya pemilik yang bisa baca/ubah datanya
+2. Storage bucket privat; file diakses lewat signed URL yang kedaluwarsa
+3. Semua halaman/API privat dicek autentikasinya di server, bukan hanya di browser
+4. Tidak ada secret key (service_role, API key AI, Stripe secret, dll.) di kode frontend atau bundle
+5. Rate limit per pengguna di endpoint AI dan login
+Jangan ubah apa pun sebelum saya setujui.
+```
 
 ## SQL Injection: cara mencegahnya *(IG, video "I'm a hacker…")*
 **Apa itu:** penyerang memasukkan potongan perintah SQL ke kolom input (mis. username/password). Kalau kode server menempelkan input itu langsung ke query, server mengira input sudah selesai dan perintah SQL penyerang ikut dijalankan. Akibatnya data bisa dibaca, diubah, atau dihapus. Termasuk trik tertua, tapi paling merusak.
