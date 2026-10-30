@@ -32,12 +32,13 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Strategi - Bangun Software & Outreach Otomatis]] *(IG)* | Claude Code + Supabase, outreach DM/email otomatis (GrokBot / harvey) | lengkap |
 | [[Connector - 5 Connector Wajib untuk Claude]] *(IG)* | Perplexity, Firecrawl, Playwright, PostHog, Composio | lengkap |
 | [[WhatsApp Agent - Kapso]] *(IG)* | Agent WA booking otomatis lewat Claude Code + Kapso; ide paket upsell | lengkap |
+| [[SEO - Checklist Supaya Website Muncul di Google]] *(IG)* | Search Console, sitemap, SEO & GEO, meta tag, Google Business Profile | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
 2. **Design brief**: prompt 2. Cari referensi di Refero / Motionsites / Pinterest, lalu tiru gayanya dengan Design DNA (#22).
 3. **Bangun**: Claude Code + setup desain (lihat [[Skill Desain - Perbaiki UI Buatan AI]]) + skill web: Genjutsu (#24), GSAP (#21), emilkowalski/skills (#27), Three.js (#20) kalau perlu 3D.
-4. **Audit keamanan sebelum serah terima**: prompt 3, [[Keamanan - Checklist Sebelum Launch|checklist 20 poin]], security-audit-skill (#32), Cybersecurity Skills (#28).
+4. **Audit SEO** ([[SEO - Checklist Supaya Website Muncul di Google|checklist SEO]]) dan **audit keamanan sebelum serah terima**: prompt 3, [[Keamanan - Checklist Sebelum Launch|checklist 20 poin]], security-audit-skill (#32), Cybersecurity Skills (#28).
 5. **Debug saat ada masalah**: prompt 4.
 6. **Uji & rapikan**: prompt 5 (E2E Playwright), prompt 6 (cleanup), prompt 7 (commit rapi).
 7. **Jadikan skill**: prompt 8. Tiap pekerjaan berulang (misalnya "bikin landing page UMKM") disimpan jadi skill.
