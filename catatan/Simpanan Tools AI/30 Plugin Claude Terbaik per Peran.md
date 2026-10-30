@@ -23,7 +23,7 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | ECC | Everything Claude Code. Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
 | Karpathy skills ("Garbati") | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills): satu file CLAUDE.md untuk memperbaiki perilaku Claude Code, berdasarkan pengamatan Andrej Karpathy soal kesalahan umum LLM saat coding. ± 227k★. Sumber aslinya mungkin `forrestchang/andrej-karpathy-skills` |
 | Ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): "AI agent berpikir seperti senior dev paling malas: kode terbaik adalah kode yang tidak perlu ditulis." ± 181k★ |
-| Agent skills | belum dicek (nama umum, cari repo-nya) |
+| Agent skills | repo bernama persis "agent-skills" belum ketemu. Kandidat: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills), daftar kurasi Claude Skills (± 78k★) |
 
 ## 2. Riset / memahami hal besar
 | Plugin | Catatan |
@@ -38,10 +38,10 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 ## 3. Project besar / token cepat habis
 | Plugin | Catatan |
 |---|---|
-| GStack | repo utama `garrytan/gstack` belum muncul di pencarian (hanya fork, mis. Ahacad/gstack) |
+| GStack | [garrytan/gstack](https://github.com/garrytan/gstack): setup Claude Code milik Garry Tan; 23 tool yang berperan sebagai CEO, Designer, Eng Manager, Release Manager, Doc Engineer, dan QA. ± 138k★. **Terkonfirmasi** |
 | Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman): "why use many token when few token do trick". Skill + proxy yang memangkas ± 65% token dengan gaya bicara ringkas ala manusia gua. ± 116k★ |
 | Claude Mem | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem): konteks/memori permanen antar sesi untuk agent. ± 106k★ |
-| Headroom | proyek utama belum ketemu. Yang muncul hanya proyek kecil bernama sama, mis. [gglucass/headroom-desktop](https://github.com/gglucass/headroom-desktop) (aplikasi menu bar yang mengklaim memangkas biaya token Claude Code/Codex ± 50%, ± 628★) |
+| Headroom | repo utama belum terkonfirmasi. Pemiliknya kemungkinan **chopratejas** (ada [headroom-zed](https://github.com/chopratejas/headroom-zed) dan headroom-swift: "context compression for AI agents"). Cari `chopratejas/headroom` |
 | GSD | [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done): sistem meta-prompting, context engineering, dan spec-driven development untuk Claude Code. ± 64k★. **Status: diarsipkan** (public archive) |
 | BMAD Method | [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD): "Breakthrough Method for Agile AI Driven Development". ± 55k★ |
 
@@ -49,21 +49,21 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | Plugin | Catatan |
 |---|---|
 | UI UX Pro Max | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): skill "design intelligence" untuk UI/UX profesional di banyak platform. ± 143k★ |
-| Taste | = Taste Skill (catatan skill desain) |
-| Archify | belum dicek |
-| Impeccable | ada di catatan skill desain |
-| PPT Master | belum dicek (dari namanya membuat slide/PowerPoint) |
+| Taste | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill): memberi coding agent "selera": art direction, gambar referensi, dan cek di browser supaya tidak menghasilkan halaman AI generik. ± 106k★ |
+| Archify | [tt-a1i/archify](https://github.com/tt-a1i/archify): ubah ide, rencana, atau codebase jadi diagram interaktif yang bagus; skill untuk Claude Code, Codex, dll. ± 92k★ |
+| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable): kosakata desain untuk coding agent. Arahkan dengan *polish* / *bolder*, review dengan *critique* / *audit*, tangkap "AI slop" sebelum rilis. ± 96k★ |
+| PPT Master | belum ketemu dengan nama ini. Mirip: [tristan-mcinnis/pptx-from-layouts-skill](https://github.com/tristan-mcinnis/pptx-from-layouts-skill) (skill Claude Code untuk membuat PowerPoint dari markdown, ± 40★) |
 | Diagram Design | = #13 `cathrynlavery/diagram-design` |
 
 ## 5. Menulis & video
 | Plugin | Catatan |
 |---|---|
-| Skills by Anthropic | skill resmi Anthropic |
+| Skills by Anthropic | [anthropics/skills](https://github.com/anthropics/skills): repo publik Agent Skills resmi Anthropic. ± 185k★. **Terkonfirmasi** |
 | Open Montage | = #17 `calesthio/OpenMontage` |
 | Hyperframes | = #14 `heygen-com/hyperframes` |
-| Humanizer | belum dicek (dari namanya membuat tulisan AI terdengar manusiawi) |
-| I Have ADHD | belum dicek |
-| Marketing Skills | belum dicek |
+| Humanizer | [blader/humanizer](https://github.com/blader/humanizer): skill yang menghapus ciri tulisan buatan AI. ± 63k★ |
+| I Have ADHD | nama persis belum ketemu. Paling mirip: [alexh/i-really-have-adhd](https://github.com/alexh/i-really-have-adhd), skill yang membentuk output ringkas sesuai jumlah keputusan pembaca (± 12★). Skill ADHD lain: [UditAkhourii/adhd](https://github.com/UditAkhourii/adhd) (tree-of-thought dengan pruning, ± 4,5k★) |
+| Marketing Skills | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills): skill marketing untuk Claude Code: CRO, copywriting, SEO, analytics, growth. ± 57k★ |
 
 ## Pilihan untuk jualan website
 Mengikuti saran video (satu baris dulu):
