@@ -86,6 +86,21 @@ Nama awalnya dari transkrip suara, lalu **dikonfirmasi dengan caption video**: "
 | I Have ADHD | nama persis belum ketemu. Paling mirip: [alexh/i-really-have-adhd](https://github.com/alexh/i-really-have-adhd), skill yang membentuk output ringkas sesuai jumlah keputusan pembaca (± 12★). Skill ADHD lain: [UditAkhourii/adhd](https://github.com/UditAkhourii/adhd) (tree-of-thought dengan pruning, ± 4,5k★) |
 | Marketing Skills | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills): skill marketing untuk Claude Code: CRO, copywriting, SEO, analytics, growth. ± 57k★ |
 
+## Shortlist 10 skill (komentar IG @mr.penguinnz)
+Daftar 10 skill dari sebuah komentar IG. **Semuanya sudah ada di daftar 30 di atas**, jadi ini bisa dianggap "paling sering disebut":
+| Skill | Repo |
+|---|---|
+| Taste Skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) |
+| Agent Skills | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) |
+| Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) |
+| Graphify | [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) |
+| UI UX Pro Max | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
+| Ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) |
+| Anthropic Skills | [anthropics/skills](https://github.com/anthropics/skills) |
+| Karpathy Skills | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
+| Matt Pocock Skills | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| Superpowers | [obra/superpowers](https://github.com/obra/superpowers) |
+
 ## Pilihan untuk jualan website
 Mengikuti saran video (satu baris dulu):
 - **Minggu membangun website:** baris **4. Desain & visual**. Mulai dari UI UX Pro Max atau Impeccable.
