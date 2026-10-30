@@ -54,6 +54,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 32 | security-audit-skill | https://github.com/cloudflare/security-audit-skill | Skill: audit keamanan 6 fase | screenshot IG |
 | 33 | VibeWise | belum ketemu (situs: github.com/vibewisehq/vibewise) | Plugin Claude Code: belajar sambil AI menulis kode | screenshot IG |
 | 34 | Semgrep | https://github.com/semgrep/semgrep | Scan keamanan kode (static analysis) | screenshot IG |
+| 35 | Day Trader skill | belum ada link | 11 skill Claude untuk analisis saham / day trading | transkrip IG |
 
 ## Detail per item
 
@@ -278,6 +279,19 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - **Fungsi (pengetahuan umum):** alat **static analysis** open source yang memindai kode di banyak bahasa (JavaScript/TypeScript, Python, Go, dll.) untuk menemukan bug dan celah keamanan (injection, secret bocor, pola berbahaya) berdasarkan aturan (rules). Bisa dijalankan di terminal atau CI. Ada juga fitur SCA (cek dependency rentan).
 - **Pakai:** misalnya `semgrep scan --config auto` di folder project (ikuti README untuk cara instal terbaru).
 - **Relevan untuk:** ⭐ cek keamanan otomatis website klien sebelum serah terima. Lihat [[Keamanan - Checklist Sebelum Launch]].
+
+### 35. Day Trader skill (sumber: IG, transkrip)
+- **Isi:** 11 skill Claude, gratis dan open source, masing-masing satu tugas. Contoh:
+  - memindai ribuan grafik saham untuk mencari *setup*
+  - memantau berita terbaru setiap saham di watchlist
+  - memberi tahu momen masuk (entry)
+  - menentukan stop loss dan target **sebelum** masuk
+  - **"time machine"**: memutar ulang sisa hari itu **10.000 kali** dari candle terbaru saham itu sendiri (simulasi) dan memberi peluang yang jujur. Contoh Tesla di video: hasilnya "hampir seperti lempar koin".
+- **Pengaman bawaan:** tidak ada transaksi tanpa persetujuan user; **paper trading** (uang virtual) jadi default.
+- **Cara pasang (dari video):** tempel link repo ke Claude, lalu bilang "install skill".
+- **Link:** belum ada di transkrip; cari "day trader skill claude" di GitHub.
+- ⚠️ **Catatan risiko:** trading saham berisiko tinggi. Simulasi dan peluang dari AI bukan jaminan hasil, dan di contoh video pun hasilnya hampir 50:50. Pakai paper trading dulu, jangan pakai uang yang tidak siap hilang. Ini bukan nasihat keuangan.
+- **Relevan untuk:** pribadi / belajar; tidak terkait jualan website.
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
