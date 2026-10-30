@@ -30,6 +30,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done | lengkap |
 | [[Panduan - Jadi AI Engineer & Stack Pilihan]] | Alur kerja per klien, stack utama, tambahan per paket (Basic/Standard/Pro) | lengkap |
 | [[Strategi - Bangun Software & Outreach Otomatis]] *(IG)* | Claude Code + Supabase, outreach DM/email otomatis (GrokBot / harvey) | lengkap |
+| [[Connector - 5 Connector Wajib untuk Claude]] *(IG)* | Perplexity, Firecrawl, Playwright, PostHog, Composio | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
