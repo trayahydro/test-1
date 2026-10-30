@@ -56,6 +56,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 34 | Semgrep | https://github.com/semgrep/semgrep | Scan keamanan kode (static analysis) | screenshot IG |
 | 35 | Day Trader skill | belum ada link | 11 skill Claude untuk analisis saham / day trading | transkrip IG |
 | 36 | "Azars" (?): agent asisten "Jarvis" | belum ada link | Agent pribadi yang menelepon dengan jadwal harian | transkrip IG |
+| 37 | Knowledge Work Plugins (Anthropic) | https://github.com/anthropics/knowledge-work-plugins | Plugin resmi Anthropic untuk pekerjaan kantor per peran | screenshot IG |
 
 ## Detail per item
 
@@ -305,6 +306,12 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
   3. Agent **menelepon lewat ponsel** dan membacakan ringkasannya.
 - **Catatan:** iMessage hanya untuk iPhone/Mac. Alternatif yang mirip: **Routines** di Claude (tugas terjadwal) + connector Google Calendar + pengiriman lewat WhatsApp/email (lihat [[WhatsApp Agent - Kapso]]).
 - **Relevan untuk:** produktivitas pribadi. Bisa juga jadi ide layanan untuk klien, mis. ringkasan booking harian dikirim ke pemilik usaha tiap pagi (lihat [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]]).
+
+### 37. Knowledge Work Plugins (sumber: IG, @pedroaitech)
+- **Link:** https://github.com/anthropics/knowledge-work-plugins (resmi Anthropic, open source, Apache-2.0, ± 29k★ menurut video)
+- **Fungsi (pengetahuan umum, cek README):** kumpulan plugin resmi Anthropic untuk **pekerjaan non-coding per peran/divisi**, misalnya sales, marketing, operasional, desain, engineering, data, keuangan, dan legal. Bisa dipakai di Claude (termasuk Cowork) dan Claude Code. Isinya skill + command siap pakai seperti laporan status, risk assessment, review desain, dan analisis data.
+- **Catatan:** beberapa plugin dari kumpulan ini (mis. *operations*, *design*, *engineering*, *data*) kemungkinan sudah tersedia di akun Claude Anda.
+- **Relevan untuk:** sisi bisnis jualan website, mis. plugin marketing/sales untuk promosi dan proposal, *operations* untuk SOP dan status report ke klien, *design* untuk review desain.
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
