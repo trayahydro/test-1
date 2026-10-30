@@ -13,32 +13,34 @@ Kaitan: [[00 Simpanan Tools AI (MOC)]] · [[00 Jualan Website (MOC)]]
 
 Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yang meragukan diberi tanda *(?)* beserta dugaan nama aslinya. Nomor `#` merujuk ke daftar di MOC simpanan.
 
+**Pencarian repo (2026-10-30):** dicari lewat halaman pencarian GitHub (urut bintang). Link di bawah **dari hasil pencarian**, halaman repo belum dibuka satu per satu. Angka bintang perkiraan dari hasil pencarian.
+
 ## 1. Menulis kode: Claude bekerja seperti senior developer
 | Plugin | Catatan |
 |---|---|
-| Superpowers | belum dicek |
+| Superpowers | repo utama belum terkonfirmasi (dugaan `obra/superpowers`). Terlihat: [obra/superpowers-marketplace](https://github.com/obra/superpowers-marketplace) (marketplace plugin Claude Code, ± 1,3k★) |
 | Matt Pocock skills | = #12 `mattpocock/skills` |
-| ECC | *(?)* kemungkinan "Everything Claude Code" |
-| Garbati skills | *(?)* salah dengar; kemungkinan "Karpathy skills" |
-| Ponytail | belum dicek |
+| ECC | Everything Claude Code. Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
+| Karpathy skills ("Garbati") | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills): satu file CLAUDE.md untuk memperbaiki perilaku Claude Code, berdasarkan pengamatan Andrej Karpathy soal kesalahan umum LLM saat coding. ± 227k★. Sumber aslinya mungkin `forrestchang/andrej-karpathy-skills` |
+| Ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): "AI agent berpikir seperti senior dev paling malas: kode terbaik adalah kode yang tidak perlu ditulis." ± 181k★ |
 | Agent skills | belum dicek (nama umum, cari repo-nya) |
 
 ## 2. Riset / memahami hal besar
 | Plugin | Catatan |
 |---|---|
-| Graphify | belum dicek |
+| Graphify | [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify): ubah codebase + dokumen, skema SQL, config, PDF jadi knowledge graph yang bisa ditanya; skill `/graphify`. ± 139k★ |
 | Agent Reach | = #5 (akses internet untuk agent) |
-| Understand Anything | belum dicek |
-| Last 30 Days | belum dicek |
-| Career Ops | belum dicek |
+| Understand Anything | [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything): ubah kode jadi knowledge graph interaktif untuk dipelajari. ± 89k★ |
+| Last 30 Days | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill): riset topik apa pun di Reddit, X, YouTube, HN, Polymarket, dan web. ± 66k★ |
+| Career Ops | [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops): agent cari kerja; scan lowongan dan beri skor 1–5 terhadap CV. ± 79k★ |
 | REA | kemungkinan = #11 `morluto/rea` |
 
 ## 3. Project besar / token cepat habis
 | Plugin | Catatan |
 |---|---|
-| GStack | *(?)* kemungkinan "gstack" |
+| GStack | repo utama `garrytan/gstack` belum muncul di pencarian (hanya fork, mis. Ahacad/gstack) |
 | Caveman | belum dicek (dari namanya kemungkinan menghemat token dengan jawaban ringkas) |
-| Claude Mem | belum dicek (dari namanya memori untuk Claude) |
+| Claude Mem | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem): konteks/memori permanen antar sesi untuk agent. ± 106k★ |
 | Headroom | belum dicek |
 | GSD | *(?)* kemungkinan "Get Shit Done" |
 | BMAD Method | *(?)* transkrip: "the PM. MAD method", kemungkinan "BMAD Method" |
