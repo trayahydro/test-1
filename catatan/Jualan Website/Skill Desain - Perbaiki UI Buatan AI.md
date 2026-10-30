@@ -82,6 +82,25 @@ Link dari hasil pencarian GitHub (2026-10-30). Google DESIGN.md terkonfirmasi le
 
 Taste, Impeccable, dan Awesome Design sudah muncul di beberapa video berbeda, jadi termasuk yang paling direkomendasikan untuk desain.
 
+## Resep website "seharga $10.000" dalam 4 langkah *(IG, transkrip)*
+> Klaim video: website terlihat premium, dibuat Claude dalam ± 2 menit; keempat langkah dibungkus dalam **satu repo** sehingga cukup menempel satu baris. Repo-nya tidak disebut di transkrip.
+
+1. **Pasang Claude Code** di terminal.
+2. **Tambahkan skill UI/UX Pro Max** ([nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)) supaya Claude otomatis membuat layout yang bersih dan modern.
+3. **Ambil hero section dari 21st.dev** *(transkrip: "21st, its dev")*, marketplace komponen UI siap pakai (React/Tailwind/shadcn). Tempel langsung ke project.
+4. **Tambahkan Framer Motion** *(transkrip: "frame of motion"; sekarang bernama **Motion**)* supaya setiap section beranimasi sendiri.
+
+**Kaitan:** sama dengan stack pilihan (Next.js + Tailwind + shadcn/ui + animasi) di [[Panduan - Jadi AI Engineer & Stack Pilihan]]. 21st.dev bisa jadi sumber komponen bersama React Bits, Watermelon UI, dan Motionsites.
+
+**Prompt contoh:**
+```
+Pakai skill UI/UX Pro Max. Buat landing page untuk [bisnis klien] dengan Next.js + Tailwind.
+Untuk hero, gunakan komponen ini dari 21st.dev: [tempel kode/link komponen].
+Tambahkan animasi masuk per section dengan Motion (framer-motion), halus dan tidak berlebihan,
+hormati prefers-reduced-motion. Warna & font ikuti DESIGN_SYSTEM.md.
+```
+"Website $10.000 dalam 2 menit" adalah klaim promosi. Hasil pertama tetap perlu disesuaikan dengan konten dan brand klien, dan dicek (SEO, keamanan, mobile) sebelum diserahkan.
+
 ## 4 repo efek visual yang bisa "dicuri" *(IG, transkrip)*
 > *"Designers these days use GitHub as their asset library."* Vibe coding menutup jarak antara desainer dan engineer.
 > **Cara pakai:** tidak perlu coding atau download. Arahkan Claude Code ke repo-nya, lalu jelaskan efek yang diinginkan.
