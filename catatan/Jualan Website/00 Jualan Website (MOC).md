@@ -33,6 +33,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Connector - 5 Connector Wajib untuk Claude]] *(IG)* | Perplexity, Firecrawl, Playwright, PostHog, Composio | lengkap |
 | [[WhatsApp Agent - Kapso]] *(IG)* | Agent WA booking otomatis lewat Claude Code + Kapso; ide paket upsell | lengkap |
 | [[SEO - Checklist Supaya Website Muncul di Google]] *(IG)* | Search Console, sitemap, SEO & GEO, meta tag, Google Business Profile | lengkap |
+| [[Hemat Biaya - Pembagian Model Claude (Opus, Sonnet, Haiku)]] *(IG)* | Opus merencanakan, Sonnet membangun, Haiku mencari; `/model opusplan` | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
