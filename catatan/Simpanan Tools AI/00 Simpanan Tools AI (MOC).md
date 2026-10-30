@@ -57,6 +57,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 35 | Day Trader skill | belum ada link | 11 skill Claude untuk analisis saham / day trading | transkrip IG |
 | 36 | "Azars" (?): agent asisten "Jarvis" | belum ada link | Agent pribadi yang menelepon dengan jadwal harian | transkrip IG |
 | 37 | Knowledge Work Plugins (Anthropic) | https://github.com/anthropics/knowledge-work-plugins | Plugin resmi Anthropic untuk pekerjaan kantor per peran | screenshot IG |
+| 38 | Founder Skill | belum ada link | 11 skill untuk menguji ide bisnis sebelum launch | transkrip IG |
 
 ## Detail per item
 
@@ -312,6 +313,17 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - **Fungsi (pengetahuan umum, cek README):** kumpulan plugin resmi Anthropic untuk **pekerjaan non-coding per peran/divisi**, misalnya sales, marketing, operasional, desain, engineering, data, keuangan, dan legal. Bisa dipakai di Claude (termasuk Cowork) dan Claude Code. Isinya skill + command siap pakai seperti laporan status, risk assessment, review desain, dan analisis data.
 - **Catatan:** beberapa plugin dari kumpulan ini (mis. *operations*, *design*, *engineering*, *data*) kemungkinan sudah tersedia di akun Claude Anda.
 - **Relevan untuk:** sisi bisnis jualan website, mis. plugin marketing/sales untuk promosi dan proposal, *operations* untuk SOP dan status report ke klien, *design* untuk review desain.
+
+### 38. Founder Skill (sumber: IG, transkrip)
+- **Isi:** 11 skill Claude, gratis, masing-masing satu tugas, untuk **menguji bisnis sebelum mengeluarkan uang**. Contoh:
+  - **Board of directors**: "dewan direksi" yang dilatih gaya pemikiran tokoh seperti Alex Hormozi, Peter Thiel, Steve Jobs
+  - **Marketing director**: strategi pemasaran
+  - **CFO**: mencari margin keuntungan
+  - **Consumer skill** *(paling menarik)*: membuat **swarm agent** yang meniru target pelanggan, masing-masing dengan tingkat penghasilan, keberatan, dan perilaku beli berbeda. Bisnis dijalankan melalui **100 skenario pembeli** untuk melihat siapa yang membeli, siapa yang tidak, dan kenapa.
+- **Klaim:** dapat rencana bisnis yang menguntungkan sebelum launch, alih-alih gagal setelah menghabiskan uang.
+- **Cara pasang (dari video):** tempel link ke Claude, lalu bilang "install skill". **Link belum ada** di transkrip; cari "founder skill claude" di GitHub.
+- **Catatan:** simulasi pembeli oleh AI hanya **perkiraan**, bukan pengganti validasi dengan calon pelanggan sungguhan (wawancara, pre-order, tes iklan kecil). "Dilatih pada tokoh X" biasanya berarti meniru gaya pemikirannya, bukan nasihat dari orangnya langsung.
+- **Relevan untuk:** ⭐ merancang **paket & harga jasa website**. Uji ke "pemilik UMKM" virtual (warung, salon, bengkel, klinik) untuk melihat keberatan umum (mahal, tidak perlu website, sudah punya IG) sebelum menawarkan ke klien nyata. Lihat topik harga di [[00 Jualan Website (MOC)]].
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
