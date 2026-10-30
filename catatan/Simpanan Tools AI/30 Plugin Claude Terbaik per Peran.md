@@ -18,7 +18,7 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 ## 1. Menulis kode: Claude bekerja seperti senior developer
 | Plugin | Catatan |
 |---|---|
-| Superpowers | repo utama belum terkonfirmasi (dugaan `obra/superpowers`). Terlihat: [obra/superpowers-marketplace](https://github.com/obra/superpowers-marketplace) (marketplace plugin Claude Code, ± 1,3k★) |
+| Superpowers | [obra/superpowers](https://github.com/obra/superpowers): framework agentic skill + metodologi pengembangan software. ± 309k★, MIT. **Terkonfirmasi** (halaman repo dibuka). Pasang: `/plugin install superpowers@claude-plugins-official` |
 | Matt Pocock skills | = #12 `mattpocock/skills` |
 | ECC | Everything Claude Code. Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
 | Karpathy skills ("Garbati") | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills): satu file CLAUDE.md untuk memperbaiki perilaku Claude Code, berdasarkan pengamatan Andrej Karpathy soal kesalahan umum LLM saat coding. ± 227k★. Sumber aslinya mungkin `forrestchang/andrej-karpathy-skills` |
@@ -39,16 +39,16 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | Plugin | Catatan |
 |---|---|
 | GStack | repo utama `garrytan/gstack` belum muncul di pencarian (hanya fork, mis. Ahacad/gstack) |
-| Caveman | belum dicek (dari namanya kemungkinan menghemat token dengan jawaban ringkas) |
+| Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman): "why use many token when few token do trick". Skill + proxy yang memangkas ± 65% token dengan gaya bicara ringkas ala manusia gua. ± 116k★ |
 | Claude Mem | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem): konteks/memori permanen antar sesi untuk agent. ± 106k★ |
-| Headroom | belum dicek |
-| GSD | *(?)* kemungkinan "Get Shit Done" |
-| BMAD Method | *(?)* transkrip: "the PM. MAD method", kemungkinan "BMAD Method" |
+| Headroom | proyek utama belum ketemu. Yang muncul hanya proyek kecil bernama sama, mis. [gglucass/headroom-desktop](https://github.com/gglucass/headroom-desktop) (aplikasi menu bar yang mengklaim memangkas biaya token Claude Code/Codex ± 50%, ± 628★) |
+| GSD | [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done): sistem meta-prompting, context engineering, dan spec-driven development untuk Claude Code. ± 64k★. **Status: diarsipkan** (public archive) |
+| BMAD Method | [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD): "Breakthrough Method for Agile AI Driven Development". ± 55k★ |
 
 ## 4. Desain & visual
 | Plugin | Catatan |
 |---|---|
-| UI UX Pro Max | ada di [[Skill Desain - Perbaiki UI Buatan AI]] |
+| UI UX Pro Max | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): skill "design intelligence" untuk UI/UX profesional di banyak platform. ± 143k★ |
 | Taste | = Taste Skill (catatan skill desain) |
 | Archify | belum dicek |
 | Impeccable | ada di catatan skill desain |
