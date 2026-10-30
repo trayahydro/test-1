@@ -36,6 +36,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Hemat Biaya - Pembagian Model Claude (Opus, Sonnet, Haiku)]] *(IG)* | Opus merencanakan, Sonnet membangun, Haiku mencari; `/model opusplan` | lengkap |
 | [[Dokumen Project - 4 Dokumen Wajib Vibe Coder]] *(IG)* | Template AGENTS.md, PRD.md, DESIGN_SYSTEM.md, ARCHITECTURE.md | lengkap |
 | [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]] *(IG)* | Alur automasi booking → konfirmasi → rute → laporan AI → invoice → ulasan; ide paket jasa lapangan | lengkap |
+| [[Workflow - Handoff untuk Mencegah Context Rot]] *(IG)* | handoff.md (6 bagian) + /clear, lebih baik dari /compact | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD + dokumen project** ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder|4 dokumen]]): prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
