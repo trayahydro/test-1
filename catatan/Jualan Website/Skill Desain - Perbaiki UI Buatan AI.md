@@ -99,6 +99,13 @@ Untuk hero, gunakan komponen ini dari 21st.dev: [tempel kode/link komponen].
 Tambahkan animasi masuk per section dengan Motion (framer-motion), halus dan tidak berlebihan,
 hormati prefers-reduced-motion. Warna & font ikuti DESIGN_SYSTEM.md.
 ```
+**Cara pakai 21st.dev (dari video IG kreator Indonesia):**
+1. Buka **21st.dev**, lalu pilih jenis **section** yang dibutuhkan (hero, background, fitur, pricing, testimonial, dll.).
+2. Pilih komponen yang tidak "pasaran"; di video dicontohkan komponen **background**.
+3. Klik **copy prompt** pada komponen itu, lalu tempel ke Claude Code / AI coding agent.
+4. Tunggu sampai selesai, lalu cek hasilnya. Eksplorasi section lain dengan cara yang sama.
+Pesan video: inilah cara supaya landing page **tidak kelihatan seperti buatan AI**, karena komponennya dibuat desainer.
+
 "Website $10.000 dalam 2 menit" adalah klaim promosi. Hasil pertama tetap perlu disesuaikan dengan konten dan brand klien, dan dicek (SEO, keamanan, mobile) sebelum diserahkan.
 
 ## 4 repo efek visual yang bisa "dicuri" *(IG, transkrip)*
