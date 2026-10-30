@@ -2,7 +2,7 @@
 tipe: moc
 topik: simpanan tools & repo AI dari TikTok/IG
 dibuat: 2026-10-29
-diperbarui: 2026-10-29
+diperbarui: 2026-10-30
 tags: [simpanan, tools-ai, github, inbox]
 ---
 
@@ -48,6 +48,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 29 | pm-skills | https://github.com/phuryn/pm-skills | Skill: product manager (strategi s/d launch) | screenshot |
 | 30 | book-to-skill | https://github.com/virgiliojr94/book-to-skill | Ubah buku PDF teknis jadi skill Claude | screenshot |
 | 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | belum dicek (skill Instagram) | link |
+| 32 | security-audit-skill | kemungkinan https://github.com/cloudflare/security-audit-skill (cek) | Skill: audit keamanan 6 fase | screenshot IG |
 
 ## Detail per item
 
@@ -244,6 +245,10 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - **Link:** https://github.com/Jakeschincariol/instagram-agent-skill
 - **Fungsi:** belum dicek. Dari namanya, skill agent untuk Instagram.
 - **Relevan untuk:** promosi jasa website lewat IG, kalau fungsinya sesuai.
+
+### 32. security-audit-skill (sumber: IG)
+- Skill audit keamanan 6 fase dengan temuan yang diverifikasi independen. Cikal bakal harness keamanan Cloudflare. ± 50,6k stars, MIT.
+- Detail lengkap ada di [[Keamanan - Checklist Sebelum Launch]].
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
