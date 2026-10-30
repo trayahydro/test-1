@@ -31,6 +31,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Panduan - Jadi AI Engineer & Stack Pilihan]] | Alur kerja per klien, stack utama, tambahan per paket (Basic/Standard/Pro) | lengkap |
 | [[Strategi - Bangun Software & Outreach Otomatis]] *(IG)* | Claude Code + Supabase, outreach DM/email otomatis (GrokBot / harvey) | lengkap |
 | [[Connector - 5 Connector Wajib untuk Claude]] *(IG)* | Perplexity, Firecrawl, Playwright, PostHog, Composio | lengkap |
+| [[WhatsApp Agent - Kapso]] *(IG)* | Agent WA booking otomatis lewat Claude Code + Kapso; ide paket upsell | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
@@ -47,7 +48,7 @@ Nomor `#` merujuk ke [[00 Simpanan Tools AI (MOC)]].
 
 ## Topik yang belum ada materinya
 - [ ] Cara cari klien (awal: [[Strategi - Bangun Software & Outreach Otomatis]])
-- [ ] Harga & paket
+- [ ] Harga & paket (ide upsell: agent WhatsApp, lihat [[WhatsApp Agent - Kapso]])
 - [ ] Portofolio
 - [ ] Closing & kontrak
 - [ ] Hosting, domain & maintenance (sebagian ada di catatan Stack)
