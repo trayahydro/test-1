@@ -253,6 +253,13 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - **Link:** https://github.com/Jakeschincariol/instagram-agent-skill
 - **Fungsi:** *"Thirteen Claude skills that run an Instagram account."* Reels dari 26 formula hook yang sudah dinilai, skill riset viral, caption linter, dan humanizer. Gratis, MIT. ± 3,8k★.
 - **Relevan untuk:** ⭐ **promosi jasa website lewat IG**.
+- **Tambahan dari IG (@ghostless.ai, "A free Claude skill finds what's already viral"):** 13 skill Instagram, **gratis, tanpa API key**, MIT, open source. Contoh command:
+  - `/ig-viral`: mencari dan meranking Reels yang sedang viral di niche tertentu
+  - `/ig-reel`: membuat Reel; contoh output: skor hook ("hook 86 STRONG") dan *beat sheet* (urutan adegan)
+  - `/ig-audit`: audit akun Instagram
+  - `/ig-profile`: optimasi profil
+- Caption: *"Posted 30 reels and got zero views? Stop guessing."* Riset dulu apa yang sudah viral, baru buat konten.
+- **Penerapan:** riset Reels viral di niche "jasa website" / "UMKM", lalu buat konten promosi berdasarkan pola hook yang terbukti.
 
 ### 32. security-audit-skill (sumber: IG)
 - Skill audit keamanan 6 fase dengan temuan yang diverifikasi independen. Cikal bakal harness keamanan Cloudflare. ± 50,6k stars, MIT.
