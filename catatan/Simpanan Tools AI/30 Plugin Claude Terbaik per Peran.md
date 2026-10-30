@@ -31,10 +31,20 @@ Nama awalnya dari transkrip suara, lalu **dikonfirmasi dengan caption video**: "
 |---|---|
 | Superpowers | [obra/superpowers](https://github.com/obra/superpowers): framework agentic skill + metodologi pengembangan software. ± 309k★, MIT. **Terkonfirmasi** (halaman repo dibuka). Pasang: `/plugin install superpowers@claude-plugins-official` |
 | Matt Pocock skills | = #12 `mattpocock/skills` |
-| ECC | Everything Claude Code ("paket besar skill dan agent"). Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
+| ECC | **[affaan-m/ECC](https://github.com/affaan-m/ECC)** (Everything Claude Code; URL lama affaan-m/everything-claude-code dialihkan ke sini). **Terkonfirmasi**, ± 293k★, MIT, situs ecc.tools. Lihat detail di bawah. *(Repo WorldFlowAI/everything-claude-code yang tercatat sebelumnya bukan yang resmi.)* |
 | Karpathy skills ("Garbati") | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills): satu file CLAUDE.md untuk memperbaiki perilaku Claude Code, berdasarkan pengamatan Andrej Karpathy soal kesalahan umum LLM saat coding. ± 227k★. Sumber aslinya mungkin `forrestchang/andrej-karpathy-skills` |
 | Ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): "AI agent berpikir seperti senior dev paling malas: kode terbaik adalah kode yang tidak perlu ditulis." ± 181k★ |
 | Agent skills | repo bernama persis "agent-skills" belum ketemu. Kandidat: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills), daftar kurasi Claude Skills (± 78k★) |
+
+### Detail: ECC, Everything Claude Code *(IG, video kedua)*
+- **Dari video:** setup Claude Code pribadi seorang developer yang dibuka jadi open source. Berisi ± 286 skill dan 68 sub-agent yang membuat Claude bekerja seperti satu tim developer. Ada skill yang memindai celah keamanan, menjaga memori tetap bersih, dan belajar dari sesi-sesi sebelumnya. Jalan juga di Cursor, Codex, dan Gemini. Pembuatnya **memakai setup ini untuk memenangkan hackathon Anthropic**.
+- **Dari halaman repo (dicek 2026-10-30):** *"The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond."*
+  - README terbaru: **71 agent, 314 skill, 98 command**, plus hooks, rules, memori, continuous learning, dan scanner keamanan **AgentShield**. Angkanya berbeda dari video karena repo terus bertambah.
+  - README menyebut dibuat di **Claude Code Hackathon (Cerebral Valley × Anthropic)**.
+  - Paling optimal di Claude Code. Codex punya jalur plugin native; Cursor, Gemini, OpenCode, dll. lewat *adapter* yang fiturnya terbatas.
+  - **Pasang:** `/plugin install ecc@ecc` di Claude Code, atau `npx ecc-universal@2.2.3 setup` (cek versi terbaru di README).
+  - ⚠️ README memperingatkan: **unggahan ulang oleh pihak ketiga bisa berisi malware**. Sumber resmi hanya github.com/affaan-m/ECC.
+- Sesuai saran video "30 plugin": jangan langsung pasang semuanya. ECC sangat besar; pilih bagian yang dibutuhkan.
 
 ## 2. Riset / memahami hal besar
 | Plugin | Catatan |
