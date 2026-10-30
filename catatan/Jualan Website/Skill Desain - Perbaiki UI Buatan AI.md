@@ -71,6 +71,27 @@ Link dari hasil pencarian GitHub (2026-10-30). Google DESIGN.md terkonfirmasi le
 - Video menunjukkan alur **Figma ⇄ MCP ⇄ Playwright**: desain dibaca dari Figma lewat MCP, dibangun, lalu dicek otomatis di browser dengan Playwright.
 - Kaitan: skill `figma-mcp` dan `playwright-tester` di claude-web-design-skills, serta prompt 5 (E2E test).
 
+## 4 repo efek visual yang bisa "dicuri" *(IG, transkrip)*
+> *"Designers these days use GitHub as their asset library."* Vibe coding menutup jarak antara desainer dan engineer.
+> **Cara pakai:** tidak perlu coding atau download. Arahkan Claude Code ke repo-nya, lalu jelaskan efek yang diinginkan.
+
+| # | Repo | Efek | Link (dugaan, belum dicek) |
+|---|---|---|---|
+| 1 | **React Three Fiber** | memasukkan library 3D Three.js ke website (React) | kemungkinan `github.com/pmndrs/react-three-fiber` |
+| 2 | **liquidglass.js** | efek **liquid glass ala Apple** dengan kontrol lengkap | cari "liquidglass.js" di GitHub |
+| 3 | **Shader Gradient** | gradien bergerak yang halus di React; bisa diatur bentuk, warna, dan gerakannya | kemungkinan `github.com/ruucm/shadergradient` |
+| 4 | **Liquid Logo** | tampilan logam cair krom untuk logo atau objek apa pun | cari "liquid logo" di GitHub |
+
+**Kaitan:** Three.js Skills (#20), Canvas UI, React Bits, dan gaya "Liquid Glass" di daftar 20 efek Claude (#4 simpanan).
+
+**Contoh prompt:**
+```
+Pelajari repo [LINK REPO]. Lalu tambahkan efek [shader gradient bergerak] di hero section
+website ini dengan warna brand dari DESIGN_SYSTEM.md. Pastikan tetap ringan di HP
+(matikan atau sederhanakan efek di perangkat lemah dan untuk prefers-reduced-motion).
+```
+Efek 3D/shader berat bisa memperlambat website. Cek skor Lighthouse di HP setelah menambahkannya.
+
 ## Link tambahan
 - **Prompt Motion**: https://prompt-motion.com/. Dari namanya, prompt untuk animasi/motion design. Belum dicek.
 - **threeui (MengTo)**: https://github.com/MengTo/threeui. MengTo adalah kreator Design+Code. Dari namanya, UI berbasis Three.js/3D. Belum dicek.
