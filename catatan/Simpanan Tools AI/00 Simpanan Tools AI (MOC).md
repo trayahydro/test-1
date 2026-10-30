@@ -25,9 +25,9 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 3 | premiere-pro-mcp | https://github.com/leancoderkavy/premiere-pro-mcp | Edit video: Premiere Pro × AI | screenshot |
 | 4 | 20 Video Effects Created by Claude | belum ada link | Efek video buatan Claude | screenshot |
 | 5 | Agent Reach | https://github.com/Panniantong/Agent-Reach | AI agent: akses internet | screenshot |
-| 6 | harvey | https://github.com/ethanplusai/harvey | belum dicek | link |
-| 7 | freefield | https://github.com/neuregex/freefield | belum dicek (open source) | link |
-| 8 | voicebox | https://github.com/jamiepine/voicebox | belum dicek | link |
+| 6 | harvey | https://github.com/ethanplusai/harvey | **AI sales agent** (cari prospek, cold email) | link |
+| 7 | freefield | https://github.com/neuregex/freefield | Higgsfield open source di ComfyUI (video AI) | link |
+| 8 | voicebox | https://github.com/jamiepine/voicebox | Studio suara AI: clone, dikte, TTS | link |
 | 9 | Adobe_Premiere_Pro_MCP | https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP | Edit video: Premiere Pro × Claude Code | screenshot |
 | 10 | Concat | https://github.com/jub0t/Concat | Editor video gratis (pengganti CapCut) | screenshot |
 | 11 | rea | https://github.com/morluto/rea | MCP: reverse engineering aplikasi | screenshot |
@@ -36,9 +36,9 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 14 | hyperframes | https://github.com/heygen-com/hyperframes | Video dari HTML untuk AI agent | screenshot |
 | 15 | openGym | https://github.com/DuarteSantos8/openGym | Aplikasi tracker gym (self-hosted) | screenshot |
 | 16 | 20 Claude Animation Styles | belum ada link | Gaya animasi buatan Claude | screenshot |
-| 17 | OpenMontage | https://github.com/calesthio/OpenMontage | Video/montage dengan agent skills | screenshot |
-| 18 | animate | https://github.com/cth9191/animate | belum dicek (open source) | link |
-| 19 | motionmaxxing | https://github.com/tejashmakwana/motionmaxxing | belum dicek (open source) | link |
+| 17 | OpenMontage | https://github.com/calesthio/OpenMontage | Sistem produksi video agentic | screenshot |
+| 18 | animate | https://github.com/cth9191/animate | Animasi prosedural untuk Claude Code | link |
+| 19 | motionmaxxing | https://github.com/Tejashmakwana/motionmaxxing | Skill: video AI jadi kelas motion designer | link |
 | 20 | Three.js Skills | https://github.com/CloudAI-X/threejs-skills | Skill: 3D web (Three.js) | screenshot (sumber: @rifqieh) |
 | 21 | GSAP Skill | https://github.com/greensock/gsap-skills | Skill resmi: animasi web GSAP | screenshot (@rifqieh) |
 | 22 | Design DNA | https://github.com/zanwei/design-dna | Skill: ekstrak & tiru gaya desain web | screenshot (@rifqieh) |
@@ -50,7 +50,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 28 | Cybersecurity Skills | https://github.com/mukul975/Anthropic-Cybersecurity-Skills (nama terpotong, cek) | Skill: 817 skill keamanan | screenshot |
 | 29 | pm-skills | https://github.com/phuryn/pm-skills | Skill: product manager (strategi s/d launch) | screenshot |
 | 30 | book-to-skill | https://github.com/virgiliojr94/book-to-skill | Ubah buku PDF teknis jadi skill Claude | screenshot |
-| 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | belum dicek (skill Instagram) | link |
+| 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | 13 skill untuk menjalankan akun Instagram | link |
 | 32 | security-audit-skill | https://github.com/cloudflare/security-audit-skill | Skill: audit keamanan 6 fase | screenshot IG |
 
 ## Detail per item
@@ -92,16 +92,19 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 - **Relevan untuk:** riset prospek dan lead (misalnya data bisnis dari Google Maps untuk calon klien website).
 
 ### 6. harvey
-- **Link:** https://github.com/ethanplusai/harvey
-- **Fungsi:** belum dicek.
+- **Link:** https://github.com/ethanplusai/harvey (± 3,4k★, MIT, Python)
+- **Fungsi:** *"Autonomous AI sales agent powered by Claude Code or Codex."* Mencari prospek, menulis cold email, mengirim kampanye, membalas respons, dan membuat jadwal meeting. Tidak perlu API key karena jalan di langganan Claude/Codex.
+- **Relevan untuk:** ⭐ **sangat relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]**, yaitu mencari calon klien dan mengirim penawaran otomatis. Perhatikan etika dan aturan anti-spam; kirim ke prospek yang relevan saja.
 
 ### 7. freefield
-- **Link:** https://github.com/neuregex/freefield (open source)
-- **Fungsi:** belum dicek.
+- **Link:** https://github.com/neuregex/freefield (± 263★, MIT)
+- **Fungsi:** *"Open-source Higgsfield on ComfyUI: every app is one folder, every model is open weights."* Versi open source dari Higgsfield (tool video/gambar AI) yang berjalan di ComfyUI.
+- **Catatan:** butuh GPU kuat, jadi tidak cocok untuk laptop dengan grafis bawaan.
 
 ### 8. voicebox
-- **Link:** https://github.com/jamiepine/voicebox
-- **Fungsi:** belum dicek. Dari namanya kemungkinan terkait suara/TTS. Kalau benar, bisa jadi alternatif voice-over natural untuk video.
+- **Link:** https://github.com/jamiepine/voicebox (± 59k★, MIT)
+- **Fungsi:** *"The open-source AI voice studio. Clone, dictate, create."* Studio suara AI: clone suara, dikte (Whisper), dan TTS (Qwen3-TTS). Mendukung CUDA dan MLX (Mac).
+- **Relevan untuk:** ⭐ **voice-over natural** untuk video SWRO Traya berikutnya, sebagai alternatif Piper yang terdengar kaku. Cek dukungan bahasa Indonesia dan kebutuhan GPU.
 
 ### 9. Adobe_Premiere_Pro_MCP
 - **Link:** https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP (publik, ± 684 stars, 129 fork). Nama pemilik dibaca dari URL di screenshot.
@@ -170,15 +173,16 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 ### 17. OpenMontage (calesthio/OpenMontage)
 - **Link:** https://github.com/calesthio/OpenMontage (publik, 97 issues, 245 pull request, aktif)
 - **Isi yang terlihat:** folder `.agents/skills`, berarti berbasis agent skills. Ada PR dengan kata "wan2", kemungkinan model video Wan 2.x.
-- **Fungsi:** belum dicek. Dari namanya kemungkinan untuk membuat montage/video otomatis dengan AI agent.
+- **Fungsi (dari halaman repo):** *"World's first open-source, agentic video production system."* 12 pipeline produksi, 100+ tool, 700+ file skill. Mengubah AI coding assistant jadi studio produksi video lengkap (komposer Remotion). ± 73k★, AGPL-3.0.
 
 ### 18. animate (cth9191/animate)
-- **Link:** https://github.com/cth9191/animate (open source)
-- **Fungsi:** belum dicek. Dari namanya terkait animasi, mungkin sumber item 16.
+- **Link:** https://github.com/cth9191/animate (± 1,1k★, MIT)
+- **Fungsi:** animasi prosedural dengan gaya apa pun untuk Claude Code: video canvas pendek satu file, dengan cek cerita, tampilan, dan storyboard. Ada 7 gaya bawaan atau gaya dari referensi sendiri, musik sendiri (sinkron ketukan), screenshot produk asli, dan semua format dari satu karya.
+- **Kemungkinan** sumber video "20 Claude Animation Styles" (#16).
 
-### 19. motionmaxxing (tejashmakwana/motionmaxxing)
-- **Link:** https://github.com/tejashmakwana/motionmaxxing (open source)
-- **Fungsi:** belum dicek. Dari namanya terkait motion/animasi.
+### 19. motionmaxxing (Tejashmakwana/motionmaxxing)
+- **Link:** https://github.com/Tejashmakwana/motionmaxxing (± 1,1k★, Apache-2.0)
+- **Fungsi:** *"Looksmaxxing for motion graphics."* Agent skill yang mengubah video AI asal-asalan jadi film yang terlihat dibuat motion designer.
 
 ### Kumpulan skill web dari @rifqieh ("Build web and mobile apps")
 Lima skill di bawah berasal dari satu video carousel. **Sangat relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]**, karena semuanya membuat website buatan Claude terlihat premium.
@@ -246,8 +250,8 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 
 ### 31. instagram-agent-skill (Jakeschincariol/instagram-agent-skill)
 - **Link:** https://github.com/Jakeschincariol/instagram-agent-skill
-- **Fungsi:** belum dicek. Dari namanya, skill agent untuk Instagram.
-- **Relevan untuk:** promosi jasa website lewat IG, kalau fungsinya sesuai.
+- **Fungsi:** *"Thirteen Claude skills that run an Instagram account."* Reels dari 26 formula hook yang sudah dinilai, skill riset viral, caption linter, dan humanizer. Gratis, MIT. ± 3,8k★.
+- **Relevan untuk:** ⭐ **promosi jasa website lewat IG**.
 
 ### 32. security-audit-skill (sumber: IG)
 - Skill audit keamanan 6 fase dengan temuan yang diverifikasi independen. Cikal bakal harness keamanan Cloudflare. ± 50,6k stars, MIT.
@@ -269,7 +273,7 @@ Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks a
 **Kapan dipakai:** sebelum mengerjakan tugas penting, misalnya desain website klien, riset pasar, atau proposal.
 
 ## Yang perlu dicek nanti (di PC lokal)
-- [ ] Buka link tanpa deskripsi (harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing, instagram-agent-skill), lalu isi fungsinya.
+- [x] Deskripsi harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing, instagram-agent-skill sudah diisi dari halaman repo (2026-10-30).
 - [x] Link huashu-motion, Agent Reach, Concat sudah ketemu (2026-10-30).
 - [ ] Cari sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
