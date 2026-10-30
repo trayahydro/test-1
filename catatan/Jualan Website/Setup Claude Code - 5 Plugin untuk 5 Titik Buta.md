@@ -29,6 +29,8 @@ Catatan transkrip: "Adios Mani" = **Addy Osmani** (engineer Google Chrome). Ini 
 ```
 Nama plugin persisnya belum terlihat saat dicek; jalankan `/plugin` di Claude Code untuk melihat daftar resminya.
 
+*Tambahan (IG, screenshot video lain):* Frontend Design berbentuk file **`frontend-design/SKILL.md`**, yaitu sebuah skill. Kemungkinan ada juga di repo skill resmi [anthropics/skills](https://github.com/anthropics/skills) (#30 plugin: "Skills by Anthropic"). Videonya dari kreator lain lagi, jadi skill ini termasuk yang paling sering direkomendasikan.
+
 **3. Agent Skills**: [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills): *"Production-grade engineering skills for AI coding agents."* ± 112k★, MIT, 25 skill. **Terkonfirmasi.**
 ```
 /plugin marketplace add addyosmani/agent-skills
