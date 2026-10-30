@@ -37,6 +37,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Dokumen Project - 4 Dokumen Wajib Vibe Coder]] *(IG)* | Template AGENTS.md, PRD.md, DESIGN_SYSTEM.md, ARCHITECTURE.md | lengkap |
 | [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]] *(IG)* | Alur automasi booking → konfirmasi → rute → laporan AI → invoice → ulasan; ide paket jasa lapangan | lengkap |
 | [[Workflow - Handoff untuk Mencegah Context Rot]] *(IG)* | handoff.md (6 bagian) + /clear, lebih baik dari /compact | lengkap |
+| [[Setup Claude Code - 5 Plugin untuk 5 Titik Buta]] *(IG)* | Security Guidance, Frontend Design, Agent Skills (Addy Osmani), Ponytail, Chrome DevTools MCP + perintah pasang | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD + dokumen project** ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder|4 dokumen]]): prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
