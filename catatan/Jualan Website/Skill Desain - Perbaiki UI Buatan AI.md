@@ -22,22 +22,31 @@ Kaitan: [[00 Jualan Website (MOC)]] · [[Referensi Desain - Sumber Inspirasi Web
 **The full pack (tools):** Claude · Cursor · Figma · Vercel · Supabase · Raycast
 
 ## 12 GitHub Repos That Fix AI-Generated UI
-| # | Repo | Stars (di video) |
-|---|---|---|
-| 1 | UI/UX Pro Max Skill | 137.459 |
-| 2 | Awesome DESIGN.md | 122.227 |
-| 3 | Open Design | 102.408 |
-| 4 | Taste Skill | 99.143 |
-| 5 | Impeccable | 82.958 |
-| 6 | React Bits | 49.689 |
-| 7 | Emil Kowalski Skills | 47.523 |
-| 8 | Hallmark | 30.374 |
-| 9 | Google DESIGN.md | 28.421 |
-| 10 | GSAP Skills | 16.632 |
-| 11 | Scroll World | 10.264 |
-| 12 | Canvas UI | 5.018 |
+| # | Repo | Link | Stars (di video) |
+|---|---|---|---|
+| 1 | UI/UX Pro Max Skill | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 137.459 |
+| 2 | Awesome DESIGN.md | [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) | 122.227 |
+| 3 | Open Design | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 102.408 |
+| 4 | Taste Skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 99.143 |
+| 5 | Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | 82.958 |
+| 6 | React Bits | [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits) | 49.689 |
+| 7 | Emil Kowalski Skills | [emilkowalski/skills](https://github.com/emilkowalski/skills) | 47.523 |
+| 8 | Hallmark | [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | 30.374 |
+| 9 | Google DESIGN.md | [google-labs-code/design.md](https://github.com/google-labs-code/design.md) | 28.421 |
+| 10 | GSAP Skills | [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | 16.632 |
+| 11 | Scroll World | [oso95/scroll-world](https://github.com/oso95/scroll-world) | 10.264 |
+| 12 | Canvas UI | [DavidHDev/canvas-ui](https://github.com/DavidHDev/canvas-ui) | 5.018 |
 
-Link per repo belum ada, cari namanya di GitHub. GSAP Skills = #21 dan Emil Kowalski = #27 di daftar simpanan.
+Link dari hasil pencarian GitHub (2026-10-30). Google DESIGN.md terkonfirmasi lewat halaman repo. GSAP Skills = #21 dan Emil Kowalski = #27 di daftar simpanan.
+
+**Keterangan singkat:**
+- **Awesome DESIGN.md**: kumpulan file DESIGN.md hasil analisis design system brand terkenal; taruh di project supaya agent membuat UI yang sesuai.
+- **Open Design**: workspace agent desain AI kolaboratif, local-first (motion, prototipe, website, app, dashboard, presentasi).
+- **React Bits**: library komponen React/Next.js beranimasi dan interaktif, open source terbesar.
+- **Hallmark**: skill desain anti-"AI slop" untuk Claude Code, Cursor, dan Codex.
+- **Google DESIGN.md**: format spesifikasi resmi Google Labs untuk menjelaskan identitas visual ke coding agent (Apache-2.0, npm `@google/design.md`, masih alpha).
+- **Scroll World**: skill yang mengubah brand apa pun jadi landing page dunia 3D yang bisa di-scroll.
+- **Canvas UI**: komponen kanvas kreatif (HTML asli + efek WebGL) untuk React, Vue, Svelte, dan vanilla.
 
 ## Taste Skill (detail dari screenshot README)
 - *"A collection of skills that improve how AI tools write frontend. AI builds modern, premium designs with proper animation, typography, spacing, layout, visual hierarchy and design taste."*
@@ -55,7 +64,7 @@ Link per repo belum ada, cari namanya di GitHub. GSAP Skills = #21 dan Emil Kowa
   })
   console.log(result)
   ```
-- Repo di screenshot: `taste-skill/taste-skill`, v1.2.0, MIT, ± 482 stars. Angka ini beda jauh dengan 99.143 di daftar 12 repo, jadi **kemungkinan repo berbeda**. Cek yang asli.
+- Repo di screenshot (`taste-skill/taste-skill`) **tidak ada di GitHub** (404). Repo aslinya **[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)** (± 106k★): memberi coding agent "selera" lewat art direction, gambar referensi, dan cek di browser.
 - Perintah `npx install` tidak lazim (biasanya `npm install` atau `npx skills add`). Ikuti README asli saat memasang.
 
 ## Figma × Playwright lewat MCP
@@ -65,12 +74,15 @@ Link per repo belum ada, cari namanya di GitHub. GSAP Skills = #21 dan Emil Kowa
 ## Link tambahan
 - **Prompt Motion**: https://prompt-motion.com/. Dari namanya, prompt untuk animasi/motion design. Belum dicek.
 - **threeui (MengTo)**: https://github.com/MengTo/threeui. MengTo adalah kreator Design+Code. Dari namanya, UI berbasis Three.js/3D. Belum dicek.
-- **Orca** dan **Oh-my-pi**: disebut sebagai *coding agent*. Link belum ada, cari namanya.
+- **Orca**: [stablyai/orca](https://github.com/stablyai/orca). Tempat menjalankan banyak coding agent sekaligus (mis. Claude Code) dengan langganan sendiri. ± 111k★.
+- **Oh-my-pi**: [can1357/oh-my-pi](https://github.com/can1357/oh-my-pi). Coding agent dengan IDE terintegrasi (Stencil Labs). ± 37k★.
 
 ## Claude Code + Figcraft vs Google Stitch
 - Klaim dari video TikTok: **Claude Code + Figcraft lebih bagus dari Google Stitch** untuk membuat desain UI.
 - **Google Stitch:** tool desain UI berbasis AI dari Google.
-- **Figcraft:** link dan cara kerjanya belum dicatat. Dari namanya kemungkinan terkait Figma (desain di Figma dikerjakan oleh Claude Code). *Cek di PC lokal.*
+- **Figcraft:** dua kandidat di GitHub:
+  - [divikwu/figcraft](https://github.com/divikwu/figcraft): *"AI-driven Figma plugin that follows design specs. MCP bridge between IDE and Figma."* Plugin Figma + jembatan MCP antara IDE (Claude Code) dan Figma. **Paling cocok** dengan "Claude Code + Figcraft", walau bintangnya baru ± 5.
+  - [storytold/figcraft](https://github.com/storytold/figcraft): aplikasi desain antarmuka open source berbasis Rust (± 3,9k★). Kemungkinan bukan yang dimaksud.
 - **Ide uji:** buat satu landing page yang sama dengan Claude Code + Figcraft dan dengan Google Stitch, lalu bandingkan.
 
 ## Rekomendasi setup awal (untuk dicoba di PC lokal)

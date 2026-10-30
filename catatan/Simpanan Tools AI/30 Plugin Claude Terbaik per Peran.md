@@ -29,7 +29,7 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | Plugin | Catatan |
 |---|---|
 | Graphify | [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify): ubah codebase + dokumen, skema SQL, config, PDF jadi knowledge graph yang bisa ditanya; skill `/graphify`. ± 139k★ |
-| Agent Reach | = #5 (akses internet untuk agent) |
+| Agent Reach | = #5: [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach): agent bisa membaca dan mencari di Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu lewat satu CLI. ± 107k★ |
 | Understand Anything | [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything): ubah kode jadi knowledge graph interaktif untuk dipelajari. ± 89k★ |
 | Last 30 Days | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill): riset topik apa pun di Reddit, X, YouTube, HN, Polymarket, dan web. ± 66k★ |
 | Career Ops | [career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops): agent cari kerja; scan lowongan dan beri skor 1–5 terhadap CV. ± 79k★ |
@@ -41,7 +41,7 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | GStack | [garrytan/gstack](https://github.com/garrytan/gstack): setup Claude Code milik Garry Tan; 23 tool yang berperan sebagai CEO, Designer, Eng Manager, Release Manager, Doc Engineer, dan QA. ± 138k★. **Terkonfirmasi** |
 | Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman): "why use many token when few token do trick". Skill + proxy yang memangkas ± 65% token dengan gaya bicara ringkas ala manusia gua. ± 116k★ |
 | Claude Mem | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem): konteks/memori permanen antar sesi untuk agent. ± 106k★ |
-| Headroom | repo utama belum terkonfirmasi. Pemiliknya kemungkinan **chopratejas** (ada [headroom-zed](https://github.com/chopratejas/headroom-zed) dan headroom-swift: "context compression for AI agents"). Cari `chopratejas/headroom` |
+| Headroom | [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom): mengompres output tool, log, file, dan potongan RAG sebelum masuk ke LLM. Klaim: token coding agent turun ± 20%, JSON turun 60–95%, jawaban sama. Tersedia sebagai library, proxy, dan MCP server; mendukung `headroom wrap claude`. ± 78k★. **Terkonfirmasi** |
 | GSD | [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done): sistem meta-prompting, context engineering, dan spec-driven development untuk Claude Code. ± 64k★. **Status: diarsipkan** (public archive) |
 | BMAD Method | [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD): "Breakthrough Method for Agile AI Driven Development". ± 55k★ |
 
@@ -52,7 +52,7 @@ Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yan
 | Taste | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill): memberi coding agent "selera": art direction, gambar referensi, dan cek di browser supaya tidak menghasilkan halaman AI generik. ± 106k★ |
 | Archify | [tt-a1i/archify](https://github.com/tt-a1i/archify): ubah ide, rencana, atau codebase jadi diagram interaktif yang bagus; skill untuk Claude Code, Codex, dll. ± 92k★ |
 | Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable): kosakata desain untuk coding agent. Arahkan dengan *polish* / *bolder*, review dengan *critique* / *audit*, tangkap "AI slop" sebelum rilis. ± 96k★ |
-| PPT Master | belum ketemu dengan nama ini. Mirip: [tristan-mcinnis/pptx-from-layouts-skill](https://github.com/tristan-mcinnis/pptx-from-layouts-skill) (skill Claude Code untuk membuat PowerPoint dari markdown, ± 40★) |
+| PPT Master | [hugohe3/ppt-master](https://github.com/hugohe3/ppt-master): AI mengubah dokumen atau topik jadi PowerPoint asli (shape, transisi, animasi, chart berbasis data). ± 71k★ |
 | Diagram Design | = #13 `cathrynlavery/diagram-design` |
 
 ## 5. Menulis & video

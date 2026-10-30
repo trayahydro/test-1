@@ -60,5 +60,6 @@ Prompt ini disusun dari checklist di atas dan bukan bagian dari video aslinya.
   2. **Coverage-led hunting**: menugaskan "hunter" terpisah dari unit ledger, mencatat pengecekannya, dan memakai coverage critics…
   3–6. Belum terlihat di screenshot.
 - **Angka:** ± 50,6k stars, 3,2k fork, MIT, 14 commit, kontributor literally-dan dan CooperSheroy (Sheroy Cooper).
-- **Link:** nama pemilik repo tidak terlihat. Ikon oranye mirip logo Cloudflare, jadi **kemungkinan** `github.com/cloudflare/security-audit-skill`. *Cek dulu.*
+- **Link:** **https://github.com/cloudflare/security-audit-skill** (milik organisasi Cloudflare, ± 53k★; ketemu lewat pencarian GitHub 2026-10-30).
+- Skill keamanan lain yang ditemukan: [trailofbits/skills](https://github.com/trailofbits/skills) (Trail of Bits, ± 7,9k★) dan [raroque/vibe-security-skill](https://github.com/raroque/vibe-security-skill) (± 1,2k★).
 - **Relevan untuk:** audit menyeluruh sebelum serah terima website/aplikasi klien yang punya login atau database.

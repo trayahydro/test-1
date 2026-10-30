@@ -21,15 +21,15 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | # | Nama | Link | Kategori | Sumber |
 |---|------|------|----------|--------|
 | 1 | Openjutsu | https://github.com/D3voz/openjutsu | Video AI: tukar karakter/objek | screenshot |
-| 2 | huashu-motion | belum ada link (cari di GitHub) | Video: film peluncuran produk | screenshot |
+| 2 | huashu-motion | https://github.com/alchaincyf/huashu-motion | Video: film peluncuran produk | screenshot |
 | 3 | premiere-pro-mcp | https://github.com/leancoderkavy/premiere-pro-mcp | Edit video: Premiere Pro × AI | screenshot |
 | 4 | 20 Video Effects Created by Claude | belum ada link | Efek video buatan Claude | screenshot |
-| 5 | Agent Reach | belum ada link (cari di GitHub) | AI agent: akses internet | screenshot |
+| 5 | Agent Reach | https://github.com/Panniantong/Agent-Reach | AI agent: akses internet | screenshot |
 | 6 | harvey | https://github.com/ethanplusai/harvey | belum dicek | link |
 | 7 | freefield | https://github.com/neuregex/freefield | belum dicek (open source) | link |
 | 8 | voicebox | https://github.com/jamiepine/voicebox | belum dicek | link |
 | 9 | Adobe_Premiere_Pro_MCP | https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP | Edit video: Premiere Pro × Claude Code | screenshot |
-| 10 | Concat | belum ada link | Editor video gratis (pengganti CapCut) | screenshot |
+| 10 | Concat | https://github.com/jub0t/Concat | Editor video gratis (pengganti CapCut) | screenshot |
 | 11 | rea | https://github.com/morluto/rea | MCP: reverse engineering aplikasi | screenshot |
 | 12 | skills (Matt Pocock) | https://github.com/mattpocock/skills | Agent skills untuk Claude | screenshot |
 | 13 | diagram-design | https://github.com/cathrynlavery/diagram-design | Skill: 44 jenis diagram HTML+SVG | screenshot |
@@ -51,7 +51,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 29 | pm-skills | https://github.com/phuryn/pm-skills | Skill: product manager (strategi s/d launch) | screenshot |
 | 30 | book-to-skill | https://github.com/virgiliojr94/book-to-skill | Ubah buku PDF teknis jadi skill Claude | screenshot |
 | 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | belum dicek (skill Instagram) | link |
-| 32 | security-audit-skill | kemungkinan https://github.com/cloudflare/security-audit-skill (cek) | Skill: audit keamanan 6 fase | screenshot IG |
+| 32 | security-audit-skill | https://github.com/cloudflare/security-audit-skill | Skill: audit keamanan 6 fase | screenshot IG |
 
 ## Detail per item
 
@@ -65,7 +65,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 ### 2. huashu-motion
 - **Tagline:** *"Commercial-grade product launch films, in one go."* Membuat film peluncuran produk kelas komersial sekaligus.
 - **Badge yang terlihat:** License MIT, **Agent Skills** Standard, berarti berupa skill untuk AI agent (misalnya Claude).
-- **Link:** belum ada, cari "huashu-motion" di GitHub.
+- **Link:** https://github.com/alchaincyf/huashu-motion (± 1,9k★). Deskripsi: agent membuat video promosi produk kelas komersial sekali jadi; bisa membuat musik dan mengubah bagian video dengan menunjuk frame-nya.
 - **Relevan untuk:** video promosi produk, misalnya video SWRO Traya berikutnya.
 
 ### 3. premiere-pro-mcp
@@ -88,7 +88,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 - **Tagline (Mandarin):** 给你的 AI Agent 一键装上互联网能力, artinya "satu klik memberi AI Agent kemampuan akses internet". Memilih, memasang, dan mengecek cara akses yang paling stabil, jadi kalau cara aksesnya berubah pengguna tidak perlu repot.
 - **Badge:** GitHub Trending **#1 Repository of the Day**, Global Rank #142, lisensi MIT, Python 3.10+, ± 98K stars.
 - **Fitur yang terlihat:** *BrowserAct*, yaitu mengambil data dari situs rumit seperti Amazon, LinkedIn, X, dan Google Maps dengan perintah bahasa biasa. Agent memakai browser asli, menghasilkan bot pengambil data yang bisa dipakai ulang, dan mengembalikan hasil terstruktur.
-- **Link:** belum ada, cari "Agent Reach" di GitHub.
+- **Link:** https://github.com/Panniantong/Agent-Reach (± 107k★, dari hasil pencarian GitHub).
 - **Relevan untuk:** riset prospek dan lead (misalnya data bisnis dari Google Maps untuk calon klien website).
 
 ### 6. harvey
@@ -111,7 +111,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 ### 10. Concat
 - **Tagline:** *"The free, open-source, cross-platform CapCut replacement."* Editor video gratis dan open source, jalan di Windows, Mac, dan Linux, sebagai pengganti CapCut.
 - **Tampilan:** mirip CapCut (timeline, teks, panel tipografi).
-- **Link:** belum ada, cari "Concat CapCut replacement" di GitHub.
+- **Link:** https://github.com/jub0t/Concat (± 12,8k★). Dibuat dengan Rust + ffmpeg, *local-first*, bisa dikendalikan lewat JSON-RPC API & **MCP**, jadi bisa diperintah Claude.
 - **Relevan untuk:** edit konten TikTok/IG tanpa langganan CapCut Pro.
 
 ### 11. rea (morluto/rea)
@@ -270,7 +270,8 @@ Untuk membuat hasil kerja AI lebih mendalam, bukan sekadar lebih panjang. Teks a
 
 ## Yang perlu dicek nanti (di PC lokal)
 - [ ] Buka link tanpa deskripsi (harvey, freefield, voicebox, OpenMontage, animate, motionmaxxing, instagram-agent-skill), lalu isi fungsinya.
-- [ ] Cari link huashu-motion, Agent Reach, Concat, sumber "20 Video Effects" dan "20 Claude Animation Styles".
+- [x] Link huashu-motion, Agent Reach, Concat sudah ketemu (2026-10-30).
+- [ ] Cari sumber "20 Video Effects" dan "20 Claude Animation Styles".
 - [ ] Bandingkan 2 MCP Premiere Pro (item 3 dan 9).
 - [ ] Cek kebutuhan hardware tiap tool. Laptop: Ryzen 3 5300U, Radeon bawaan, RAM 8 GB.
 - [ ] Tandai mana yang relevan untuk [[00 Jualan Website (MOC)|Jualan Website]]. Kandidat awal: #20–24 dan #27 (skill web), #14 hyperframes, #13 diagram-design, #12 skills.

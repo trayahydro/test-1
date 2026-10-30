@@ -28,7 +28,7 @@ lalu gaya referensinya bisa ditiru dengan skill **Design DNA** (#22 di [[00 Simp
 
 ## 4. claude-web-design-skills (repo GitHub)
 - **Tagline:** *"You can give Claude a few open-source skills. Better typography, spacing, layouts, responsive design, accessibility, prototyping, and testing."* ("Small skills. Big possibilities.")
-- ± 8,2k stars. **Nama pemilik repo tidak terlihat** di screenshot, jadi cari "claude-web-design-skills" di GitHub.
+- ± 8,2k stars. **Nama pemilik repo tidak terlihat** di screenshot, dan pencarian GitHub dengan nama ini **tidak menemukannya** (2026-10-30). Kemungkinan namanya berbeda atau repo-nya privat/dihapus. Alternatif serupa: Genjutsu (#24) dan [edisonmbli/refactoring-ui-skill](https://github.com/edisonmbli/refactoring-ui-skill) (skill dari buku *Refactoring UI*).
 - Daftar skill (file .md):
 
 | Skill | Fungsi | Tipe |
