@@ -35,6 +35,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[SEO - Checklist Supaya Website Muncul di Google]] *(IG)* | Search Console, sitemap, SEO & GEO, meta tag, Google Business Profile | lengkap |
 | [[Hemat Biaya - Pembagian Model Claude (Opus, Sonnet, Haiku)]] *(IG)* | Opus merencanakan, Sonnet membangun, Haiku mencari; `/model opusplan` | lengkap |
 | [[Dokumen Project - 4 Dokumen Wajib Vibe Coder]] *(IG)* | Template AGENTS.md, PRD.md, DESIGN_SYSTEM.md, ARCHITECTURE.md | lengkap |
+| [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]] *(IG)* | Alur automasi booking → konfirmasi → rute → laporan AI → invoice → ulasan; ide paket jasa lapangan | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD + dokumen project** ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder|4 dokumen]]): prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
@@ -51,7 +52,7 @@ Nomor `#` merujuk ke [[00 Simpanan Tools AI (MOC)]].
 
 ## Topik yang belum ada materinya
 - [ ] Cara cari klien (awal: [[Strategi - Bangun Software & Outreach Otomatis]])
-- [ ] Harga & paket (ide upsell: agent WhatsApp, lihat [[WhatsApp Agent - Kapso]])
+- [ ] Harga & paket (ide upsell: agent WhatsApp ([[WhatsApp Agent - Kapso]]), automasi bisnis jasa ([[Automasi - Contoh Alur Bisnis Jasa (Plumber)]]))
 - [ ] Portofolio
 - [ ] Closing & kontrak
 - [ ] Hosting, domain & maintenance (sebagian ada di catatan Stack)
