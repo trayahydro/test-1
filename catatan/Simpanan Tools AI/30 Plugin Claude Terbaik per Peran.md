@@ -1,6 +1,6 @@
 ---
 tipe: daftar
-sumber: Instagram (transkrip video "30 best Claude plugins on GitHub", dikirim user sebagai teks)
+sumber: Instagram (transkrip video + caption "30 best Claude plugins on GitHub", dikirim user sebagai teks)
 dibuat: 2026-10-30
 tags: [simpanan, claude-plugin, skill, sumber-ig]
 ---
@@ -11,16 +11,27 @@ Kaitan: [[00 Simpanan Tools AI (MOC)]] · [[00 Jualan Website (MOC)]]
 
 > **Pesan utama video:** jangan pasang ke-30 plugin karena Claude malah penuh noise. **Pilih satu baris yang cocok dengan pekerjaan minggu ini, pasang satu plugin dari baris itu.** Sebelum memasang, buka repo-nya dan cek apa saja yang boleh dijalankan plugin itu di komputer.
 
-Nama ditulis sesuai **transkrip suara**, jadi beberapa mungkin salah dengar. Yang meragukan diberi tanda *(?)* beserta dugaan nama aslinya. Nomor `#` merujuk ke daftar di MOC simpanan.
+Nama awalnya dari transkrip suara, lalu **dikonfirmasi dengan caption video**: "Garbati" = **Karpathy Skills**, "the PM. MAD method" = **BMAD Method**, GStack = **gstack**, ECC dan GSD juga tertulis di caption. Nomor `#` merujuk ke daftar di MOC simpanan.
 
 **Pencarian repo (2026-10-30):** dicari lewat halaman pencarian GitHub (urut bintang). Link di bawah **dari hasil pencarian**, halaman repo belum dibuka satu per satu. Angka bintang perkiraan dari hasil pencarian.
+
+## Fungsi singkat menurut caption video
+| Peran | Plugin → fungsi (terjemahan) |
+|---|---|
+| **Coding seperti senior dev** | Superpowers → Claude merencanakan dan menulis tes dulu · Matt Pocock Skills → skill harian engineer sungguhan · ECC → paket besar skill dan agent · Karpathy Skills → menghentikan kebiasaan coding terburuk Claude · Ponytail → Claude menulis kode jauh lebih sedikit · Agent Skills → cara senior engineer merilis kode |
+| **Riset & memahami** | Graphify → kode jadi peta · Agent Reach → Claude bisa membaca Reddit, X, YouTube · Understand Anything → tur terpandu codebase apa pun · Last 30 Days → apa yang dibicarakan orang sebulan terakhir · Career Ops → cari kerja dan sesuaikan CV · REA → Claude bisa membongkar aplikasi apa pun |
+| **Project besar, hemat token** | gstack → Claude dapat tim startup lengkap · Caveman → Claude bicara singkat, hemat token · Claude-Mem → Claude ingat sesi sebelumnya · Headroom → memperkecil yang harus dibaca Claude · GSD → merencanakan dan membangun bertahap · BMAD Method → Claude jadi tim agile |
+| **Desain & visual** | UI UX Pro Max → pengetahuan desain UI nyata · Taste → mencegah website terlihat generik · Archify → ide apa pun jadi diagram hidup · Impeccable → AI lebih jago desain · PPT Master → PowerPoint asli dari dokumen · Diagram Design → diagram rapi gaya majalah |
+| **Menulis & video** | Skills by Anthropic → skill resmi Anthropic · OpenMontage → AI jadi studio video · HyperFrames → kode web jadi video · Humanizer → menghilangkan kesan AI di tulisan · I Have ADHD → Claude menjawab langsung ke intinya dulu · Marketing Skills → skill copywriting, SEO, growth |
+
+> ⚠️ Caption: *"Before you install it, open the repo and read what it's allowed to do, because some of these can run commands on your computer."* Sebagian plugin bisa menjalankan perintah di komputer.
 
 ## 1. Menulis kode: Claude bekerja seperti senior developer
 | Plugin | Catatan |
 |---|---|
 | Superpowers | [obra/superpowers](https://github.com/obra/superpowers): framework agentic skill + metodologi pengembangan software. ± 309k★, MIT. **Terkonfirmasi** (halaman repo dibuka). Pasang: `/plugin install superpowers@claude-plugins-official` |
 | Matt Pocock skills | = #12 `mattpocock/skills` |
-| ECC | Everything Claude Code. Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
+| ECC | Everything Claude Code ("paket besar skill dan agent"). Terlihat: [WorldFlowAI/everything-claude-code](https://github.com/WorldFlowAI/everything-claude-code), toolkit agents/commands/skills/rules/hooks, ± 5,6k★. Ada juga rujukan ke `affaan-m/ECC` (belum dicek) |
 | Karpathy skills ("Garbati") | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills): satu file CLAUDE.md untuk memperbaiki perilaku Claude Code, berdasarkan pengamatan Andrej Karpathy soal kesalahan umum LLM saat coding. ± 227k★. Sumber aslinya mungkin `forrestchang/andrej-karpathy-skills` |
 | Ponytail | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): "AI agent berpikir seperti senior dev paling malas: kode terbaik adalah kode yang tidak perlu ditulis." ± 181k★ |
 | Agent skills | repo bernama persis "agent-skills" belum ketemu. Kandidat: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills), daftar kurasi Claude Skills (± 78k★) |
