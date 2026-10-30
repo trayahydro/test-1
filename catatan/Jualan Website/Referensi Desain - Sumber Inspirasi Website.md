@@ -59,3 +59,13 @@ lalu gaya referensinya bisa ditiru dengan skill **Design DNA** (#22 di [[00 Simp
 | prototype-reviewer | dukungan feedback prototipe | Design |
 
 Beberapa deskripsi tertutup tulisan "Claude" di video, jadi diisi dari yang terbaca.
+
+## 5. Designeer *(IG)*
+- **Isi:** kumpulan **200+ sumber desain terbaik** di internet: galeri desain, library komponen, dan referensi animasi, tersusun di satu tempat dan **gratis**.
+- **Masalah yang dijawab:** *"Everyone's building websites with AI right now, but most of them end up looking exactly the same."*
+- **Link:** belum ketemu. Tidak ada di GitHub, dan `designeer.com` tidak bisa diakses dari sesi cloud. Cari "Designeer design resources" di browser.
+- **Cara pakai dengan Claude (dari video):**
+  1. Beri Claude akses ke seluruh situs. Claude menjelajahi galeri-galerinya dan **menyimpan prinsip desain dari yang terbaik ke dalam sebuah skill** yang dibaca sebelum setiap build. Jadi tidak perlu menjelaskan ulang seperti apa desain yang bagus.
+  2. Saat menemukan website yang disukai, berikan ke Claude dan sebutkan apa yang mau diambil: **layout, nuansa, animasi**.
+  3. Hasilnya terlihat seperti buatan studio desain. Berguna juga kalau belum tahu mau gaya seperti apa.
+- **Kaitan:** mirip konsep Design DNA (#22) dan prompt 8 (ubah task jadi skill) di [[Prompt - 8 Prompt Wajib Sebelum Vibecoding]].

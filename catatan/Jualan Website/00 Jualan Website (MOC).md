@@ -29,6 +29,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Keamanan - Checklist Sebelum Launch]] *(IG)* | 20 poin keamanan sebelum launch + security-audit-skill (asal harness Cloudflare) | lengkap |
 | [[Mindset - Vibe Coder vs AI Engineer]] *(IG)* | Putuskan stack/integrasi/desain dulu, format prompt Goal-Context-Constraints-Done | lengkap |
 | [[Panduan - Jadi AI Engineer & Stack Pilihan]] | Alur kerja per klien, stack utama, tambahan per paket (Basic/Standard/Pro) | lengkap |
+| [[Strategi - Bangun Software & Outreach Otomatis]] *(IG)* | Claude Code + Supabase, outreach DM/email otomatis (GrokBot / harvey) | lengkap |
 
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD**: prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
@@ -44,7 +45,7 @@ yang disimpan user, dalam bentuk screenshot.
 Nomor `#` merujuk ke [[00 Simpanan Tools AI (MOC)]].
 
 ## Topik yang belum ada materinya
-- [ ] Cara cari klien
+- [ ] Cara cari klien (awal: [[Strategi - Bangun Software & Outreach Otomatis]])
 - [ ] Harga & paket
 - [ ] Portofolio
 - [ ] Closing & kontrak

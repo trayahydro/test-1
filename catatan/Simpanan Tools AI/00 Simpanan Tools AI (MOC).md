@@ -52,6 +52,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 30 | book-to-skill | https://github.com/virgiliojr94/book-to-skill | Ubah buku PDF teknis jadi skill Claude | screenshot |
 | 31 | instagram-agent-skill | https://github.com/Jakeschincariol/instagram-agent-skill | 13 skill untuk menjalankan akun Instagram | link |
 | 32 | security-audit-skill | https://github.com/cloudflare/security-audit-skill | Skill: audit keamanan 6 fase | screenshot IG |
+| 33 | VibeWise | belum ketemu (situs: github.com/vibewisehq/vibewise) | Plugin Claude Code: belajar sambil AI menulis kode | screenshot IG |
 
 ## Detail per item
 
@@ -256,6 +257,12 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 ### 32. security-audit-skill (sumber: IG)
 - Skill audit keamanan 6 fase dengan temuan yang diverifikasi independen. Cikal bakal harness keamanan Cloudflare. ± 50,6k stars, MIT.
 - Detail lengkap ada di [[Keamanan - Checklist Sebelum Launch]].
+
+### 33. VibeWise (sumber: IG)
+- *"Free Claude Code plugin, open source"*, MIT, ± 3k★ dalam 9 hari, motto **"you build · AI writes"**.
+- Dari repo turunan yang ditemukan, ini plugin **learning-first**: kita belajar engineering sementara AI menulis kodenya.
+- **Link:** repo utama belum ketemu di pencarian GitHub. Yang ada: [vibewisehq/vibewise](https://github.com/vibewisehq/vibewise) (situs landing resmi), versi opencode (Akshat-2011/vibe-wise-opencode), dan versi Codex (mmlvc/open-wise).
+- **Relevan untuk:** belajar dasar web sambil membuat website klien (sejalan dengan langkah 6 di [[Panduan - Jadi AI Engineer & Stack Pilihan]]).
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.

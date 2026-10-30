@@ -82,7 +82,7 @@ Link dari hasil pencarian GitHub (2026-10-30). Google DESIGN.md terkonfirmasi le
 - **Google Stitch:** tool desain UI berbasis AI dari Google.
 - **Figcraft:** dua kandidat di GitHub:
   - [divikwu/figcraft](https://github.com/divikwu/figcraft): *"AI-driven Figma plugin that follows design specs. MCP bridge between IDE and Figma."* Plugin Figma + jembatan MCP antara IDE (Claude Code) dan Figma. **Paling cocok** dengan "Claude Code + Figcraft", walau bintangnya baru ± 5.
-  - [storytold/figcraft](https://github.com/storytold/figcraft): aplikasi desain antarmuka open source berbasis Rust (± 3,9k★). Kemungkinan bukan yang dimaksud.
+  - [storytold/figcraft](https://github.com/storytold/figcraft): **FigCraft, "Interface design, rebuilt in pure Rust"** (± 3,9k★). Screenshot IG menunjukkan situs ini: frames, auto layout, komponen & variant, vector network, style, variable, dan prototipe dalam **aplikasi native** yang langsung terbuka dan jalan offline. Tanpa akun, tanpa telemetri, tanpa langganan. Gratis dan open source (macOS, Windows, Linux, web). Jadi **alternatif Figma gratis**. *Update (IG): kemungkinan inilah FigCraft yang dimaksud, bukan divikwu.*
 - **Ide uji:** buat satu landing page yang sama dengan Claude Code + Figcraft dan dengan Google Stitch, lalu bandingkan.
 
 ## Rekomendasi setup awal (untuk dicoba di PC lokal)
