@@ -71,6 +71,17 @@ Link dari hasil pencarian GitHub (2026-10-30). Google DESIGN.md terkonfirmasi le
 - Video menunjukkan alur **Figma ⇄ MCP ⇄ Playwright**: desain dibaca dari Figma lewat MCP, dibangun, lalu dicek otomatis di browser dengan Playwright.
 - Kaitan: skill `figma-mcp` dan `playwright-tester` di claude-web-design-skills, serta prompt 5 (E2E test).
 
+## 5 tools gratis untuk menjadikan Claude "desainer AI" *(IG, transkrip)*
+| # | Tool | Fungsi (dari video) | Sudah tercatat? |
+|---|---|---|---|
+| 1 | **Taste** | memberi Claude aturan desain nyata supaya website tidak terlihat generik buatan AI | ya: [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) |
+| 2 | **Impeccable** | memperbaiki desain frontend dengan design system-nya sendiri, plus **live editor** untuk mengubah langsung di browser | ya: [pbakaus/impeccable](https://github.com/pbakaus/impeccable) |
+| 3 | **Playwright CLI** | Claude menjalankan beberapa browser, **mengetes website otomatis**, dan mengambil screenshot untuk memastikan semuanya berfungsi dan terlihat bagus | Playwright (lihat [[Connector - 5 Connector Wajib untuk Claude]]) |
+| 4 | **Awesome Design** | design system yang terinspirasi website nyata: tipografi, spacing, tombol, layout | ya: kemungkinan [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) |
+| 5 | **"image 23.js"** *(?)* | beri gambar (mis. sepeda), lalu Claude membuatnya ulang sebagai **model 3D interaktif** lewat kode | **baru**; nama dari transkrip suara, kemungkinan salah dengar (mungkin "image-to-3D" / "img2three.js"). Cek di video asli |
+
+Taste, Impeccable, dan Awesome Design sudah muncul di beberapa video berbeda, jadi termasuk yang paling direkomendasikan untuk desain.
+
 ## 4 repo efek visual yang bisa "dicuri" *(IG, transkrip)*
 > *"Designers these days use GitHub as their asset library."* Vibe coding menutup jarak antara desainer dan engineer.
 > **Cara pakai:** tidak perlu coding atau download. Arahkan Claude Code ke repo-nya, lalu jelaskan efek yang diinginkan.
