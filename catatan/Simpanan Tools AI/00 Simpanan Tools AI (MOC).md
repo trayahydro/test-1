@@ -55,6 +55,7 @@ terlihat di screenshot. Repo yang hanya dikirim sebagai link belum ada deskripsi
 | 33 | VibeWise | belum ketemu (situs: github.com/vibewisehq/vibewise) | Plugin Claude Code: belajar sambil AI menulis kode | screenshot IG |
 | 34 | Semgrep | https://github.com/semgrep/semgrep | Scan keamanan kode (static analysis) | screenshot IG |
 | 35 | Day Trader skill | belum ada link | 11 skill Claude untuk analisis saham / day trading | transkrip IG |
+| 36 | "Azars" (?): agent asisten "Jarvis" | belum ada link | Agent pribadi yang menelepon dengan jadwal harian | transkrip IG |
 
 ## Detail per item
 
@@ -295,6 +296,15 @@ Satu carousel berisi 7 repo (#1–#4 = item 25–28, #6–#7 = item 29–30). #5
 - **Link:** belum ada di transkrip; cari "day trader skill claude" di GitHub.
 - ⚠️ **Catatan risiko:** trading saham berisiko tinggi. Simulasi dan peluang dari AI bukan jaminan hasil, dan di contoh video pun hasilnya hampir 50:50. Pakai paper trading dulu, jangan pakai uang yang tidak siap hilang. Ini bukan nasihat keuangan.
 - **Relevan untuk:** pribadi / belajar; tidak terkait jualan website.
+
+### 36. Agent asisten "Jarvis" lewat "Azars" (sumber: IG, transkrip)
+- **Ide:** agent AI menelepon tiap pagi dan membacakan jadwal hari itu, gaya "Jarvis".
+- **3 langkah (dari video):**
+  1. Buka **"Azars"** (nama dari transkrip suara, **kemungkinan salah dengar**; cek nama aslinya). Hubungkan **Google Calendar** di *Integrations* dan **iMessage** di *Ways to Talk*, supaya agent tahu jadwal dan punya cara menghubungi.
+  2. Buat **routine** (tugas terjadwal yang dijalankan agent tanpa diminta) pada jam bangun. Saat jalan, agent menarik acara hari ini lalu membuat ringkasan singkat untuk dibacakan.
+  3. Agent **menelepon lewat ponsel** dan membacakan ringkasannya.
+- **Catatan:** iMessage hanya untuk iPhone/Mac. Alternatif yang mirip: **Routines** di Claude (tugas terjadwal) + connector Google Calendar + pengiriman lewat WhatsApp/email (lihat [[WhatsApp Agent - Kapso]]).
+- **Relevan untuk:** produktivitas pribadi. Bisa juga jadi ide layanan untuk klien, mis. ringkasan booking harian dikirim ke pemilik usaha tiap pagi (lihat [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]]).
 
 ### Catatan tambahan untuk item 13 (diagram-design)
 Carousel ini menyebut **38** jenis diagram ("plain HTML and SVG, no Mermaid … for Claude Code, Codex, and Pi. No shadows.") dengan 26k stars. Video sebelumnya menyebut **44** jenis dan 56k stars. Kemungkinan videonya dibuat di waktu berbeda. Versi terbaru dicek langsung di repo.
