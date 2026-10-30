@@ -63,7 +63,9 @@ Beberapa deskripsi tertutup tulisan "Claude" di video, jadi diisi dari yang terb
 ## 5. Designeer *(IG)*
 - **Isi:** kumpulan **200+ sumber desain terbaik** di internet: galeri desain, library komponen, dan referensi animasi, tersusun di satu tempat dan **gratis**.
 - **Masalah yang dijawab:** *"Everyone's building websites with AI right now, but most of them end up looking exactly the same."*
-- **Link:** belum ketemu. Tidak ada di GitHub, dan `designeer.com` tidak bisa diakses dari sesi cloud. Cari "Designeer design resources" di browser.
+- **Link:** **https://designeer.xyz** (dikonfirmasi dari screenshot user).
+- **Deskripsi resmi:** *"A curated collection of interface craft, component libraries, AI tools, and resources for builders."* Katalog kurasi untuk desainer dan developer: inspirasi desain, sumber daya UI, tools, dan portofolio, **masing-masing direview manual**. Ada galeri karya visual terbaru dari seluruh web.
+- **Fitur yang terlihat:** filter kategori (All + 13 kategori lain), filter warna ("All colours"), urutkan "Recent", tombol favorit (bintang), pencarian, dan login (opsional).
 - **Cara pakai dengan Claude (dari video):**
   1. Beri Claude akses ke seluruh situs. Claude menjelajahi galeri-galerinya dan **menyimpan prinsip desain dari yang terbaik ke dalam sebuah skill** yang dibaca sebelum setiap build. Jadi tidak perlu menjelaskan ulang seperti apa desain yang bagus.
   2. Saat menemukan website yang disukai, berikan ke Claude dan sebutkan apa yang mau diambil: **layout, nuansa, animasi**.
