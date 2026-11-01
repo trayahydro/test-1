@@ -1,7 +1,7 @@
 ---
 tipe: prd
 klien: calon klien "Teteh" (brand fashion)
-status: DRAF v0.1, belum dikonfirmasi klien
+status: DRAF v0.2 (+ analisis referensi), belum dikonfirmasi klien
 dibuat: 2026-11-01
 tags: [jualan-website, klien, prd, ecommerce, fashion]
 ---
@@ -34,7 +34,36 @@ Alasan: pembayaran, login, dan keamanan data ditangani platform yang sudah terbu
 
 ## 1. Ringkasan produk
 - **Produk:** website toko online brand fashion, tempat pelanggan bisa melihat koleksi, membuat akun, menyimpan wishlist, belanja, dan membayar langsung di website.
-- **Referensi desain & fitur:** https://www.mote--mote.com · https://puranaindonesia.com *(belum dianalisis; minta screenshot bagian yang disukai klien)*.
+- **Referensi desain & fitur:** https://www.mote--mote.com · https://puranaindonesia.com (analisis di bagian 1a).
+
+## 1a. Analisis website referensi (dicek 1 Nov 2026)
+
+| Aspek | **Mote Mote** (mote--mote.com) | **Purana** (puranaindonesia.com) |
+|---|---|---|
+| Platform | **WordPress + WooCommerce** (tema Astra + tema custom "mote-mote"), plugin **Xendit Virtual Account**, Popup Builder | **Shopify** (tema "Debut" yang dikustom) |
+| Karakter brand | muda, playful, edgy; detail beading & aksen unik | premium, elegan, wastra/tenun Indonesia; editorial & "quiet luxury" |
+| Kisaran harga | IDR ± 679 rb – 1,7 jt | IDR ± 1,2 – 4,9 jt |
+| Warna | putih dominan, hitam, **aksen kuning stabilo** (bar pengumuman & tombol) | putih, **cokelat tua / taupe** (blok hero), tombol **hijau tosca** |
+| Tipografi | **Futura** (geometris), huruf kapital kecil, jarak huruf lebar | logo serif klasik, teks sans-serif tipis & kecil |
+| Beranda | hero foto besar full-width + logo besar di tengah, teks editorial musim, foto lookbook, grid produk 4 kolom, tombol "View all" | hero split: blok warna + judul koleksi ("Spring/Summer '27, Regal Bloom") + foto model; blok kontak; foto kampanye besar |
+| Foto produk | **ghost/flat-lay latar putih** (rapi, seragam) | **foto model** di latar netral + beberapa thumbnail |
+| Halaman produk | nama, kategori, harga, deskripsi singkat, *More information*, **Size Chart**, pilihan ukuran, **opsi bungkus kado**, jumlah, Add to cart, **ikon zoom** | nama, harga, ukuran, Add to cart, status **PRE ORDER + tanggal tersedia**, bahan & ukuran detail (cm), tombol share, **"You may also like"** |
+| Navigasi | Shop, About Us, Motemoteland, Mote Atelier · Stockist, Contact, My Account, keranjang | Our Story, New Arrivals, Shop Collections, Contact, News · cari, akun, keranjang |
+| Fitur lain | **bar pengumuman** ("Shop 24/7… shipping closes Sat–Sun"), **tombol WhatsApp melayang**, link Instagram/TikTok/Spotify | **form mailing list** di footer, Size Guide, kebijakan Retur & Tukar, ikon sosmed |
+| Yang tidak terlihat | wishlist, AI chat | wishlist, AI chat, zoom besar |
+
+### Arah desain untuk [Nama Brand] (usulan, konfirmasi ke klien)
+- **Gaya:** minimalis-editorial: banyak ruang putih, foto besar, teks kecil & rapi, sehingga produk jadi bintangnya.
+- **Ambil dari Mote Mote:** hero foto full-width + logo besar, grid produk 4 kolom yang bersih, bar pengumuman, tombol WhatsApp, size chart di halaman produk, opsi bungkus kado, ikon zoom.
+- **Ambil dari Purana:** hero "koleksi musim" (nama koleksi + foto kampanye), detail bahan & ukuran dalam cm, label pre-order + tanggal, "You may also like", mailing list di footer, halaman Our Story.
+- **Tambahan sesuai brief (keduanya belum punya):** **wishlist**, **zoom besar/lightbox** di galeri foto, **AI customer service** (tahap 2), **sinkron stok** marketplace (tahap 2).
+- **Konsistensi foto:** pilih satu gaya (latar putih seperti Mote, atau model seperti Purana); campuran keduanya membuat toko terlihat tidak rapi.
+- **Pertanyaan ke klien:** karakter brand lebih dekat ke **Mote Mote** (playful/edgy) atau **Purana** (premium/elegan)? Warna dan font akan diturunkan dari jawaban ini ke DESIGN_SYSTEM.md.
+
+### Catatan teknis dari referensi
+- Kedua referensi memakai **platform siap pakai** (WooCommerce & Shopify), mendukung keputusan pendekatan A.
+- Mote Mote memakai **Xendit** untuk pembayaran VA, jadi Xendit sudah umum dipakai brand fashion lokal.
+- Shopify (seperti Purana) lebih minim perawatan teknis dibanding WordPress/WooCommerce (update plugin, keamanan, hosting).
 
 ## 2. Masalah
 Penjualan saat ini bergantung pada marketplace (Shopee/Tokopedia): potongan biaya tinggi, brand kurang menonjol, data pelanggan tidak dimiliki brand, dan sulit membangun pelanggan setia (promo/koleksi baru).
@@ -131,7 +160,7 @@ Logo (format vektor/PNG), palet warna/brand guideline (bila ada), foto produk (r
 3. Metode pembayaran & kurir yang diinginkan? Sudah punya akun payment gateway?
 4. Stok sekarang dikelola di mana? Sudah pakai aplikasi omnichannel?
 5. Kebijakan retur/tukar ukuran?
-6. Bagian mana dari kedua website referensi yang paling disukai (tampilan, alur, fitur)?
+6. Bagian mana dari kedua website referensi yang paling disukai? Karakter brand lebih dekat ke Mote Mote (playful/edgy) atau Purana (premium/elegan)? Foto produk latar putih atau dengan model?
 7. Sudah punya domain, logo, dan foto produk siap pakai?
 8. Budget & target tanggal launch?
 
