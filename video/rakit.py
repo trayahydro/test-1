@@ -8,7 +8,8 @@ Langkah:
   4. backsound (audio/buat_musik.py) diredam otomatis saat ada narasi
   5. encode H.264 + AAC, lalu pecah menjadi beberapa file < 95 MB bila perlu
 
-Pemakaian: python3 rakit.py [--vo /home/user/tts/out] [--crf 20] [--maks-mb 95]
+Pemakaian: python3 rakit.py [--vo folder_vo] [--crf 20] [--maks-mb 95]
+           [--retime timing_baru.json]   # VO baru: tempo video disesuaikan per kalimat (cue)
 """
 import argparse, glob, json, math, os, re, subprocess, sys
 
@@ -41,12 +42,44 @@ def kelompok_adegan():
     return g
 
 
+POST = 1.0                  # jeda setelah narasi (sama dengan overlay.js)
+EXTRA = {17: 8.0}           # tambahan tahan di akhir adegan (siapkanAdegan extra)
+
+
+def knots(t, no):
+    """Titik waktu nyata dalam satu adegan: awal, tiap batas cue, akhir."""
+    k = [0.0]
+    for c in t['cues']:
+        k += [PRE + c['a'], PRE + c['b']]
+    k.append(PRE + t['durasi'] + POST + EXTRA.get(no, 0.0))
+    return k
+
+
+def retime(src, dst, k_lama, k_baru):
+    """Regangkan/padatkan video per interval cue supaya cocok dengan narasi baru."""
+    d = durasi(src)
+    k_lama = k_lama[:-1] + [d]                 # ujung = durasi video sebenarnya
+    parts, fc = [], []
+    for i in range(len(k_lama) - 1):
+        a, b, na, nb = k_lama[i], k_lama[i + 1], k_baru[i], k_baru[i + 1]
+        if b - a < 1 / 60 or nb - na < 1 / 60:
+            continue
+        fc.append(f'[0:v]trim={a:.4f}:{b:.4f},setpts=(PTS-STARTPTS)*{(nb - na) / (b - a):.6f}[p{i}]')
+        parts.append(f'[p{i}]')
+    fc.append(''.join(parts) + f'concat=n={len(parts)}:v=1:a=0,fps=30,format=yuv420p[v]')
+    script = dst + '.filter.txt'
+    open(script, 'w').write(';\n'.join(fc))
+    sh(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-filter_complex_script', script, '-map', '[v]',
+        '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', dst])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--vo', default=os.path.join(ROOT, '..', 'tts', 'vo'), help='folder adegan_XX.flac / .wav')
     ap.add_argument('--crf', type=int, default=20)
     ap.add_argument('--maks-mb', type=float, default=95)
     ap.add_argument('--out', default=os.path.join(ROOT, 'out', 'SWRO-Traya-Hydro-Indonesia.mp4'))
+    ap.add_argument('--retime', help='timing.json VO baru; video tiap adegan disesuaikan per cue')
     a = ap.parse_args()
     os.makedirs(WORK, exist_ok=True)
 
@@ -71,6 +104,16 @@ def main():
         open(lst, 'w').write(''.join(f"file '{os.path.abspath(p).replace(os.sep, '/')}'\n" for p in parts))
         sh(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', dst])
         adegan.append(dst)
+    if a.retime:
+        lama = {t['no']: t for t in json.load(open(os.path.join(ROOT, '..', 'tts', 'timing_vo.json')))}
+        baru = {t['no']: t for t in json.load(open(a.retime))}
+        os.makedirs(os.path.join(WORK, 'retime'), exist_ok=True)
+        for i, no in enumerate(nos):
+            if [c['text'] for c in lama[no]['cues']] != [c['text'] for c in baru[no]['cues']]:
+                sys.exit(f'cue adegan {no} tidak sama dengan timing_vo.json')
+            dst = os.path.join(WORK, 'retime', f'adegan_{no:02d}.mp4')
+            retime(adegan[i], dst, knots(lama[no], no), knots(baru[no], no))
+            adegan[i] = dst
     D = [durasi(f) for f in adegan]
     S = [sum(D[:k]) - XF * k for k in range(len(D))]       # waktu mulai tiap adegan di video final
     total = S[-1] + D[-1]

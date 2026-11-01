@@ -7,6 +7,7 @@
 Pemakaian:
   python buat_vo.py <naskah.md> <folder_output> --mesin piper --model <model.onnx> [--ls 1.0]
   python buat_vo.py <naskah.md> <folder_output> --mesin google [--suara id-ID-Chirp3-HD-Charon]
+  python buat_vo.py <naskah.md> <folder_output> --mesin edge [--suara id-ID-ArdiNeural] [--rate 1.0]
     (Google Cloud Text-to-Speech; API key dibaca dari variabel lingkungan GOOGLE_TTS_API_KEY)
 Hasil: adegan_XX.wav, timing.json (durasi & cue subtitle per adegan), vo_draf.mp3 (semua adegan).
 """
@@ -210,16 +211,56 @@ class MesinGoogle:
             return rf.readframes(rf.getnframes())
 
 
+class MesinEdge:
+    """Suara neural Microsoft (mis. id-ID-ArdiNeural) lewat layanan Read Aloud Edge (paket edge-tts).
+    Untuk pemakaian komersial resmi, suara yang sama tersedia di Azure Speech."""
+    sr = 24000
+
+    def __init__(self, suara="id-ID-ArdiNeural", rate=1.0):
+        import edge_tts  # noqa: F401  (pip install edge-tts)
+        self.suara = suara
+        self.rate = f"{round((rate - 1) * 100):+d}%"
+        self.proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+
+    def pcm(self, teks):
+        import asyncio, edge_tts
+        teks = re.sub(r"(?<=\w)-(?=\w)", " ", teks)
+
+        async def ambil():
+            buf = bytearray()
+            async for c in edge_tts.Communicate(teks, self.suara, rate=self.rate, proxy=self.proxy).stream():
+                if c["type"] == "audio":
+                    buf += c["data"]
+            return bytes(buf)
+
+        for coba in range(4):
+            try:
+                mp3 = asyncio.run(ambil())
+                if mp3:
+                    break
+            except Exception:
+                if coba == 3:
+                    raise
+        r = subprocess.run(["ffmpeg", "-v", "error", "-i", "pipe:0", "-f", "s16le", "-ac", "1", "-ar", str(self.sr), "pipe:1"],
+                           input=mp3, capture_output=True, check=True)
+        return r.stdout
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("naskah"); ap.add_argument("out")
-    ap.add_argument("--mesin", default="piper", choices=["piper", "google"])
+    ap.add_argument("--mesin", default="piper", choices=["piper", "google", "edge"])
     ap.add_argument("--model"); ap.add_argument("--ls", type=float, default=1.0)
-    ap.add_argument("--suara", default="id-ID-Chirp3-HD-Charon"); ap.add_argument("--rate", type=float, default=1.0)
+    ap.add_argument("--suara", default=None); ap.add_argument("--rate", type=float, default=1.0)
     args = ap.parse_args()
     naskah, out = Path(args.naskah), Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    mesin = MesinPiper(args.model, args.ls) if args.mesin == "piper" else MesinGoogle(args.suara, args.rate)
+    if args.mesin == "piper":
+        mesin = MesinPiper(args.model, args.ls)
+    elif args.mesin == "edge":
+        mesin = MesinEdge(args.suara or "id-ID-ArdiNeural", args.rate)
+    else:
+        mesin = MesinGoogle(args.suara or "id-ID-Chirp3-HD-Charon", args.rate)
     sr = mesin.sr
     hasil = []
     for a in baca_naskah(naskah):
