@@ -33,6 +33,7 @@ function serve(root) {
     : ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
   const browser = await chromium.launch({ args, headless: process.env.HEADED !== '1' });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+  page.setDefaultTimeout(0);
   page.on('console', (m) => console.log('[page]', m.text()));
   page.on('pageerror', (e) => console.error('[pageerror]', e));
   const root = path.resolve(__dirname, '..');
@@ -63,7 +64,7 @@ function serve(root) {
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', tmp], { stdio: ['pipe', 'inherit', 'inherit'] });
     for (let i = c0; i < c1; i++) {
       await page.evaluate((t) => window.renderFrame(t), (f0 + i) / fps);
-      const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
+      const buf = await page.screenshot({ type: 'jpeg', quality: 95, timeout: 0 });
       if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
       if (i % 10 === 0) process.stdout.write(`\r${path.basename(html)} ${i}/${frames}`);
     }
