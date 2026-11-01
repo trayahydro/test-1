@@ -39,6 +39,7 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Workflow - Handoff untuk Mencegah Context Rot]] *(IG)* | handoff.md (6 bagian) + /clear, lebih baik dari /compact | lengkap |
 | [[Setup Claude Code - 5 Plugin untuk 5 Titik Buta]] *(IG)* | Security Guidance, Frontend Design, Agent Skills (Addy Osmani), Ponytail, Chrome DevTools MCP + perintah pasang | lengkap |
 | [[Automasi - Tim Social Media AI (Iklan, Leads, Sales)]] *(IG)* | Iklan dari riset kompetitor, leads dari komentar/DM, voice agent menelepon dalam 60 detik | lengkap |
+| [[Harga - Cara Menentukan Harga Jasa Website]] *(TikTok)* | HPP, margin, jual value, rumus harga, kapan HPP dimasukkan ke harga | lengkap |
 
 ## Klien
 - [[PRD - Toko Online Fashion (Teteh)]]: calon klien toko online fashion (draf PRD v0.1, Shopify + Midtrans/Xendit + omnichannel)
@@ -58,7 +59,7 @@ Nomor `#` merujuk ke [[00 Simpanan Tools AI (MOC)]].
 
 ## Topik yang belum ada materinya
 - [ ] Cara cari klien (awal: [[Strategi - Bangun Software & Outreach Otomatis]])
-- [ ] Harga & paket (ide upsell: agent WhatsApp ([[WhatsApp Agent - Kapso]]), automasi bisnis jasa ([[Automasi - Contoh Alur Bisnis Jasa (Plumber)]]))
+- [x] Harga & paket: [[Harga - Cara Menentukan Harga Jasa Website]] (+ ide upsell: [[WhatsApp Agent - Kapso]], [[Automasi - Contoh Alur Bisnis Jasa (Plumber)]])
 - [ ] Portofolio
 - [ ] Closing & kontrak
 - [ ] Hosting, domain & maintenance (sebagian ada di catatan Stack)
