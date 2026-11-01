@@ -89,7 +89,7 @@ function hmiTexture(logo) {
       g.fillStyle = '#fff'; g.font = '700 20px Jakarta, sans-serif'; g.fillText(v, x + 8, y + 52);
     };
     const xs = [24, 152, 280, 408, 536, 664];
-    [['INTAKE', '3.2 bar'], ['MMF', '2.8 bar'], ['CF 5 µm', '2.5 bar'], ['HPP', '62 bar'], ['RO', '99.7 %'], ['PRODUK', '310 mg/L']].forEach(([t, v], i) => box(xs[i], 110, t, v));
+    [['INTAKE', '3.2 bar'], ['MMF', '2.8 bar'], ['CF 1 µm', '2.5 bar'], ['HPP', '40 bar'], ['RO', '99.7 %'], ['PRODUK', '280 mg/L']].forEach(([t, v], i) => box(xs[i], 110, t, v));
     g.strokeStyle = '#4fc3f7'; g.lineWidth = 3;
     for (let i = 0; i < 5; i++) { g.beginPath(); g.moveTo(xs[i] + 112, 143); g.lineTo(xs[i + 1], 143); g.stroke(); }
     // grafik tren
@@ -456,7 +456,7 @@ export function buildSWRO(M, logos) {
     // label 5 µm
     const lab = add(new THREE.CylinderGeometry(0.1665, 0.1665, 0.16, 40, 1, true, Math.PI * 0.85, Math.PI * 0.6), new THREE.MeshStandardMaterial({ map: TX.textPanel(512, 160, (g2) => {
       g2.fillStyle = '#ffffff'; g2.fillRect(0, 0, 512, 160);
-      g2.fillStyle = '#0e2242'; g2.font = '800 64px Jakarta, sans-serif'; g2.fillText('5 µm', 150, 80);
+      g2.fillStyle = '#0e2242'; g2.font = '800 64px Jakarta, sans-serif'; g2.fillText('1 µm', 150, 80);
       g2.fillStyle = '#1e6fd0'; g2.font = '700 28px Jakarta, sans-serif'; g2.fillText('CARTRIDGE FILTER', 116, 128);
     }), roughness: 0.5 }), E, false);
     lab.position.set(x, 0.85, z0);

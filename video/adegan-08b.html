@@ -102,10 +102,10 @@ const camAt = kamera(cam, [
   { t: A.durasi, p: [0.4, 1.15, 2.7], l: [0.12, 0.88, 0], f: 38 },
 ]);
 
-chip('4', 'Cartridge Filter 5 µm', 'Polypropylene melt-blown', 4, T0 + 0.2);
+chip('4', 'Cartridge Filter 1 µm', 'Polypropylene melt-blown', 4, T0 + 0.2);
 bug(T0);
 const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
-kartu({ k: 'ELEMEN FILTER', tt: 'PP Melt-blown', rows: [['Rating', '5 µm'], ['Panjang', '40" (± 1 m)', 'TIPIKAL'], ['Jumlah', 'beberapa elemen / housing']], x: 1360, y: 200, t0: 5.7, t1: 12.0, anchor: S(V(0.19, 1.1, -0.04)) });
+kartu({ k: 'ELEMEN FILTER', tt: 'PP Melt-blown', rows: [['Rating', '1 µm'], ['Panjang', '40" (± 1 m)', 'TIPIKAL'], ['Jumlah', 'beberapa elemen / housing']], x: 1360, y: 200, t0: 5.7, t1: 12.0, anchor: S(V(0.19, 1.1, -0.04)) });
 kartu({ k: 'ARAH ALIRAN', tt: 'Luar → Dalam', rows: [['Partikel halus', 'tertangkap di media'], ['Air tersaring', 'keluar lewat inti tengah']], x: 1360, y: 200, t0: 12.8, t1: 20.6 });
 penanda('•', 'Lapisan luar (kasar)', S(V(0.05, 1.2, 0.01)), 13.4, 20.6);
 penanda('•', 'Lapisan dalam (halus)', S(V(0.025, 1.05, 0.01)), 14.2, 20.6);

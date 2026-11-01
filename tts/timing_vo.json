@@ -136,57 +136,77 @@
  {
   "no": 3,
   "judul": "Prinsip Reverse Osmosis",
-  "durasi": 35.697,
+  "durasi": 49.713,
   "cues": [
    {
     "a": 0.0,
-    "b": 2.287,
+    "b": 2.264,
     "text": "Prinsipnya adalah osmosis balik."
    },
    {
-    "a": 2.567,
-    "b": 3.482,
+    "a": 2.544,
+    "b": 3.451,
     "text": "Secara alami,"
    },
    {
-    "a": 3.482,
-    "b": 9.324,
+    "a": 3.451,
+    "b": 9.243,
     "text": "air bergerak dari larutan encer menuju larutan pekat melalui membran semipermeabel."
    },
    {
-    "a": 9.604,
-    "b": 11.926,
+    "a": 9.523,
+    "b": 11.822,
     "text": "Proses ini disebut osmosis."
    },
    {
-    "a": 12.206,
-    "b": 16.751,
-    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik air laut,"
+    "a": 12.102,
+    "b": 15.088,
+    "text": "Aliran berhenti saat tercapai kesetimbangan,"
    },
    {
-    "a": 16.751,
-    "b": 18.557,
+    "a": 15.088,
+    "b": 18.278,
+    "text": "dan selisih tekanannya disebut tekanan osmotik."
+   },
+   {
+    "a": 18.558,
+    "b": 22.768,
+    "text": "Untuk air laut, tekanan osmotiknya tipikal sekitar 27 bar,"
+   },
+   {
+    "a": 22.768,
+    "b": 26.616,
+    "text": "dan makin tinggi kadar garam, makin besar tekanannya."
+   },
+   {
+    "a": 26.896,
+    "b": 30.818,
+    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik,"
+   },
+   {
+    "a": 30.818,
+    "b": 32.596,
     "text": "arah aliran tersebut dibalik."
    },
    {
-    "a": 18.837,
-    "b": 21.373,
+    "a": 32.876,
+    "b": 35.397,
     "text": "Molekul air dipaksa menembus membran,"
    },
    {
-    "a": 21.373,
-    "b": 24.595,
+    "a": 35.397,
+    "b": 38.6,
     "text": "sementara garam terlarut dan pengotor tertahan."
    },
    {
-    "a": 24.875,
-    "b": 29.506,
+    "a": 38.88,
+    "b": 43.515,
     "text": "Air laut dengan TDS tipikal sekitar 35.000 mg/L"
    },
    {
-    "a": 29.506,
-    "b": 35.417,
-    "text": "dapat diolah menjadi air tawar dengan TDS di bawah 500 mg/L."
+    "a": 43.515,
+    "b": 49.433,
+    "text": "dapat diolah menjadi air minum dengan TDS di bawah 300 mg/L."
    }
   ],
   "wav": "adegan_03.wav"
@@ -320,36 +340,31 @@
  {
   "no": 6,
   "judul": "Opsi Ultrafiltrasi",
-  "durasi": 27.729,
+  "durasi": 26.034,
   "cues": [
    {
     "a": 0.0,
-    "b": 2.733,
+    "b": 2.717,
     "text": "Untuk air baku dengan kekeruhan tinggi,"
    },
    {
-    "a": 2.733,
-    "b": 7.779,
+    "a": 2.717,
+    "b": 7.732,
     "text": "multimedia filter dapat dilengkapi atau digantikan dengan ultrafiltrasi."
    },
    {
-    "a": 8.059,
-    "b": 11.188,
-    "text": "Membran UF berupa ribuan serat berongga"
+    "a": 8.012,
+    "b": 13.933,
+    "text": "Membran UF berupa ribuan serat berongga dengan ukuran pori tipikal 0,02 mikron,"
    },
    {
-    "a": 11.188,
-    "b": 15.279,
-    "text": "dengan ukuran pori tipikal 0,01 sampai 0,03 mikron,"
-   },
-   {
-    "a": 15.279,
-    "b": 21.457,
+    "a": 13.933,
+    "b": 19.703,
     "text": "cukup kecil untuk menahan partikel koloid, bakteri, dan sebagian besar virus."
    },
    {
-    "a": 21.737,
-    "b": 27.449,
+    "a": 19.983,
+    "b": 25.754,
     "text": "Hasilnya, air umpan menjadi sangat stabil dengan nilai SDI tipikal di bawah 3."
    }
   ],
@@ -390,8 +405,8 @@
  },
  {
   "no": 8,
-  "judul": "Cartridge Filter 5 Mikron",
-  "durasi": 29.009,
+  "judul": "Cartridge Filter 1 Mikron",
+  "durasi": 28.8,
   "cues": [
    {
     "a": 0.0,
@@ -400,32 +415,32 @@
    },
    {
     "a": 4.761,
-    "b": 7.76,
+    "b": 7.765,
     "text": "Di dalam housing ini terpasang beberapa elemen"
    },
    {
-    "a": 7.76,
-    "b": 11.344,
-    "text": "filter polypropylene melt-blown dengan rating 5 mikron."
+    "a": 7.765,
+    "b": 11.356,
+    "text": "filter polypropylene melt-blown dengan rating 1 mikron."
    },
    {
-    "a": 11.624,
-    "b": 15.269,
+    "a": 11.636,
+    "b": 15.235,
     "text": "Air mengalir dari sisi luar elemen menuju bagian tengah,"
    },
    {
-    "a": 15.269,
-    "b": 19.891,
+    "a": 15.235,
+    "b": 19.798,
     "text": "dan partikel halus yang lolos dari tahap sebelumnya tertangkap di sini."
    },
    {
-    "a": 20.171,
-    "b": 23.816,
+    "a": 20.078,
+    "b": 23.688,
     "text": "Perbedaan tekanan masuk dan keluar dipantau terus."
    },
    {
-    "a": 24.096,
-    "b": 28.729,
+    "a": 23.968,
+    "b": 28.52,
     "text": "Ketika selisihnya mencapai sekitar 1 bar, elemen filter diganti."
    }
   ],
@@ -434,41 +449,41 @@
  {
   "no": 9,
   "judul": "Pompa Tekanan Tinggi",
-  "durasi": 26.476,
+  "durasi": 26.418,
   "cues": [
    {
     "a": 0.0,
-    "b": 2.194,
+    "b": 2.159,
     "text": "Kini air siap diberi tekanan."
    },
    {
-    "a": 2.474,
-    "b": 8.516,
-    "text": "Pompa tekanan tinggi menaikkan tekanan air hingga tipikal 55 sampai 70 bar,"
+    "a": 2.439,
+    "b": 8.575,
+    "text": "Pompa tekanan tinggi menaikkan tekanan air hingga tipikal 35 sampai 42 bar,"
    },
    {
-    "a": 8.516,
-    "b": 11.577,
-    "text": "jauh di atas tekanan osmotik air laut."
+    "a": 8.575,
+    "b": 11.275,
+    "text": "di atas tekanan osmotik air laut."
    },
    {
-    "a": 11.857,
-    "b": 15.578,
+    "a": 11.555,
+    "b": 15.308,
     "text": "Bagian yang bersentuhan dengan air laut dibuat dari stainless"
    },
    {
-    "a": 15.578,
-    "b": 18.567,
+    "a": 15.308,
+    "b": 18.323,
     "text": "steel duplex atau super duplex yang tahan korosi."
    },
    {
-    "a": 18.847,
-    "b": 21.412,
+    "a": 18.603,
+    "b": 21.233,
     "text": "Pompa ini adalah jantung sistem SWRO,"
    },
    {
-    "a": 21.412,
-    "b": 26.196,
+    "a": 21.233,
+    "b": 26.138,
     "text": "dan dirancang untuk beroperasi terus-menerus dengan efisiensi tinggi."
    }
   ],
@@ -666,46 +681,51 @@
  {
   "no": 13,
   "judul": "Air Produk & Pembuangan Brine",
-  "durasi": 27.832,
+  "durasi": 28.9,
   "cues": [
    {
     "a": 0.0,
-    "b": 5.574,
-    "text": "Hasil akhirnya adalah air produk dengan TDS tipikal di bawah 500 mg/L,"
+    "b": 3.042,
+    "text": "Hasil akhirnya adalah air produk dengan"
    },
    {
-    "a": 5.574,
-    "b": 11.149,
+    "a": 3.042,
+    "b": 6.631,
+    "text": "TDS tipikal di bawah 300 mg/L untuk air minum,"
+   },
+   {
+    "a": 6.631,
+    "b": 12.092,
     "text": "siap disimpan dan didistribusikan untuk kebutuhan domestik, komersial,"
    },
    {
-    "a": 11.149,
-    "b": 12.423,
+    "a": 12.092,
+    "b": 13.34,
     "text": "maupun industri."
    },
    {
-    "a": 12.703,
-    "b": 16.089,
+    "a": 13.62,
+    "b": 17.041,
     "text": "Brine, dengan kadar garam sekitar dua kali air laut,"
    },
    {
-    "a": 16.089,
-    "b": 18.76,
+    "a": 17.041,
+    "b": 19.738,
     "text": "dikembalikan ke laut melalui pipa outfall"
    },
    {
-    "a": 18.76,
-    "b": 21.886,
+    "a": 19.738,
+    "b": 22.896,
     "text": "dan difuser yang dirancang agar cepat bercampur,"
    },
    {
-    "a": 21.886,
-    "b": 24.361,
+    "a": 22.896,
+    "b": 25.396,
     "text": "sehingga dampaknya terhadap lingkungan"
    },
    {
-    "a": 24.361,
-    "b": 27.552,
+    "a": 25.396,
+    "b": 28.62,
     "text": "dapat diminimalkan sesuai ketentuan yang berlaku."
    }
   ],
@@ -714,41 +734,41 @@
  {
   "no": 14,
   "judul": "Rekap Skala Filtrasi",
-  "durasi": 32.725,
+  "durasi": 32.493,
   "cues": [
    {
     "a": 0.0,
-    "b": 3.146,
+    "b": 3.1,
     "text": "Mari kita lihat kembali perjalanan air laut ini."
    },
    {
-    "a": 3.426,
+    "a": 3.38,
     "b": 6.584,
     "text": "Strainer menahan partikel berukuran milimeter."
    },
    {
     "a": 6.864,
-    "b": 11.436,
+    "b": 11.321,
     "text": "Multimedia filter menangkap partikel hingga sekitar 10 mikron,"
    },
    {
-    "a": 11.436,
-    "b": 13.795,
+    "a": 11.321,
+    "b": 13.621,
     "text": "lebih kecil dari sehelai rambut."
    },
    {
-    "a": 14.075,
-    "b": 17.059,
-    "text": "Cartridge filter menyaring hingga 5 mikron."
+    "a": 13.901,
+    "b": 16.885,
+    "text": "Cartridge filter menyaring hingga 1 mikron."
    },
    {
-    "a": 17.339,
-    "b": 24.828,
-    "text": "Ultrafiltrasi, bila digunakan, menahan bakteri dan virus pada skala 0,01 mikron."
+    "a": 17.165,
+    "b": 24.619,
+    "text": "Ultrafiltrasi, bila digunakan, menahan bakteri dan virus pada skala 0,02 mikron."
    },
    {
-    "a": 25.108,
-    "b": 32.445,
+    "a": 24.899,
+    "b": 32.213,
     "text": "Dan akhirnya, membran RO memisahkan ion garam pada skala sekitar 0,0001 mikron."
    }
   ],

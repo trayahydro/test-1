@@ -23,8 +23,9 @@ const TX0 = 470, TX1 = 1450, TY0 = 250, TY1 = 820, MX = 960;
 const chamber = (side) => side < 0 ? [TX0 + 14, MX - 14] : [MX + 14, TX1 - 14];
 
 // tinggi muka air (0..1 dari dasar) tiap sisi sebagai fungsi waktu
+// waktu (desain): osmosis 4–10 · kesetimbangan 12.7–19 · grafik 19.2–27.3 · RO 27.5–33.3 · close-up 33.5–39.3 · TDS 39.5–
 function level(t) {
-  const o = easeInOut(prog(t, 4.0, 6.0)), r = easeInOut(prog(t, 13.4, 5.6));
+  const o = easeInOut(prog(t, 4.0, 6.0)), r = easeInOut(prog(t, 28.2, 4.8));
   const L = 0.62 - 0.14 * o + 0.24 * r, Rr = 0.62 + 0.14 * o - 0.24 * r;
   return [L, Rr];
 }
@@ -36,7 +37,7 @@ for (let i = 0; i < 260; i++) {
   const side = i < 130 ? -1 : 1;
   let cross = null;
   if (side < 0 && R() < 0.42) cross = { dir: 1, t0: 4.2 + R() * 5.2 };      // osmosis: kiri → kanan
-  else if (side > 0 && R() < 0.62) cross = { dir: -1, t0: 13.6 + R() * 5.0 }; // RO: kanan → kiri
+  else if (side > 0 && R() < 0.62) cross = { dir: -1, t0: 28.4 + R() * 4.2 }; // RO: kanan → kiri
   water.push({ side, u: R(), v: R(), u2: R(), v2: R(), my: R(), ph: R() * 6.28, cross });
 }
 const ions = [];
@@ -85,15 +86,15 @@ function tank(t, alpha) {
     g.fillStyle = C.waterTop; g.fillRect(x0, y - 2, x1 - x0, 4);
   });
   // piston (fase RO)
-  const pk = easeOut(prog(t, 12.8, 1.0));
+  const pk = easeOut(prog(t, 27.6, 1.0));
   if (pk > 0) {
     const py = yOf(lv[1]) - 18 - (1 - pk) * 140;
     g.fillStyle = 'rgba(200,215,230,0.95)'; g.fillRect(MX + 8, py - 22, TX1 - MX - 16, 22);
     g.fillRect((MX + TX1) / 2 - 10, py - 150, 20, 130);
     const pul = 0.5 + 0.5 * Math.sin(t * 6);
     arrow((MX + TX1) / 2 + 90, py - 150, (MX + TX1) / 2 + 90, py - 40, `rgba(255,170,90,${0.7 + 0.3 * pul})`, 7);
-    label('TEKANAN', TX1 + 40, py - 100, 26, '#ffb36b', 800, 'left');
-    label('> tekanan osmotik', TX1 + 40, py - 68, 22, '#ffd2a8', 600, 'left');
+    label('TEKANAN  p', TX1 + 40, py - 100, 28, '#ffb36b', 800, 'left');
+    label('p > π (tekanan osmotik)', TX1 + 40, py - 66, 22, '#ffd2a8', 600, 'left');
   }
   // dinding tangki
   g.strokeStyle = 'rgba(207,233,255,0.85)'; g.lineWidth = 6; g.lineJoin = 'round';
@@ -101,7 +102,7 @@ function tank(t, alpha) {
   // membran semipermeabel
   g.setLineDash([18, 10]); g.strokeStyle = C.mem; g.lineWidth = 5;
   g.beginPath(); g.moveTo(MX, TY0 - 30); g.lineTo(MX, TY1); g.stroke(); g.setLineDash([]);
-  label('MEMBRAN SEMIPERMEABEL', MX, TY1 + 46, 20, C.acc, 800);
+  label('MEMBRAN SEMIPERMEABEL', MX, TY1 + 38, 20, C.acc, 800);
   label('AIR TAWAR (ENCER)', (TX0 + MX) / 2, TY0 - 64, 24, C.txt, 800);
   label('AIR LAUT (PEKAT)', (MX + TX1) / 2, TY0 - 64, 24, C.txt, 800);
   // ion garam (hanya sisi kanan)
@@ -124,10 +125,79 @@ function tank(t, alpha) {
     drawMol(x, y, 5, C.h2o);
   });
   // label fase + panah arah aliran
-  const o1 = prog(t, 4.0, 0.6) * (1 - prog(t, 12.6, 0.5)), o2 = prog(t, 13.0, 0.6);
+  const o1 = prog(t, 4.0, 0.6) * (1 - prog(t, 12.4, 0.5)), oe = prog(t, 12.8, 0.6) * (1 - prog(t, 27.4, 0.4)), o2 = prog(t, 28.0, 0.6);
   const pill = (w) => { g.fillStyle = 'rgba(6,21,44,0.85)'; g.beginPath(); g.roundRect(MX - w / 2, 482, w, 52, 12); g.fill(); };
   if (o1 > 0) { g.globalAlpha = alpha * o1; arrow(MX - 110, 570, MX + 110, 570, '#9fdcff', 8); pill(230); label('OSMOSIS', MX, 520, 34, C.txt, 800); }
+  if (oe > 0) {
+    g.globalAlpha = alpha * oe;
+    arrow(MX - 120, 560, MX - 16, 560, '#9fdcff', 6); arrow(MX + 120, 590, MX + 16, 590, '#9fdcff', 6);
+    pill(520); label('KESETIMBANGAN OSMOTIK', MX, 520, 32, C.txt, 800);
+    // selisih tinggi muka air = tekanan osmotik π
+    const yL = yOf(lv[0]), yR = yOf(lv[1]), bx = TX1 + 46;
+    g.strokeStyle = '#ffd54f'; g.lineWidth = 4; g.setLineDash([10, 8]);
+    g.beginPath(); g.moveTo(TX0, yL); g.lineTo(bx + 20, yL); g.stroke(); g.setLineDash([]);
+    g.beginPath(); g.moveTo(bx, yL); g.lineTo(bx, yR); g.moveTo(bx - 14, yL); g.lineTo(bx + 14, yL); g.moveTo(bx - 14, yR); g.lineTo(bx + 14, yR); g.stroke();
+    label('π', bx + 30, (yL + yR) / 2 + 4, 56, '#ffd54f', 800, 'left');
+    label('tekanan osmotik', bx + 30, (yL + yR) / 2 + 40, 22, '#ffe8a3', 700, 'left');
+  }
   if (o2 > 0) { g.globalAlpha = alpha * o2; arrow(MX + 110, 570, MX - 110, 570, '#ffb36b', 8); pill(380); label('REVERSE OSMOSIS', MX, 520, 34, C.txt, 800); }
+  g.restore();
+  // indikator tahap (mengikuti diagram: osmosis → kesetimbangan → reverse osmosis)
+  g.save(); g.globalAlpha = alpha;
+  const st = t < 12.6 ? 0 : t < 27.4 ? 1 : 2;
+  ['1  Osmosis', '2  Kesetimbangan osmotik', '3  Reverse osmosis'].forEach((n, i) => {
+    const x = 560 + i * 400;
+    g.fillStyle = i === st ? 'rgba(110,195,255,0.95)' : 'rgba(110,195,255,0.18)';
+    g.beginPath(); g.roundRect(x - 170, 888, 340, 46, 23); g.fill();
+    label(n, x, 919, 22, i === st ? '#06152c' : C.sub, 800);
+  });
+  g.restore();
+}
+
+// ---------- Grafik tekanan osmotik vs kadar garam (air laut, 25 °C) ----------
+function grafik(t, alpha) {
+  if (alpha <= 0) return;
+  g.save(); g.globalAlpha = alpha;
+  const X0 = 520, X1 = 1500, Y0 = 860, Y1 = 260;            // area plot
+  const px = (c) => X0 + (X1 - X0) * c / 60, py = (p) => Y0 - (Y0 - Y1) * p / 50;
+  label('TEKANAN OSMOTIK vs KADAR GARAM', 960, 180, 34, C.txt, 800);
+  label('air laut · suhu 25 °C', 960, 218, 22, C.sub, 600);
+  // grid + sumbu
+  g.lineWidth = 1; g.strokeStyle = 'rgba(207,233,255,0.12)';
+  for (let c = 10; c <= 60; c += 10) { g.beginPath(); g.moveTo(px(c), Y0); g.lineTo(px(c), Y1); g.stroke(); }
+  for (let p = 10; p <= 50; p += 10) { g.beginPath(); g.moveTo(X0, py(p)); g.lineTo(X1, py(p)); g.stroke(); }
+  g.lineWidth = 4; g.strokeStyle = 'rgba(207,233,255,0.9)';
+  g.beginPath(); g.moveTo(X0, Y1 - 20); g.lineTo(X0, Y0); g.lineTo(X1 + 20, Y0); g.stroke();
+  for (let c = 0; c <= 60; c += 10) label(String(c), px(c), Y0 + 36, 20, C.sub, 600);
+  for (let p = 0; p <= 50; p += 10) label(String(p), X0 - 18, py(p) + 7, 20, C.sub, 600, 'right');
+  label('kadar garam (g/L)', 960, Y0 + 78, 22, C.acc, 700);
+  g.save(); g.translate(X0 - 74, (Y0 + Y1) / 2); g.rotate(-Math.PI / 2); label('tekanan osmotik π (bar)', 0, 0, 22, C.acc, 700); g.restore();
+  // garis: 15 g/L ≈ 12 bar → 60 g/L ≈ 47 bar (mengikuti diagram referensi)
+  const k = easeInOut(prog(t, 19.8, 2.6)), c1 = lerp(15, 60, k), pOf = (c) => 12 + (c - 15) * 35 / 45;
+  g.strokeStyle = '#ff5a52'; g.lineWidth = 7; g.lineCap = 'round';
+  g.beginPath(); g.moveTo(px(15), py(12)); g.lineTo(px(c1), py(pOf(c1))); g.stroke();
+  // titik air laut tipikal: 35 g/L → ± 27 bar
+  const a1 = easeOut(prog(t, 21.0, 0.8));
+  if (a1 > 0) {
+    g.globalAlpha = alpha * a1;
+    const xs = px(35), ys = py(pOf(35));
+    g.setLineDash([10, 8]); g.strokeStyle = '#ffd54f'; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(xs, Y0); g.lineTo(xs, ys); g.lineTo(X0, ys); g.stroke(); g.setLineDash([]);
+    g.beginPath(); g.arc(xs, ys, 12, 0, 7); g.fillStyle = '#ffd54f'; g.fill();
+    g.fillStyle = 'rgba(14,34,66,0.95)'; g.strokeStyle = 'rgba(255,213,79,0.7)'; g.lineWidth = 2;
+    g.beginPath(); g.roundRect(xs + 30, ys - 104, 400, 84, 14); g.fill(); g.stroke();
+    label('AIR LAUT TIPIKAL', xs + 52, ys - 70, 20, '#ffd54f', 800, 'left');
+    label('± 35 g/L  →  π ± 27 bar', xs + 52, ys - 36, 28, C.txt, 800, 'left');
+  }
+  // "makin tinggi kadar garam, makin besar tekanannya"
+  const a2 = prog(t, 23.4, 0.6);
+  if (a2 > 0) {
+    g.globalAlpha = alpha * a2;
+    const u = (t - 23.4) * 0.35 % 1, cu = lerp(15, 60, u);
+    g.beginPath(); g.arc(px(cu), py(pOf(cu)), 10, 0, 7); g.fillStyle = '#ffffff'; g.fill();
+    arrow(px(40), py(18), px(54), py(29), '#ff9f8f', 6);
+    label('kadar garam ↑  →  tekanan osmotik ↑', px(51), py(10), 24, '#ffd2c8', 700);
+  }
   g.restore();
 }
 
@@ -192,7 +262,7 @@ function glass(x, y, w, h, dens, col, t) {
 function tds(t, alpha) {
   if (alpha <= 0) return;
   g.save(); g.globalAlpha = alpha;
-  const k1 = easeOut(prog(t, 26.0, 1.2)), k2 = easeOut(prog(t, 30.8, 1.2));
+  const k1 = easeOut(prog(t, 39.6, 1.2)), k2 = easeOut(prog(t, 44.3, 1.2));
   glass(400, 330, 300, 400, 160, 'rgba(40,110,190,0.55)', t);
   label('AIR LAUT', 550, 290, 30, C.txt, 800);
   label(`${Math.round(35000 * k1).toLocaleString('id-ID')}`, 550, 820, 64, C.txt, 800);
@@ -205,8 +275,8 @@ function tds(t, alpha) {
     label('SWRO', 950, 486, 30, C.txt, 800);
     glass(1220, 330, 300, 400, 3, 'rgba(160,225,255,0.35)', t);
     label('AIR PRODUK', 1370, 290, 30, C.txt, 800);
-    label(`< ${Math.round(500 * k2)}`, 1370, 820, 64, '#c8f4ff', 800);
-    label('mg/L TDS · tipikal', 1370, 860, 22, C.sub, 600);
+    label(`< ${Math.round(300 * k2)}`, 1370, 820, 64, '#c8f4ff', 800);
+    label('mg/L TDS · air minum · tipikal', 1370, 860, 22, C.sub, 600);
   }
   g.restore();
 }
@@ -214,10 +284,12 @@ function tds(t, alpha) {
 window.renderFrame = (tl) => {
   const t = waktu(tl);
   background();
-  const aTank = easeOut(prog(t, 0.2, 0.8)) * (1 - prog(t, 19.4, 0.6));
-  const aZoom = prog(t, 19.6, 0.6) * (1 - prog(t, 25.5, 0.6));
-  const aTds = prog(t, 25.9, 0.6);
+  const aTank = easeOut(prog(t, 0.2, 0.8)) * (1 - prog(t, 19.0, 0.5)) + prog(t, 27.2, 0.5) * (1 - prog(t, 33.2, 0.5));
+  const aGraf = prog(t, 19.3, 0.6) * (1 - prog(t, 26.8, 0.5));
+  const aZoom = prog(t, 33.6, 0.6) * (1 - prog(t, 39.0, 0.5));
+  const aTds = prog(t, 39.4, 0.6);
   tank(t, aTank);
+  grafik(t, aGraf);
   closeup(t, aZoom);
   tds(t, aTds);
   perbarui(t);

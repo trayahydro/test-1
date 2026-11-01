@@ -44,7 +44,7 @@ function hmi(t) {
   if (logo) hg.drawImage(logo, 14, 6, 44 * logo.width / logo.height, 44);
   hg.fillStyle = '#fff'; hg.font = '700 24px Jakarta'; hg.fillText('SWRO — PEMANTAUAN', 150, 37);
   hg.fillStyle = Math.sin(t * 4) > 0 ? '#4caf50' : '#2e6b31'; hg.beginPath(); hg.arc(762, 28, 10, 0, 7); hg.fill();
-  const v = [['Tekanan umpan', (62 + Math.sin(t * 0.7) * 0.4).toFixed(1), 'bar'], ['Laju aliran', 'stabil', ''], ['Konduktivitas', Math.round(560 + Math.sin(t * 0.5) * 8), 'µS/cm'], ['pH produk', (7.6 + Math.sin(t * 0.3) * 0.05).toFixed(1), ''], ['Suhu', (29 + Math.sin(t * 0.2) * 0.2).toFixed(1), '°C']];
+  const v = [['Tekanan umpan', (40 + Math.sin(t * 0.7) * 0.4).toFixed(1), 'bar'], ['Laju aliran', 'stabil', ''], ['Konduktivitas', Math.round(560 + Math.sin(t * 0.5) * 8), 'µS/cm'], ['pH produk', (7.6 + Math.sin(t * 0.3) * 0.05).toFixed(1), ''], ['Suhu', (29 + Math.sin(t * 0.2) * 0.2).toFixed(1), '°C']];
   v.forEach(([n, x, u], i) => {
     const bx = 20 + (i % 3) * 258, by = 76 + Math.floor(i / 3) * 96;
     hg.strokeStyle = '#4fc3f7'; hg.lineWidth = 2; hg.strokeRect(bx, by, 244, 82);

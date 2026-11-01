@@ -136,57 +136,77 @@
  {
   "no": 3,
   "judul": "Prinsip Reverse Osmosis",
-  "durasi": 35.697,
+  "durasi": 49.713,
   "cues": [
    {
     "a": 0.0,
-    "b": 2.287,
+    "b": 2.264,
     "text": "Prinsipnya adalah osmosis balik."
    },
    {
-    "a": 2.567,
-    "b": 3.482,
+    "a": 2.544,
+    "b": 3.451,
     "text": "Secara alami,"
    },
    {
-    "a": 3.482,
-    "b": 9.324,
+    "a": 3.451,
+    "b": 9.243,
     "text": "air bergerak dari larutan encer menuju larutan pekat melalui membran semipermeabel."
    },
    {
-    "a": 9.604,
-    "b": 11.926,
+    "a": 9.523,
+    "b": 11.822,
     "text": "Proses ini disebut osmosis."
    },
    {
-    "a": 12.206,
-    "b": 16.751,
-    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik air laut,"
+    "a": 12.102,
+    "b": 15.088,
+    "text": "Aliran berhenti saat tercapai kesetimbangan,"
    },
    {
-    "a": 16.751,
-    "b": 18.557,
+    "a": 15.088,
+    "b": 18.278,
+    "text": "dan selisih tekanannya disebut tekanan osmotik."
+   },
+   {
+    "a": 18.558,
+    "b": 22.768,
+    "text": "Untuk air laut, tekanan osmotiknya tipikal sekitar 27 bar,"
+   },
+   {
+    "a": 22.768,
+    "b": 26.616,
+    "text": "dan makin tinggi kadar garam, makin besar tekanannya."
+   },
+   {
+    "a": 26.896,
+    "b": 30.818,
+    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik,"
+   },
+   {
+    "a": 30.818,
+    "b": 32.596,
     "text": "arah aliran tersebut dibalik."
    },
    {
-    "a": 18.837,
-    "b": 21.373,
+    "a": 32.876,
+    "b": 35.397,
     "text": "Molekul air dipaksa menembus membran,"
    },
    {
-    "a": 21.373,
-    "b": 24.595,
+    "a": 35.397,
+    "b": 38.6,
     "text": "sementara garam terlarut dan pengotor tertahan."
    },
    {
-    "a": 24.875,
-    "b": 29.506,
+    "a": 38.88,
+    "b": 43.515,
     "text": "Air laut dengan TDS tipikal sekitar 35.000 mg/L"
    },
    {
-    "a": 29.506,
-    "b": 35.417,
-    "text": "dapat diolah menjadi air tawar dengan TDS di bawah 500 mg/L."
+    "a": 43.515,
+    "b": 49.433,
+    "text": "dapat diolah menjadi air minum dengan TDS di bawah 300 mg/L."
    }
   ],
   "wav": "adegan_03.wav"

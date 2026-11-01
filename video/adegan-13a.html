@@ -35,7 +35,7 @@ const camAt = kamera(cam, [
 chip('9', 'Air Produk', 'Siap disimpan & didistribusikan', 9, 0.3);
 bug(0.2);
 const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
-kartu({ k: 'KUALITAS', tt: 'TDS < 500 mg/L', rows: [['Status', 'tipikal'], ['Siap untuk', 'disimpan & didistribusikan']], x: 110, y: 200, t0: 0.9, t1: 99, anchor: S(V(T.x, T.yg + 2.0, T.z - T.r)) });
+kartu({ k: 'KUALITAS', tt: 'TDS < 300 mg/L', rows: [['Untuk', 'air minum', 'TIPIKAL'], ['Siap untuk', 'disimpan & didistribusikan']], x: 110, y: 200, t0: 0.9, t1: 99, anchor: S(V(T.x, T.yg + 2.0, T.z - T.r)) });
 const use = el('<div><i>⌂</i><b>Domestik</b><span>permukiman & fasilitas umum</span></div><div><i>▦</i><b>Komersial</b><span>resor, hotel, pelabuhan</span></div><div><i>⚙</i><b>Industri</b><span>proses & utilitas</span></div>', 'use');
 [...use.children].forEach((c, i) => muncul(c, 7.0 + i * 1.6));
 window.renderFrame = (tl) => {

@@ -92,7 +92,7 @@ const S = (p) => (t) => { const s = layar(cam, p); return s[2] < 1 ? s : null; }
 penanda('•', 'Impeler bertingkat', S(V(X0 + 0.2 + 2 * 0.215, 0.2, -0.02)), 13.0, 99);
 penanda('•', 'Poros', S(V(X1 + 0.2, 0, 0)), 13.6, 19.0);
 kartu({ k: 'MATERIAL', tt: 'Duplex / Super Duplex', rows: [['Bagian basah', 'stainless steel tahan korosi'], ['Lingkungan', 'air laut, klorida tinggi']], x: 1340, y: 200, t0: 12.7, t1: 19.4, w: 470 });
-kartu({ k: 'JANTUNG SISTEM', tt: 'Operasi Kontinu', rows: [['Pola kerja', 'terus-menerus'], ['Efisiensi', 'tinggi'], ['Tekanan', '55–70 bar', 'TIPIKAL']], x: 1340, y: 200, t0: 19.6, t1: 99 });
+kartu({ k: 'JANTUNG SISTEM', tt: 'Operasi Kontinu', rows: [['Pola kerja', 'terus-menerus'], ['Efisiensi', 'tinggi'], ['Tekanan', '35–42 bar', 'TIPIKAL']], x: 1340, y: 200, t0: 19.6, t1: 99 });
 const g = dial({ x: 110, y: 200, judul: 'TEKANAN PER TAHAP' });
 
 window.renderFrame = (tl) => {
@@ -104,7 +104,7 @@ window.renderFrame = (tl) => {
   render();
   // tekanan naik bertahap (6 tingkat) mengikuti siklus partikel
   const stage = Math.min(6, Math.floor(((t - 12.3) * 0.9) % 7));
-  g.set(2.5 + stage * (59.5 / 6), easeOut(prog(t, 12.6, 0.6)) * (1 - prog(t, 19.2, 0.5)));
+  g.set(2.5 + stage * (37.5 / 6), easeOut(prog(t, 12.6, 0.6)) * (1 - prog(t, 19.2, 0.5)));
   perbarui(t);
 };
 window._ready();

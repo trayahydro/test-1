@@ -47,14 +47,18 @@ pelabuhan, dan pabrik. Ikon tetes air berubah merah/kuning.
 
 ## Adegan 3: Prinsip Reverse Osmosis (±1:40–2:20)
 **Visual:** infografis bersih (navy dan biru air): tabung U dengan membran semipermeabel.
-(a) Osmosis: air bergerak ke sisi asin. (b) Tekanan diberikan pada sisi asin, aliran berbalik.
-Close-up molekul: H₂O lolos, ion Na⁺ dan Cl⁻ tertahan. Penghitung TDS: 35.000 → < 500 mg/L.
+Mengikuti diagram "Osmosis and Reverse Osmosis Principle": (a) Osmosis: air murni bergerak ke sisi larutan.
+(b) Kesetimbangan osmotik: selisih tinggi permukaan = tekanan osmotik π. (c) Reverse osmosis: piston menekan
+sisi larutan dengan p > π, air murni keluar. Grafik tekanan osmotik vs kadar garam (air laut 25 °C, ±27 bar
+pada 35 g/L). Close-up molekul: H₂O lolos, ion Na⁺ dan Cl⁻ tertahan. Penghitung TDS: 35.000 → < 300 mg/L.
 
 > Prinsipnya adalah osmosis balik. Secara alami, air bergerak dari larutan encer menuju larutan pekat
-> melalui membran semipermeabel. Proses ini disebut osmosis. Dengan memberikan tekanan yang lebih besar
-> dari tekanan osmotik air laut, arah aliran tersebut dibalik. Molekul air dipaksa menembus membran,
+> melalui membran semipermeabel. Proses ini disebut osmosis. Aliran berhenti saat tercapai kesetimbangan,
+> dan selisih tekanannya disebut tekanan osmotik. Untuk air laut, tekanan osmotiknya tipikal sekitar 27 bar,
+> dan makin tinggi kadar garam, makin besar tekanannya. Dengan memberikan tekanan yang lebih besar
+> dari tekanan osmotik, arah aliran tersebut dibalik. Molekul air dipaksa menembus membran,
 > sementara garam terlarut dan pengotor tertahan. Air laut dengan TDS tipikal sekitar 35.000 mg/L
-> dapat diolah menjadi air tawar dengan TDS di bawah 500 mg/L.
+> dapat diolah menjadi air minum dengan TDS di bawah 300 mg/L.
 
 ## Adegan 4: Intake & Pompa Umpan (±2:20–2:50)
 **Visual:** potongan pantai: pipa intake menjorok ke laut dengan kepala intake bersaringan; alternatif
@@ -90,12 +94,12 @@ kecepatan filtrasi 8–12 m/jam · partikel ±10–20 µm (tipikal).
 
 ## Adegan 6: Opsi Ultrafiltrasi (±3:55–4:20)
 **Visual:** modul UF vertikal, close-up potongan serat berongga (hollow fiber); zoom ke dinding serat:
-pori 0,01–0,03 µm; bakteri dan virus tertahan, air lolos.
-**Kartu:** Ultrafiltrasi (opsional) · pori 0,01–0,03 µm · SDI < 3 (tipikal).
+pori 0,02 µm; bakteri dan virus tertahan, air lolos.
+**Kartu:** Ultrafiltrasi (opsional) · pori 0,02 µm · SDI < 3 (tipikal).
 
 > Untuk air baku dengan kekeruhan tinggi, multimedia filter dapat dilengkapi atau digantikan dengan
-> ultrafiltrasi. Membran UF berupa ribuan serat berongga dengan ukuran pori tipikal 0,01 sampai
-> 0,03 mikron, cukup kecil untuk menahan partikel koloid, bakteri, dan sebagian besar virus. Hasilnya,
+> ultrafiltrasi. Membran UF berupa ribuan serat berongga dengan ukuran pori tipikal
+> 0,02 mikron, cukup kecil untuk menahan partikel koloid, bakteri, dan sebagian besar virus. Hasilnya,
 > air umpan menjadi sangat stabil dengan nilai SDI tipikal di bawah 3.
 
 ## Adegan 7: Dosing Antiscalant & SMBS (±4:20–4:45)
@@ -107,24 +111,24 @@ selang ke titik injeksi. Inset: kristal kerak yang gagal terbentuk; molekul klor
 > sodium metabisulfit, atau SMBS, menetralkan sisa klorin, karena membran poliamida sangat sensitif
 > terhadap oksidator.
 
-## Adegan 8: Cartridge Filter 5 Mikron (±4:45–5:15)
+## Adegan 8: Cartridge Filter 1 Mikron (±4:45–5:15)
 **Visual:** housing biru dipotong: beberapa elemen cartridge 40" di dalamnya. Air mengalir dari luar ke
 dalam elemen, partikel halus menempel di permukaan. Dua manometer menunjukkan ΔP naik.
-**Kartu:** Cartridge Filter · rating 5 µm · PP melt-blown · ganti saat ΔP ±1 bar (tipikal).
+**Kartu:** Cartridge Filter · rating 1 µm · PP melt-blown · ganti saat ΔP ±1 bar (tipikal).
 
 > Pengaman terakhir sebelum pompa tekanan tinggi adalah cartridge filter. Di dalam housing ini terpasang
-> beberapa elemen filter polypropylene melt-blown dengan rating 5 mikron. Air mengalir dari sisi luar
+> beberapa elemen filter polypropylene melt-blown dengan rating 1 mikron. Air mengalir dari sisi luar
 > elemen menuju bagian tengah, dan partikel halus yang lolos dari tahap sebelumnya tertangkap di sini.
 > Perbedaan tekanan masuk dan keluar dipantau terus. Ketika selisihnya mencapai sekitar 1 bar,
 > elemen filter diganti.
 
 ## Adegan 9: Pompa Tekanan Tinggi (±5:15–5:45)
 **Visual:** skid HPP di kontainer, lalu potongan pompa multistage: impeler berputar; manometer naik
-ke 62 bar dengan pita 55–70 bar.
-**Kartu:** Pompa Tekanan Tinggi · 55–70 bar (tipikal) · stainless duplex / super duplex.
+ke 40 bar dengan pita 35–42 bar.
+**Kartu:** Pompa Tekanan Tinggi · 35–42 bar (tipikal) · stainless duplex / super duplex.
 
-> Kini air siap diberi tekanan. Pompa tekanan tinggi menaikkan tekanan air hingga tipikal 55 sampai
-> 70 bar, jauh di atas tekanan osmotik air laut. Bagian yang bersentuhan dengan air laut dibuat dari
+> Kini air siap diberi tekanan. Pompa tekanan tinggi menaikkan tekanan air hingga tipikal 35 sampai
+> 42 bar, di atas tekanan osmotik air laut. Bagian yang bersentuhan dengan air laut dibuat dari
 > stainless steel duplex atau super duplex yang tahan korosi. Pompa ini adalah jantung sistem SWRO,
 > dan dirancang untuk beroperasi terus-menerus dengan efisiensi tinggi.
 
@@ -173,22 +177,22 @@ dosing NaOCl, lalu tangki air produk. Indikator pH bergerak ke rentang 6,5–8,5
 ## Adegan 13: Air Produk & Pembuangan Brine (±7:50–8:20)
 **Visual:** aliran terbelah: tangki air produk → rumah, hotel, industri; gelas air jernih. Jalur brine
 oranye → pipa outfall → difuser di dasar laut, plume cepat bercampur.
-**Kartu:** Air produk · TDS < 500 mg/L (tipikal).
+**Kartu:** Air produk · TDS < 300 mg/L untuk air minum (tipikal).
 
-> Hasil akhirnya adalah air produk dengan TDS tipikal di bawah 500 mg/L, siap disimpan dan didistribusikan
+> Hasil akhirnya adalah air produk dengan TDS tipikal di bawah 300 mg/L untuk air minum, siap disimpan dan didistribusikan
 > untuk kebutuhan domestik, komersial, maupun industri. Brine, dengan kadar garam sekitar dua kali air laut,
 > dikembalikan ke laut melalui pipa outfall dan difuser yang dirancang agar cepat bercampur, sehingga
 > dampaknya terhadap lingkungan dapat diminimalkan sesuai ketentuan yang berlaku.
 
 ## Adegan 14: Rekap Skala Filtrasi (±8:20–8:50)
 **Visual:** infografis skala logaritmik dari milimeter ke nanometer. Setiap tahap menyala bergantian:
-Strainer (mm) → MMF (±10–20 µm) → Cartridge (5 µm) → UF (0,01–0,03 µm) → RO (±0,0001 µm).
+Strainer (mm) → MMF (±10–20 µm) → Cartridge (1 µm) → UF (0,02 µm) → RO (±0,0001 µm).
 Pembanding: rambut manusia ±70 µm · bakteri ±1 µm · virus ±0,02–0,3 µm · ion garam < 0,001 µm.
 
 > Mari kita lihat kembali perjalanan air laut ini. Strainer menahan partikel berukuran milimeter.
 > Multimedia filter menangkap partikel hingga sekitar 10 mikron, lebih kecil dari sehelai rambut.
-> Cartridge filter menyaring hingga 5 mikron. Ultrafiltrasi, bila digunakan, menahan bakteri dan virus
-> pada skala 0,01 mikron. Dan akhirnya, membran RO memisahkan ion garam pada skala sekitar 0,0001 mikron.
+> Cartridge filter menyaring hingga 1 mikron. Ultrafiltrasi, bila digunakan, menahan bakteri dan virus
+> pada skala 0,02 mikron. Dan akhirnya, membran RO memisahkan ion garam pada skala sekitar 0,0001 mikron.
 
 ## Adegan 15: CIP & Monitoring (±8:50–9:20)
 **Visual:** jalur CIP menyala: tangki CIP → pompa → cartridge CIP → vessel → kembali ke tangki.
@@ -229,10 +233,12 @@ The Smith Alam Sutera SOHO-D/10/1009, Tangerang
 
 ## Catatan untuk Persetujuan
 1. **Angka tipikal** yang dipakai: TDS air laut ±35.000 mg/L; media MMF 0,8–1,2 / 0,4–0,6 mm;
-   filtrasi 8–12 m/jam; MMF ±10–20 µm; UF 0,01–0,03 µm; SDI < 3; cartridge 5 µm, ganti saat ΔP ±1 bar;
-   HPP 55–70 bar; vessel 1000 psi; elemen 8"×40", 6–7 per vessel; celah membran ±0,0001 µm;
-   rejeksi 99,7%; recovery 35–45%; ERD > 95%, hemat energi HPP ±50–60%; pH 6,5–8,5; produk < 500 mg/L;
+   filtrasi 8–12 m/jam; MMF ±10–20 µm; UF 0,02 µm; SDI < 3; cartridge 1 µm, ganti saat ΔP ±1 bar;
+   HPP 35–42 bar; vessel 1000 psi; elemen 8"×40", 6–7 per vessel; celah membran ±0,0001 µm;
+   rejeksi 99,7%; recovery 35–45%; ERD > 95%, hemat energi HPP ±50–60%; pH 6,5–8,5; produk < 300 mg/L (air minum);
    brine ±2× kadar air laut. Silakan coret angka yang tidak ingin ditampilkan.
+   *Revisi 1 (Pak Jimmy, 30 Okt 2026): UF 0,02 µm; cartridge 1 µm; HPP 35–42 bar; TDS air minum < 300 mg/L;
+   adegan 3 mengikuti diagram Osmosis & Reverse Osmosis Principle.*
 2. **Klaim layanan** di Adegan 16 sengaja dibatasi pada isi brief: desain custom, hemat energi,
    instalasi & perawatan. Tambahan "plug & play", "mudah dipindahkan", dan "material tahan air laut"
    menggambarkan konsep kontainer. Mohon dikonfirmasi.
