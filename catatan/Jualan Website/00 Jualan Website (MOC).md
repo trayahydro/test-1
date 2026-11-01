@@ -40,6 +40,9 @@ yang disimpan user, dalam bentuk screenshot.
 | [[Setup Claude Code - 5 Plugin untuk 5 Titik Buta]] *(IG)* | Security Guidance, Frontend Design, Agent Skills (Addy Osmani), Ponytail, Chrome DevTools MCP + perintah pasang | lengkap |
 | [[Automasi - Tim Social Media AI (Iklan, Leads, Sales)]] *(IG)* | Iklan dari riset kompetitor, leads dari komentar/DM, voice agent menelepon dalam 60 detik | lengkap |
 
+## Klien
+- [[PRD - Toko Online Fashion (Teteh)]]: calon klien toko online fashion (draf PRD v0.1, Shopify + Midtrans/Xendit + omnichannel)
+
 ## Alur kerja membuat website klien (sementara, dari materi yang ada)
 1. **PRD + dokumen project** ([[Dokumen Project - 4 Dokumen Wajib Vibe Coder|4 dokumen]]): prompt 1. Gali kebutuhan klien, tentukan MVP, putuskan stack/integrasi/desain ([[Mindset - Vibe Coder vs AI Engineer|cara AI Engineer]]).
 2. **Design brief**: prompt 2. Cari referensi di Refero / Motionsites / Pinterest, lalu tiru gayanya dengan Design DNA (#22).
