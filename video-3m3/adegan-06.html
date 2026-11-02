@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 6: Cartridge filter 20 & 5 mikron</title>
+<style>
+.skala { position: absolute; left: 110px; top: 220px; width: 520px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+.skala .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+.skala .row { display: flex; align-items: flex-end; justify-content: space-around; height: 250px; margin-top: 12px; }
+.skala .it { text-align: center; }
+.skala .c { border-radius: 50%; margin: 0 auto 12px; }
+.skala .it b { display: block; font-size: 26px; font-weight: 800; }
+.skala .it span { font-size: 17px; color: #a9c7e4; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, lerp, clamp } from '../video/lib/common.js';
+import { rng } from '../video/lib/tekstur.js';
+import { WARNA } from '../video/lib/aliran.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+import { V, penunjuk, alir, jalan } from './lib/bantu.js';
+
+const A = await siapkanAdegan(6);
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: false });
+const { cam, scene, refs } = P;
+const S = penunjuk(cam), Pp = refs.pipes;
+const R = rng(66);
+const YB = 0.19;
+const fIn = alir(Pp.t2out, WARNA.pre, { parent: scene }), fCart = alir(Pp.cart, WARNA.pre, { parent: scene }), fHP = alir(Pp.toHP, WARNA.pre, { parent: scene });
+// cartridge berlipat di dalam housing (terlihat saat mangkuk dibuat transparan)
+const pleat = (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 64; const g = c.getContext('2d'); for (let x = 0; x < 256; x += 8) { const gr = g.createLinearGradient(x, 0, x + 8, 0); gr.addColorStop(0, '#b9b2a2'); gr.addColorStop(0.5, '#fbf8f0'); gr.addColorStop(1, '#aaa392'); g.fillStyle = gr; g.fillRect(x, 0, 8, 64); } const t = new THREE.CanvasTexture(c); t.wrapS = THREE.RepeatWrapping; t.repeat.set(1.5, 1); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const cutK = [];
+refs.parts.carts.forEach((c, i) => {
+  const bowl = c.group.children[0];
+  bowl.material = bowl.material.clone(); bowl.material.transparent = true;
+  const cart = new THREE.Mesh(new THREE.CylinderGeometry(0.058, 0.058, 0.5, 40), new THREE.MeshStandardMaterial({ map: pleat, roughness: 0.8, color: c.um === 20 ? '#ffffff' : '#f2f6ff' }));
+  cart.position.y = YB + 0.30; c.group.add(cart); cart.visible = false;
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.51, 16), new THREE.MeshStandardMaterial({ color: '#3a4048' })); core.position.y = YB + 0.30; c.group.add(core); core.visible = false;
+  const ribs = c.group.children.slice(1, 11);
+  cutK.push({ c, bowl, cart, core, ribs });
+});
+// partikel tertahan
+const NP = 70;
+const mkI = (col, rad) => { const m = new THREE.InstancedMesh(new THREE.SphereGeometry(rad, 8, 6), new THREE.MeshBasicMaterial({ color: col, toneMapped: false }), NP); scene.add(m); return m; };
+const p20 = mkI('#9a6a35', 0.0045), p5 = mkI('#b98b55', 0.0028);
+const PD = Array.from({ length: NP }, () => ({ a: R() * Math.PI * 2, y: YB + 0.08 + R() * 0.44, d: R() * 2.5, k: R() < 0.5 ? 0 : 1 }));
+const _m = new THREE.Matrix4(), HID = new THREE.Matrix4().makeScale(0, 0, 0);
+function partikel(mesh, t, t0, idx) {
+  PD.forEach((p, i) => {
+    const c = refs.parts.carts[idx + p.k];
+    const u = clamp((t - t0 - p.d) / 1.6);
+    if (u <= 0) { mesh.setMatrixAt(i, HID); return; }
+    const r = lerp(0.08, 0.061, u), a = p.a;
+    _m.makeTranslation(c.x + Math.cos(a) * r, p.y, 0.18 + Math.sin(a) * r); mesh.setMatrixAt(i, _m);
+  });
+  mesh.instanceMatrix.needsUpdate = true;
+}
+const camAt = kamera(cam, [
+  { t: 0, p: [1.31, 0.75, 1.75], l: [1.31, 0.5, 0.18], f: 40 },
+  { t: 4.9, p: [1.31, 0.68, 1.45], l: [1.31, 0.5, 0.18], f: 40 },
+  { t: 5.8, p: [1.0, 0.62, 1.3], l: [1.02, 0.48, 0.18], f: 40 },
+  { t: 8.6, p: [1.06, 0.64, 1.22], l: [1.02, 0.48, 0.18], f: 40 },
+  { t: 9.4, p: [1.62, 0.62, 1.3], l: [1.6, 0.48, 0.18], f: 40 },
+  { t: 12.0, p: [1.66, 0.64, 1.22], l: [1.6, 0.48, 0.18], f: 40 },
+  { t: 14.4, p: [1.75, 0.75, 1.5], l: [1.4, 0.52, 0.1], f: 40 },
+  { t: D, p: [1.95, 0.8, 1.45], l: [1.5, 0.5, 0.0], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('5', 'Cartridge Filter', '2 × 20 µm + 2 × 5 µm', 3, 0.3);
+bug(0.2);
+kartu({ k: 'CARTRIDGE FILTER', tt: '4 Housing 20 inci', rows: [['Tahap 1', '2 × 20 mikron'], ['Tahap 2', '2 × 5 mikron']], x: 1360, y: 210, t0: 1.0, t1: 5.4 });
+penanda('20', 'Partikel ≥ 20 µm tertahan', S(V(0.92, 0.62, 0.27)), 6.0, 8.8, { kiri: true });
+penanda('5', 'Partikel ≥ 5 µm tertahan', S(V(1.70, 0.62, 0.27)), 9.6, 12.2);
+const sk = el(`<div class="k">PERBANDINGAN UKURAN</div><div class="row">
+  <div class="it"><div class="c" style="width:210px;height:210px;background:radial-gradient(circle at 35% 35%,#8a6a50,#4d382a)"></div><b>± 70 µm</b><span>sehelai rambut</span></div>
+  <div class="it"><div class="c" style="width:60px;height:60px;background:#6ec3ff"></div><b>20 µm</b><span>tahap 1</span></div>
+  <div class="it"><div class="c" style="width:15px;height:15px;background:#c8f4ff"></div><b>5 µm</b><span>tahap 2</span></div></div>`, 'skala');
+muncul(sk, 11.9, 14.6);
+kartu({ k: 'PENGAMAN TERAKHIR', tt: 'Sebelum Tekanan Tinggi', rows: [['Melindungi', 'pompa tekanan tinggi'], ['Melindungi', 'membran RO']], x: 1360, y: 210, t0: 14.6, t1: 99 });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  jalan(fIn, t, 0.2, 0.6); jalan(fCart, t, 0.6, 2.2); jalan(fHP, t, 15.0, 2.5);
+  const k20 = easeInOut(prog(t, 5.3, 0.8)) * (1 - easeInOut(prog(t, 13.8, 0.8)));
+  const k5 = easeInOut(prog(t, 8.9, 0.8)) * (1 - easeInOut(prog(t, 13.8, 0.8)));
+  cutK.forEach((q, i) => { const k = i < 2 ? k20 : k5; q.bowl.material.opacity = 1 - 0.8 * k; q.bowl.material.depthWrite = k < 0.5; q.cart.visible = q.core.visible = k > 0.02; q.ribs.forEach((r) => (r.visible = k < 0.3)); });
+  if (k20 > 0.02) partikel(p20, t, 5.6, 0); else p20.visible = false; p20.visible = k20 > 0.02;
+  if (k5 > 0.02) partikel(p5, t, 9.2, 2); p5.visible = k5 > 0.02;
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../video/lib/overlay.css"></head><body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import { panggungLaut } from './lib/panggung3m3.js';
+const q = new URLSearchParams(location.search);
+const P = panggungLaut({ waktu: q.get('w') || 'pagi', interior: true });
+const views = { 1: [[-120, 60, 90], [20, 0, 0], 40], 2: [[200, 12, 50], [160, 2, 0], 40], 3: [[90, 120, 0.1], [90, 0, 0], 40] };
+const [p, l, f] = views[q.get('v') || 1];
+P.cam.position.set(...p); P.cam.lookAt(...l); P.cam.fov = f; P.cam.updateProjectionMatrix();
+if (q.get('x')) P.setXray(1);
+window.renderFrame = (t) => { P.update(t); P.render(); };
+window.DURASI = 1; window._ready();
+</script></body></html>

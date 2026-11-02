@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 1: Kebutuhan air tawar di kapal</title>
+<style>
+.ikon { position: absolute; top: 640px; width: 230px; padding: 22px 0 18px; text-align: center; border-radius: 20px; background: rgba(8,22,44,.82); border: 1px solid rgba(110,190,255,.35); box-shadow: 0 18px 40px rgba(0,0,0,.35); opacity: 0; }
+.ikon svg { width: 84px; height: 84px; }
+.ikon div { font-size: 26px; font-weight: 700; margin-top: 8px; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { panggungLaut } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(1);
+const D = A.durasi;
+const P = panggungLaut({ waktu: 'pagi', interior: true });
+const { cam } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const S = (p) => () => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+const camAt = kamera(cam, [
+  { t: 0, p: [150, 62, 60], l: [100, 36, 0], f: 34 },
+  { t: 6.8, p: [118, 50, 44], l: [96, 37, 0], f: 34 },
+  { t: 7.6, p: [100, 30, 175], l: [92, 2, 0], f: 34 },
+  { t: 13.9, p: [112, 18, 140], l: [98, -2, 0], f: 34 },
+  { t: 15.2, p: [235, 9, 125], l: [140, 4, 0], f: 36 },
+  { t: D, p: [262, 3, 95], l: [196, 2, -50], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('1', 'Kebutuhan Air Tawar di Kapal', 'Ratusan penumpang dan kru, setiap hari', -1, 0.3);
+bug(0.2);
+
+const IK = {
+  'Minum': '<path d="M22 12h40l-5 62H27z" fill="none" stroke="#6ec3ff" stroke-width="5" stroke-linejoin="round"/><path d="M25 40h34l-3 32H28z" fill="#6ec3ff" opacity=".6"/>',
+  'Memasak': '<path d="M12 40h60v18a14 14 0 0 1-14 14H26a14 14 0 0 1-14-14z" fill="none" stroke="#6ec3ff" stroke-width="5"/><path d="M6 44h6M72 44h6M20 40v-6h44v6" stroke="#6ec3ff" stroke-width="5" fill="none"/><path d="M32 26c-4-6 4-8 0-14M44 26c-4-6 4-8 0-14M56 26c-4-6 4-8 0-14" stroke="#9fd8ff" stroke-width="3" fill="none"/>',
+  'Mandi': '<path d="M20 78V22a10 10 0 0 1 10-10h14a10 10 0 0 1 10 10v4" fill="none" stroke="#6ec3ff" stroke-width="5"/><path d="M42 30h24l-4 8H46z" fill="#6ec3ff"/><path d="M48 46l-3 8M56 46v8M64 46l3 8M50 60l-3 8M58 60v8M66 60l3 8" stroke="#9fd8ff" stroke-width="3"/>',
+  'Mencuci': '<rect x="14" y="10" width="56" height="66" rx="8" fill="none" stroke="#6ec3ff" stroke-width="5"/><circle cx="42" cy="48" r="17" fill="none" stroke="#6ec3ff" stroke-width="5"/><path d="M30 50q6-6 12 0t12 0" stroke="#9fd8ff" stroke-width="3" fill="none"/><circle cx="24" cy="20" r="3" fill="#6ec3ff"/><circle cx="34" cy="20" r="3" fill="#6ec3ff"/>',
+};
+Object.entries(IK).forEach(([nama, svg], i) => {
+  const d = el(`<svg viewBox="0 0 84 84">${svg}</svg><div>${nama}</div>`, 'ikon');
+  d.style.left = (960 - 2 * 260 + i * 260 + 15) + 'px';
+  muncul(d, 1.4 + i * 1.3, 6.9);
+});
+kartu({ k: 'MEMBAWA AIR DARI DARAT', tt: 'Banyak Keterbatasan', rows: [['Ruang', 'tangki besar & berat'], ['Biaya', 'pengisian di pelabuhan'], ['Jadwal', 'bergantung pada sandar']], x: 1350, y: 200, t0: 7.9, t1: 14.6, anchor: S(V(100, -5.3, 4.5)) });
+kartu({ k: 'DI SEKELILING KAPAL', tt: 'Air Laut Tak Terbatas', rows: [['TDS air laut', '± 35.000 mg/L', 'TIPIKAL'], ['Tantangan', 'harus dihilangkan garamnya']], x: 1350, y: 200, t0: 15.4, t1: 99 });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.update(t);
+  const x = easeInOut(prog(t, 7.6, 0.6)) * (1 - easeInOut(prog(t, 14.0, 0.8)));
+  P.setXray(x);
+  if (P.isi) P.isi.M.tankFW.emissiveIntensity = 0.3 + 0.5 * (0.5 + 0.5 * Math.sin(t * 4)) * x;
+  P.render();
+  flash.style.opacity = Math.sin(clamp((t - 7.0) / 1.1) * Math.PI) * 0.9;
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Uji skid</title>
+<link rel="stylesheet" href="../video/lib/overlay.css"></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, latarStudio, loadImg, kamera } from '../video/lib/dunia.js';
+import { buildSkid } from './lib/skid.js';
+const q = new URLSearchParams(location.search);
+const { scene, cam, pmrem, render } = buatDunia({ ao: false, bloom: 0.1, exposure: 1.0 });
+latarStudio(scene, pmrem);
+scene.add(new THREE.HemisphereLight('#e6f2ff', '#3a4a5a', 0.8));
+const sun = new THREE.DirectionalLight('#fff4e0', 2.4); sun.position.set(-3, 6, 5); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 20 }); sun.target.position.set(1.1, 0.6, 0); scene.add(sun, sun.target);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshStandardMaterial({ color: '#2a3a52', roughness: 0.8 })); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+await document.fonts.load('800 20px Jakarta'); await document.fonts.ready;
+const logos = { dark: await loadImg('../logo/traya-logo-putih.png'), light: await loadImg('../traya-logo.png') };
+const { root, refs } = buildSkid(logos, { tertutup: q.get('tutup') !== '0', membran: Number(q.get('m') || 1) });
+scene.add(root);
+refs.setPintu(Number(q.get('pintu') || 0));
+refs.parts.pgFeed.set(42); refs.parts.pgConc.set(40); refs.parts.fiProd.set(0.3); refs.parts.fiConc.set(0.7);
+const v = (q.get('v') || '1').split(',').map(Number);
+const views = { 1: [[3.6, 1.6, 3.4], [1.1, 0.8, 0]], 2: [[1.1, 0.95, 3.6], [1.1, 0.85, 0]], 3: [[-1.2, 1.9, -2.6], [1.0, 0.8, 0]], 4: [[2.9, 1.3, 1.4], [1.8, 1.0, 0.1]] };
+const [p, l] = views[v[0]];
+cam.position.set(...p); cam.lookAt(...l); cam.fov = 38; cam.updateProjectionMatrix();
+window.renderFrame = () => render();
+window.DURASI = 1;
+window._ready();
+</script></body></html>

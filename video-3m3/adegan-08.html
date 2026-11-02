@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 8: Pompa tekanan tinggi</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, easeOut, lerp, clamp } from '../video/lib/common.js';
+import { WARNA, aliran } from '../video/lib/aliran.js';
+import { dial } from '../video/lib/dial.js';
+import { panggungStudio } from './lib/panggung3m3.js';
+import { skidMaterials } from './lib/skid.js';
+import { V, penunjuk, jalan, kurva } from './lib/bantu.js';
+
+const A = await siapkanAdegan(8);
+const D = A.durasi;
+const P = await panggungStudio();
+const { cam, scene } = P;
+const S = penunjuk(cam);
+const M = skidMaterials();
+const Y = 0.3;
+const pump = new THREE.Group(); scene.add(pump);
+const add = (geo, mat, x, y, z, parent = pump) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; parent.add(m); return m; };
+// motor
+const mot = add(new THREE.CylinderGeometry(0.1, 0.1, 0.36, 40), M.motor, -0.3, Y, 0); mot.rotation.z = Math.PI / 2;
+for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; const f = add(new THREE.BoxGeometry(0.32, 0.007, 0.014), M.motor, -0.3, Y + Math.sin(a) * 0.103, Math.cos(a) * 0.103); f.rotation.x = a; }
+add(new THREE.BoxGeometry(0.1, 0.08, 0.1), M.motor, -0.32, Y + 0.14, 0);
+add(new THREE.BoxGeometry(0.62, 0.025, 0.24), M.ssDark, -0.05, Y - 0.12, 0);
+// rumah crank & manifold (bisa transparan)
+const ghost = (m) => { const c = m.clone(); c.transparent = true; return c; };
+const crankM = ghost(M.ss), headM = ghost(M.ss);
+const crank = add(new THREE.BoxGeometry(0.16, 0.18, 0.2), crankM, 0.0, Y, 0);
+const head = add(new THREE.BoxGeometry(0.18, 0.16, 0.19), headM, 0.2, Y, 0);
+add(new THREE.CylinderGeometry(0.02, 0.02, 0.03, 16), M.yellow, 0.0, Y + 0.105, 0);
+const lbl = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 160; const g = c.getContext('2d'); g.fillStyle = '#f4f4f2'; g.fillRect(0, 0, 512, 160); g.strokeStyle = '#111'; g.lineWidth = 10; g.strokeRect(5, 5, 502, 150); g.fillStyle = '#111'; g.font = '800 54px Jakarta, sans-serif'; g.textAlign = 'center'; g.fillText('HP PUMP SS316', 256, 72); g.font = '700 44px Jakarta, sans-serif'; g.fillText('60 bar · 20 Lpm', 256, 128); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+add(new THREE.PlaneGeometry(0.16, 0.05), new THREE.MeshStandardMaterial({ map: lbl }), -0.3, Y, 0.104);
+// isi: poros engkol + batang + plunger
+const inner = new THREE.Group(); pump.add(inner); inner.visible = false;
+const shaft = add(new THREE.CylinderGeometry(0.012, 0.012, 0.22, 16), M.ssDark, -0.02, Y, 0, inner); shaft.rotation.x = Math.PI / 2;
+const ZS = [-0.055, 0, 0.055], cranks = [], rods = [], plung = [];
+const plM = new THREE.MeshStandardMaterial({ color: '#e8e2d0', roughness: 0.25, metalness: 0.1 });
+ZS.forEach((z, i) => {
+  const ck = add(new THREE.CylinderGeometry(0.008, 0.008, 0.03, 12), M.yellow, 0, 0, z, inner); ck.rotation.x = Math.PI / 2; cranks.push(ck);
+  const rd = add(new THREE.BoxGeometry(0.1, 0.014, 0.014), M.ssDark, 0, 0, z, inner); rods.push(rd);
+  const pl = add(new THREE.CylinderGeometry(0.014, 0.014, 0.14, 20), plM, 0, Y, z, inner); pl.rotation.z = Math.PI / 2; plung.push(pl);
+  const sl = add(new THREE.CylinderGeometry(0.022, 0.022, 0.1, 20, 1, true), new THREE.MeshStandardMaterial({ color: '#6ec3ff', transparent: true, opacity: 0.35, side: THREE.DoubleSide }), 0.24, Y, z, inner); sl.rotation.z = Math.PI / 2;
+});
+// pipa masuk & keluar
+const pipe = (pts, r, mat) => { const c = kurva(pts); add(new THREE.TubeGeometry(c, 60, r, 14, false), mat, 0, 0, 0); return c; };
+const cIn = pipe([V(0.2, Y + 0.45, 0.25), V(0.2, Y + 0.2, 0.25), V(0.2, Y + 0.08, 0.1)], 0.017, new THREE.MeshStandardMaterial({ color: '#4a5058', roughness: 0.4 }));
+const cOut = pipe([V(0.29, Y, 0), V(0.5, Y, 0), V(0.62, Y + 0.12, 0), V(0.62, Y + 0.5, 0)], 0.011, M.ss);
+const fIn = aliran(cIn, 0.017, WARNA.pre, { parent: scene, speed: 0.4, spacing: 0.1, scale: 1.4 });
+const fOut = aliran(cOut, 0.011, WARNA.hp, { parent: scene, speed: 1.0, spacing: 0.08, scale: 1.8 });
+
+const camAt = kamera(cam, [
+  { t: 0, p: [0.9, 0.85, 1.6], l: [0.0, 0.3, 0], f: 36 },
+  { t: 3.4, p: [0.55, 0.6, 1.05], l: [0.05, 0.3, 0], f: 36 },
+  { t: 9.8, p: [0.3, 0.55, 0.8], l: [0.12, 0.3, 0], f: 36 },
+  { t: 12.3, p: [0.95, 0.7, 1.2], l: [0.25, 0.32, 0], f: 36 },
+  { t: D, p: [1.1, 0.75, 1.3], l: [0.3, 0.32, 0], f: 36, sx: -160 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('7', 'Pompa Tekanan Tinggi', 'Plunger stainless steel SS316', 5, 0.3);
+bug(0.2);
+kartu({ k: 'POMPA PLUNGER', tt: 'Piston Maju-Mundur', rows: [['Material', 'stainless steel SS316'], ['Prinsip', 'perpindahan positif']], x: 1360, y: 200, t0: 3.6, t1: 9.9 });
+penanda('•', 'Poros engkol', S(V(-0.02, Y + 0.02, 0.11)), 6.0, 12.4, { kiri: true });
+penanda('•', 'Plunger (piston)', S(V(0.2, Y + 0.03, 0.06)), 6.6, 12.4);
+kartu({ k: 'DEBIT', tt: '± 20 L/menit', rows: [['Status', 'tipikal'], ['Ke', 'membran RO']], x: 1360, y: 200, t0: 10.0, t1: 99 });
+const g = dial({ x: 110, y: 190, judul: 'TEKANAN KERJA', osmotik: true, maks: 70, pita: [35, 42], label: 'tipikal ± 42 bar', rancang: 60 });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  const cut = easeInOut(prog(t, 4.0, 1.2));
+  crankM.opacity = headM.opacity = 1 - 0.82 * cut; crankM.depthWrite = headM.depthWrite = cut < 0.5; inner.visible = cut > 0.02;
+  const th = t * 10;
+  ZS.forEach((z, i) => {
+    const a = th + i * 2 * Math.PI / 3, cx = -0.02 + Math.cos(a) * 0.02, cy = Y + Math.sin(a) * 0.02;
+    cranks[i].position.set(cx, cy, z);
+    const px = 0.13 + Math.cos(a) * 0.02;
+    rods[i].position.set((cx + px - 0.07) / 2 + 0.035, (cy + Y) / 2, z); rods[i].rotation.z = Math.atan2(Y - cy, px - 0.07 - cx);
+    plung[i].position.x = px + 0.07;
+  });
+  jalan(fIn, t, 0.4, 1.0); jalan(fOut, t, 9.8, 1.2);
+  const v = 42 * easeOut(prog(t, 12.7, 2.6)) + (t > 15.3 ? Math.sin(t * 7) * 0.4 : 0);
+  g.set(Math.max(0, v), easeOut(prog(t, 12.4, 0.6)));
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

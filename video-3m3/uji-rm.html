@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../video/lib/overlay.css"></head><body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+const q = new URLSearchParams(location.search);
+const P = await panggungRuangMesin({});
+P.refs.setPintu(Number(q.get('pintu') || 0));
+const views = { 1: [[4.6, 1.9, 5.2], [1.4, 0.9, 0], 42], 2: [[1.1, 1.1, 3.4], [1.1, 0.85, 0], 40], 3: [[-1.8, 1.6, 3.2], [0.6, 0.7, 0], 44], 4: [[3.6, 1.4, 2.2], [2.2, 1.2, 0], 42] };
+const [p, l, f] = views[q.get('v') || 1];
+P.cam.position.set(...p); P.cam.lookAt(...l); P.cam.fov = f; P.cam.updateProjectionMatrix();
+window.renderFrame = (t) => { P.render(); };
+window.DURASI = 1; window._ready();
+</script></body></html>

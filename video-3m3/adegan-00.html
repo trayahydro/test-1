@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 0: Pembuka</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, bug, judulBesar, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, clamp } from '../video/lib/common.js';
+import { panggungLaut } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(0);
+const D = A.durasi;
+const P = panggungLaut({ waktu: 'pagi' });
+const { cam } = P;
+const camAt = kamera(cam, [
+  { t: 0, p: [360, 9, 150], l: [120, 14, 0], f: 30 },
+  { t: 5.6, p: [255, 22, 105], l: [100, 17, 0], f: 33 },
+  { t: 10.4, p: [120, 60, 135], l: [88, 14, 0], f: 36 },
+  { t: D, p: [-10, 95, 120], l: [75, 8, 0], f: 38 },
+]);
+const fade = el('', 'shade'); fade.style.background = '#000';
+bug(1.0);
+judulBesar({ k: 'PT TRAYA HYDRO INDONESIA', tt: 'Air Tawar<br>dari Laut Lepas', sub: 'Sistem SWRO 3 m³/hari untuk kapal', t0: 10.2, left: 96, bottom: 200 });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.update(t); P.render();
+  fade.style.opacity = 1 - clamp(t / 1.2);
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 5b: Potongan sand filter & karbon aktif</title>
+<style>
+.mode { position: absolute; left: 110px; top: 250px; width: 360px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+.mode .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; margin-bottom: 10px; }
+.mode .m { font-size: 26px; font-weight: 700; padding: 10px 14px; border-radius: 10px; margin-top: 6px; color: #8fb3d6; transition: none; }
+.mode .m.on { background: #6ec3ff; color: #0c2342; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, lerp, clamp } from '../video/lib/common.js';
+import { rng } from '../video/lib/tekstur.js';
+import { WARNA, aliran } from '../video/lib/aliran.js';
+import { panggungStudio } from './lib/panggung3m3.js';
+import { V, penunjuk, jalan, kurva } from './lib/bantu.js';
+
+const T0 = 5.9;
+const A = await siapkanAdegan(5, { dari: T0 });
+const D = A.durasi;
+const P = await panggungStudio();
+const { cam, scene } = P;
+const S = penunjuk(cam);
+const R = rng(51);
+const r = 0.127, YB = 0.04, H = 1.25;
+const noiseTex = (base, dots, n, sz, rep = [1, 1]) => {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
+  g.fillStyle = base; g.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < n; i++) { g.fillStyle = dots[Math.floor(R() * dots.length)]; g.beginPath(); g.arc(R() * 256, R() * 256, sz * (0.5 + R()), 0, 7); g.fill(); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...rep); return t;
+};
+const TX = {
+  gravel: noiseTex('#6b6660', ['#8a847b', '#4d4943', '#a39c92', '#5e5850'], 260, 11),
+  kasar: noiseTex('#b59a6e', ['#c9b083', '#9c8259', '#d8c39c'], 1400, 4),
+  halus: noiseTex('#d9c7a2', ['#e8d9b8', '#c4af87', '#efe3c8'], 3200, 2),
+  karbon: noiseTex('#1d1f22', ['#33373c', '#0e0f10', '#4a4f55'], 2600, 3),
+};
+const frpM = new THREE.MeshStandardMaterial({ color: '#d9cfae', roughness: 0.55, side: THREE.DoubleSide });
+const ghostM = new THREE.MeshPhysicalMaterial({ color: '#e8dfc2', roughness: 0.3, transparent: true, opacity: 0.05, depthWrite: false });
+const waterM = new THREE.MeshStandardMaterial({ color: '#2f8fe0', transparent: true, opacity: 0.55, roughness: 0.1, depthWrite: false });
+const headM = new THREE.MeshStandardMaterial({ color: '#2b3036', roughness: 0.45 });
+const leverM = new THREE.MeshStandardMaterial({ color: '#d32f2f', roughness: 0.4 });
+const riserM = new THREE.MeshStandardMaterial({ color: '#e6e6e6', roughness: 0.4 });
+function tangki(x, layers) {
+  const g = new THREE.Group(); g.position.x = x; scene.add(g);
+  const back = new THREE.Mesh(new THREE.CylinderGeometry(r, r, H, 48, 1, true, Math.PI / 2, Math.PI), frpM); back.position.y = YB + H / 2; back.castShadow = true; g.add(back);
+  const front = new THREE.Mesh(new THREE.CylinderGeometry(r, r, H, 48, 1, true, -Math.PI / 2, Math.PI), ghostM); front.position.y = YB + H / 2; g.add(front);
+  const dome = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 12, 0, Math.PI * 2, 0, Math.PI / 2), ghostM); dome.position.y = YB + H; dome.scale.y = 0.45; g.add(dome);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.02, r * 1.05, 0.06, 40), new THREE.MeshStandardMaterial({ color: '#2a2d31', roughness: 0.6 })); base.position.y = YB - 0.01; g.add(base);
+  const L = layers.map(([y0, y1, tex]) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(2 * r * 0.98, 1), new THREE.MeshStandardMaterial({ map: tex.clone(), roughness: 0.9 }));
+    m.material.map.needsUpdate = true; m.position.set(0, YB + (y0 + y1) / 2, 0.001); m.scale.y = y1 - y0; m.material.map.repeat.set(1, (y1 - y0) / (2 * r)); g.add(m);
+    return { m, y0, y1 };
+  });
+  const top = L[L.length - 1].y1;
+  const w = new THREE.Mesh(new THREE.PlaneGeometry(2 * r * 0.98, H - top), waterM); w.position.set(0, YB + (top + H) / 2, 0.0015); g.add(w);
+  const riser = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, H + 0.02, 16), riserM); riser.position.set(0, YB + H / 2 + 0.06, 0.02); g.add(riser);
+  const bask = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.06, 16), riserM); bask.position.set(0, YB + 0.07, 0.02); g.add(bask);
+  // head katup 3 arah + tuas
+  const hv = new THREE.Group(); hv.position.y = YB + H + r * 0.45; g.add(hv);
+  [[0.07, 0.075, 0.07, 0.035], [0.062, 0.07, 0.07, 0.105], [0.05, 0.062, 0.03, 0.155]].forEach(([a, b, h, y]) => { const c = new THREE.Mesh(new THREE.CylinderGeometry(a, b, h, 28), headM); c.position.y = y; c.castShadow = true; hv.add(c); });
+  [-1, 1].forEach((s) => { const p = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.05, 16), headM); p.rotation.z = Math.PI / 2; p.position.set(s * 0.085, 0.06, 0); hv.add(p); });
+  const lever = new THREE.Group(); lever.position.y = 0.175; hv.add(lever);
+  const lv = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.022, 0.04), leverM); lv.position.set(0.045, 0.012, 0); lever.add(lv);
+  return { g, L, top, lever, hvY: YB + H + r * 0.45 };
+}
+const sand = tangki(-0.32, [[0, 0.15, TX.gravel], [0.15, 0.35, TX.kasar], [0.35, 0.78, TX.halus]]);
+const carb = tangki(0.32, [[0, 0.15, TX.gravel], [0.15, 0.85, TX.karbon]]);
+// pipa penghubung & label
+const pipeM = new THREE.MeshStandardMaterial({ color: '#3a4048', roughness: 0.45 });
+const hy = sand.hvY + 0.06;
+const sambung = (pts) => { const c = kurva(pts); const m = new THREE.Mesh(new THREE.TubeGeometry(c, 60, 0.017, 12, false), pipeM); scene.add(m); return c; };
+const cIn = sambung([V(-0.75, hy, 0), V(-0.42, hy, 0)]);
+const cMid = sambung([V(-0.22, hy, 0), V(0.22, hy, 0)]);
+const cOut = sambung([V(0.42, hy, 0), V(0.75, hy, 0)]);
+const cDrain = kurva([V(-0.32, hy + 0.02, -0.05), V(-0.32, hy + 0.02, -0.2), V(-0.55, hy - 0.3, -0.3), V(-0.75, 0.3, -0.3)]);
+const fIn = aliran(cIn, 0.017, WARNA.laut, { parent: scene, speed: 0.5, spacing: 0.12, scale: 1.4 });
+const fMid = aliran(cMid, 0.017, WARNA.laut, { parent: scene, speed: 0.5, spacing: 0.12, scale: 1.4 });
+const fOut = aliran(cOut, 0.017, WARNA.pre, { parent: scene, speed: 0.5, spacing: 0.12, scale: 1.4 });
+const fDrain = aliran(cDrain, 0.02, '#a8743a', { parent: scene, speed: 0.6, spacing: 0.12, scale: 1.0 });
+
+// partikel
+const inst = (n, col, rad) => { const m = new THREE.InstancedMesh(new THREE.SphereGeometry(rad, 8, 6), new THREE.MeshBasicMaterial({ color: col, toneMapped: false }), n); scene.add(m); return m; };
+const NDIRT = 90, NCL = 70, NW = 80;
+const dirt = inst(NDIRT, '#8a5a2b', 0.0055), clo = inst(NCL, '#c6e04a', 0.005), wat = inst(NW, '#bfeaff', 0.004);
+const DD = Array.from({ length: NDIRT }, () => ({ x: (R() * 2 - 1) * r * 0.85, ph: R(), stop: 0.78 - R() * R() * 0.12, d: R() * 2.2 }));
+const CD = Array.from({ length: NCL }, () => ({ x: (R() * 2 - 1) * r * 0.85, ph: R(), stop: 0.85 - R() * 0.55, d: R() * 2.2 }));
+const WD = Array.from({ length: NW }, () => ({ x: (R() * 2 - 1) * r * 0.85, ph: R() }));
+const _m = new THREE.Matrix4(), HID = new THREE.Matrix4().makeScale(0, 0, 0);
+
+const camAt = kamera(cam, [
+  { t: T0, p: [0, 0.95, 3.4], l: [0, 0.82, 0], f: 36 },
+  { t: 9.0, p: [-0.25, 0.7, 2.1], l: [-0.32, 0.52, 0], f: 36 },
+  { t: 12.4, p: [-0.3, 0.75, 1.9], l: [-0.32, 0.55, 0], f: 36 },
+  { t: 13.4, p: [0.38, 0.75, 2.1], l: [0.32, 0.58, 0], f: 36 },
+  { t: 19.0, p: [0.35, 0.8, 1.9], l: [0.32, 0.6, 0], f: 36 },
+  { t: 20.2, p: [0, 1.75, 1.3], l: [0, 1.42, 0], f: 36 },
+  { t: 26.6, p: [-0.05, 1.78, 1.22], l: [-0.05, 1.42, 0], f: 36 },
+  { t: 27.8, p: [-0.3, 0.95, 2.6], l: [-0.32, 0.8, 0], f: 36 },
+  { t: D, p: [-0.45, 1.0, 2.4], l: [-0.34, 0.85, 0], f: 36 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('4', 'Sand Filter & Karbon Aktif', 'Penyaringan awal', 1, T0);
+bug(T0);
+penanda('•', 'Pasir silika halus', S(V(-0.32 + r * 0.6, YB + 0.62, 0.01)), 7.2, 12.6);
+penanda('•', 'Pasir kasar', S(V(-0.32 + r * 0.6, YB + 0.25, 0.01)), 8.0, 12.6);
+penanda('•', 'Kerikil penyangga', S(V(-0.32 + r * 0.6, YB + 0.07, 0.01)), 8.8, 12.6);
+kartu({ k: 'SAND FILTER', tt: 'Menahan Partikel', rows: [['Lumpur', 'tertahan'], ['Pasir halus', 'tertahan'], ['Partikel tersuspensi', 'tertahan']], x: 1360, y: 210, t0: 6.6, t1: 12.6 });
+penanda('•', 'Karbon aktif granular', S(V(0.32 + r * 0.6, YB + 0.55, 0.01)), 13.8, 19.2);
+kartu({ k: 'KARBON AKTIF', tt: 'Menyerap (Adsorpsi)', rows: [['Klorin', 'diserap'], ['Bau', 'diserap'], ['Zat organik', 'diserap']], x: 1360, y: 210, t0: 13.4, t1: 19.2 });
+kartu({ k: 'MANFAAT', tt: 'Melindungi Membran', rows: [['Klorin', 'dapat merusak membran poliamida']], x: 1360, y: 560, t0: 16.4, t1: 19.2, w: 450 });
+const md = el('<div class="k">KATUP 3 ARAH MANUAL</div><div class="m">SERVICE · operasi</div><div class="m">BACKWASH · cuci balik</div><div class="m">RINSE · bilas</div>', 'mode');
+const mds = md.querySelectorAll('.m');
+muncul(md, 19.8, 27.2);
+kartu({ k: 'BACKWASH', tt: 'Aliran Dibalik', rows: [['Arah', 'bawah → atas'], ['Kotoran', 'dibuang ke drain'], ['Hasil', 'media bersih & awet']], x: 1360, y: 210, t0: 27.6, t1: 99 });
+penanda('•', 'Ke saluran pembuangan', S(V(-0.7, 0.4, -0.3)), 30.0, 99, { kiri: true });
+
+const LV = [0, 2.1, 4.2];
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  // mode katup
+  let mode = 0;
+  if (t > 22.6) mode = 1; if (t > 25.0) mode = 2; if (t > 27.2) mode = 1;
+  mds.forEach((m, i) => m.classList.toggle('on', i === mode));
+  const ang = (t < 22.6 ? 0 : t < 25.0 ? lerp(0, 2.1, easeInOut(prog(t, 22.6, 0.7))) : t < 27.2 ? lerp(2.1, 4.2, easeInOut(prog(t, 25.0, 0.7))) : lerp(4.2, 2.1, easeInOut(prog(t, 27.2, 0.7))));
+  [sand, carb].forEach((k) => (k.lever.rotation.y = ang));
+  const bw = t > 27.6;
+  // aliran
+  jalan(fIn, t, T0, 0.6, bw ? 27.4 : 1e9); jalan(fMid, t, T0 + 0.4, 0.6, bw ? 27.4 : 1e9); jalan(fOut, t, T0 + 0.8, 0.6, bw ? 27.4 : 1e9);
+  jalan(fDrain, t, 28.6, 1.4);
+  // ekspansi media saat backwash
+  const ex = easeInOut(prog(t, 27.8, 1.5)) * 0.18;
+  sand.L.forEach((L, i) => { if (i === 0) return; const y0 = L.y0 + (i === 2 ? ex * 0.4 : 0), y1 = L.y1 + ex * (i === 2 ? 1 : 0.4); L.m.position.y = YB + (y0 + y1) / 2; L.m.scale.y = y1 - y0; L.m.material.map.offset.y = Math.sin(t * 6 + i) * 0.02 * ex * 5; });
+  // partikel kotoran (sand filter)
+  DD.forEach((p, i) => {
+    let y;
+    if (!bw) { const u = clamp((t - 6.4 - p.d) / 2.4); if (u <= 0) { dirt.setMatrixAt(i, HID); return; } y = lerp(1.18, p.stop, u); }
+    else { const u = ((t - 28.2) * 0.35 + p.ph) % 1; if (t < 28.2) y = p.stop + ex; else { y = lerp(p.stop + ex, 1.25, u); if (u > 0.98) { dirt.setMatrixAt(i, HID); return; } } }
+    _m.makeTranslation(-0.32 + p.x + Math.sin(t * 3 + i) * 0.004, YB + y, 0.006); dirt.setMatrixAt(i, _m);
+  });
+  CD.forEach((p, i) => {
+    const u = clamp((t - 13.6 - p.d) / 2.6); if (u <= 0 || t > 27.6) { clo.setMatrixAt(i, HID); return; }
+    _m.makeTranslation(0.32 + p.x, YB + lerp(1.18, p.stop, u), 0.006); clo.setMatrixAt(i, _m);
+  });
+  WD.forEach((p, i) => {
+    const u = (p.ph + t * 0.3) % 1;
+    const y = bw ? lerp(0.12, 1.2, u) : lerp(1.2, 0.12, u);
+    _m.makeTranslation(-0.32 + p.x, YB + y, 0.006); wat.setMatrixAt(i, _m);
+  });
+  [dirt, clo, wat].forEach((m) => (m.instanceMatrix.needsUpdate = true));
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, T0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

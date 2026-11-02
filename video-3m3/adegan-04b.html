@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 4b: Katup inlet & pompa umpan</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { WARNA } from '../video/lib/aliran.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+import { V, penunjuk, alir, jalan } from './lib/bantu.js';
+
+const A = await siapkanAdegan(4, { dari: 8.6 });
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: false });
+const { cam, scene, refs, conn } = P;
+const S = penunjuk(cam), Pp = refs.pipes, an = refs.anchors;
+const fSea = alir(conn.seaIn, WARNA.laut, { parent: scene }), fIn = alir(Pp.intake, WARNA.laut, { parent: scene }), fFeed = alir(Pp.feed, WARNA.laut, { parent: scene });
+const camAt = kamera(cam, [
+  { t: 8.6, p: [-1.5, 0.95, 2.0], l: [-0.3, 0.32, 0.2], f: 40 },
+  { t: 11.6, p: [-0.9, 0.75, 1.5], l: [0.0, 0.33, 0.2], f: 40 },
+  { t: 15.0, p: [0.85, 0.7, 1.35], l: [0.42, 0.33, 0.2], f: 38 },
+  { t: 18.6, p: [-1.1, 1.5, 1.3], l: [0.35, 1.1, -0.18], f: 40 },
+  { t: D, p: [-0.8, 2.25, 1.1], l: [0.5, 1.6, -0.18], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('3', 'Intake Air Laut', 'Sea chest dan pompa umpan', 0, 8.6);
+bug(8.6);
+penanda('•', 'Strainer', S(V(-0.75, 0.36, 0.2)), 9.0, 12.0, { kiri: true });
+kartu({ k: 'KATUP INLET', tt: 'Air Laut Masuk Skid', rows: [['Jenis', 'ball valve'], ['Label', 'SEA WATER IN']], x: 1360, y: 210, t0: 9.4, t1: 12.4, anchor: S(V(-0.06, 0.36, 0.22)) });
+kartu({ k: 'POMPA UMPAN', tt: 'Feed Pump', rows: [['Material', 'stainless steel SS304'], ['Daya', '0,5 HP'], ['Pipa', '1 inci']], x: 1360, y: 210, t0: 12.6, t1: 99, anchor: S(an.feedPump) });
+penanda('•', 'Menuju tahap penyaringan awal', S(V(0.36, 1.2, -0.18)), 19.2, 99);
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  refs.parts.bvIn.set(t > 10.0);
+  refs.parts.feedRotor.rotation.x = t > 12.2 ? (t - 12.2) * 40 : 0;
+  jalan(fSea, t, 8.7, 1.4); jalan(fIn, t, 10.1, 0.8); jalan(fFeed, t, 13.0, 4.5);
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 8.6, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Uji kapal</title>
+<link rel="stylesheet" href="../video/lib/overlay.css"></head>
+<body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { buatDunia, langit, laut, matahari } from '../video/lib/dunia.js';
+import { buildKapal, buildInterior } from './lib/kapal.js';
+const q = new URLSearchParams(location.search);
+const { scene, cam, pmrem, render, renderer } = buatDunia({ ao: false, bloom: 0.15, exposure: 0.95 });
+const sk = langit(scene, pmrem, { elev: 24, az: -140 });
+const sea = laut(scene, { y: 0, size: 6000, rep: 300 });
+const { root, refs } = buildKapal(); scene.add(root);
+matahari(scene, sk.sunDir, new THREE.Vector3(90, 10, 0), { span: 120, dist: 300, map: 4096 });
+scene.add(new THREE.HemisphereLight('#cfe6ff', '#4a6070', 0.6));
+if (q.get('x')) { refs.xray(1); scene.add(buildInterior().group); }
+const views = { 1: [[260, 60, 170], [90, 15, 0], 30], 2: [[150, 22, 70], [110, 20, 0], 40], 3: [[-60, 40, -120], [80, 15, 0], 32], 4: [[90, 120, 0.1], [90, 0, 0], 40], 5: [[60, 10, -70], [70, -2, -5], 40] };
+const [p, l, f] = views[q.get('v') || 1];
+cam.position.set(...p); cam.lookAt(...l); cam.fov = f; cam.far = 8000; cam.updateProjectionMatrix();
+window.renderFrame = (t) => { sea.update(t); render(); };
+window.DURASI = 1; window._ready();
+</script></body></html>

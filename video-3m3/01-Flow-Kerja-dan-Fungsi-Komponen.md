@@ -6,7 +6,7 @@
 2. Tangki FRP **2 buah** (1054): sand filter + activated carbon (sesuai P&ID).
 3. Kapasitas **3 m³/hari = air produk**.
 4. Skid versi **tertutup** (panel berpintu & berkisi) yang di video bisa **dibuka & ditutup**.
-5. **Tidak menyebut BRIN**. Brand: **PT Traya Hydro Indonesia**.
+5. **Tidak menyebut nama klien**. Brand: **PT Traya Hydro Indonesia**.
 6. Unit dipasang di **kapal pesiar**, dan kapal digambar detail di video.
 7. **Opsional 2–3 membran per skid** untuk kapasitas lebih besar.
 

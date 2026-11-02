@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 14: Opsi 2–3 membran</title>
+<style>
+.opsi { position: absolute; left: 110px; top: 230px; width: 520px; padding: 22px 26px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+.opsi .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+.opsi .r { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; margin-top: 10px; border-radius: 12px; font-size: 26px; font-weight: 700; color: #8fb3d6; background: rgba(110,190,255,.06); }
+.opsi .r b { font-size: 28px; }
+.opsi .r.on { background: #6ec3ff; color: #0c2342; }
+.opsi .n { font-size: 16px; color: #8fb3d6; margin-top: 12px; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, easeBack, clamp } from '../video/lib/common.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(14);
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: false, membran: 3 });
+const { cam, refs } = P;
+const camAt = kamera(cam, [
+  { t: 0, p: [2.6, 1.55, 2.2], l: [1.6, 1.25, 0.05], f: 40, sx: -200 },
+  { t: D, p: [2.9, 1.7, 2.6], l: [1.6, 1.25, 0.05], f: 40, sx: -200 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('13', 'Kapasitas Dapat Ditingkatkan', 'Opsi 2–3 membran per skid', -1, 0.3);
+bug(0.2);
+const op = el(`<div class="k">OPSI KONFIGURASI</div>
+  <div class="r"><span>1 membran</span><b>± 3 m³/hari</b></div>
+  <div class="r"><span>2 membran</span><b>± 5–6 m³/hari</b></div>
+  <div class="r"><span>3 membran</span><b>± 8–9 m³/hari</b></div>
+  <div class="n">Estimasi; tergantung kondisi air laut & desain. Pompa disesuaikan oleh tim teknik Traya.</div>`, 'opsi');
+muncul(op, 1.0);
+const rows = op.querySelectorAll('.r');
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  const k2 = easeBack(prog(t, 3.4, 0.9)), k3 = easeBack(prog(t, 5.4, 0.9));
+  [1, k2, k3].forEach((k, i) => { const g = refs.housings[i].group; g.visible = k > 0.01; g.position.z = 0.05 + (1 - Math.min(1, k)) * 0.9; g.scale.setScalar(Math.max(0.01, Math.min(1.05, k))); });
+  const sel = t < 3.4 ? 0 : t < 5.4 ? 1 : 2;
+  rows.forEach((r, i) => r.classList.toggle('on', i === sel));
+  if (t > 3.3 && t < 6.5) P.bayangan();
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

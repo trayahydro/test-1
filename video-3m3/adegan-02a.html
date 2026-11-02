@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 2a: Kapal X-ray ke ruang mesin</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from '../video/lib/dunia.js';
+import { siapkanAdegan, bug, judulBesar, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { panggungLaut } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(2, { ke: 9.0 });
+const P = panggungLaut({ waktu: 'pagi', interior: true });
+const { cam } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const S = (p) => () => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+const sk = P.isi.pos.skid;
+const camAt = kamera(cam, [
+  { t: 0, p: [10, 45, -210], l: [90, 12, 0], f: 34 },
+  { t: 4.2, p: [56, 16, -120], l: [80, -1, -4], f: 34 },
+  { t: 9.0, p: [74.5, -1.6, -13.5], l: [74, -2.6, -7.5], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#e9f4ff';
+bug(0.2);
+judulBesar({ k: 'PT TRAYA HYDRO INDONESIA', tt: 'SWRO 3 m³/hari', sub: 'Sea Water Reverse Osmosis untuk kapal', t0: 0.8, t1: 7.6 });
+penanda('•', 'Ruang mesin', S(V(sk.x, sk.y + 1.2, sk.z)), 3.6, 7.8);
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.update(t);
+  P.setXray(easeInOut(prog(t, 2.4, 1.6)));
+  P.isi.M.skid.emissiveIntensity = 1.0 + 0.8 * (0.5 + 0.5 * Math.sin(t * 5));
+  P.render();
+  flash.style.opacity = easeInOut(prog(t, 8.2, 0.8));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

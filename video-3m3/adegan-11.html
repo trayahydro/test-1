@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 11: Panel kontrol</title>
+<style>
+.rumus { position: absolute; left: 110px; top: 230px; width: 620px; padding: 24px 28px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.93), rgba(8,22,44,.9)); border: 1px solid rgba(110,190,255,.35); opacity: 0; }
+.rumus .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #6ec3ff; }
+.rumus .f { font-size: 30px; font-weight: 800; margin: 14px 0 8px; }
+.rumus .f small { font-size: 22px; color: #a9c7e4; font-weight: 600; }
+.rumus .e { font-size: 24px; color: #d6ecff; }
+.rumus .e b { color: #6ec3ff; font-size: 30px; }
+.rumus .n { font-size: 16px; color: #8fb3d6; margin-top: 10px; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, easeOut, clamp } from '../video/lib/common.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+import { V, penunjuk } from './lib/bantu.js';
+
+const A = await siapkanAdegan(11);
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: true });
+const { cam, scene, refs } = P;
+const S = penunjuk(cam), pt = refs.parts, an = refs.anchors, M = refs.M;
+// layar controller (teks dinamis)
+const cv = document.createElement('canvas'); cv.width = 256; cv.height = 170; const g2 = cv.getContext('2d');
+const scrT = new THREE.CanvasTexture(cv); scrT.colorSpace = THREE.SRGBColorSpace;
+const scr = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.066), new THREE.MeshBasicMaterial({ map: scrT, toneMapped: false })); scr.position.set(an.display.x, an.display.y, an.display.z + 0.002); scene.add(scr);
+let lastTxt = '';
+function layarTeks(t) {
+  const run = t > 4.4, p = run ? Math.round(42 * easeOut(prog(t, 4.6, 2.5))) : 0, q = run ? Math.round(125 * easeOut(prog(t, 4.6, 2.5))) : 0;
+  const txt = `${run}|${p}|${q}`; if (txt === lastTxt) return; lastTxt = txt;
+  g2.fillStyle = '#0b2a4a'; g2.fillRect(0, 0, 256, 170);
+  g2.fillStyle = run ? '#5cff8a' : '#ffcf5c'; g2.font = '800 34px Jakarta, sans-serif'; g2.fillText(run ? '● RUN' : '● STANDBY', 14, 42);
+  g2.fillStyle = '#e8f6ff'; g2.font = '700 30px Jakarta, sans-serif'; g2.fillText(`P  ${p} bar`, 14, 96); g2.fillText(`Q  ${q} L/h`, 14, 146);
+  scrT.needsUpdate = true;
+}
+const camAt = kamera(cam, [
+  { t: 0, p: [1.6, 1.5, 2.6], l: [0.75, 1.22, 0.37], f: 40 },
+  { t: 3.8, p: [0.78, 1.32, 1.35], l: [0.75, 1.25, 0.37], f: 40 },
+  { t: 4.4, p: [0.5, 1.38, 1.35], l: [0.42, 1.33, 0.37], f: 38 },
+  { t: 7.6, p: [0.48, 1.37, 1.28], l: [0.42, 1.33, 0.37], f: 38 },
+  { t: 8.2, p: [1.12, 1.28, 1.4], l: [1.075, 1.25, 0.37], f: 38 },
+  { t: 13.0, p: [1.1, 1.28, 1.32], l: [1.075, 1.25, 0.37], f: 38 },
+  { t: 13.8, p: [1.25, 1.3, 1.35], l: [0.95, 1.25, 0.37], f: 40, sx: -220 },
+  { t: 19.2, p: [1.22, 1.3, 1.3], l: [0.95, 1.25, 0.37], f: 40, sx: -220 },
+  { t: 19.8, p: [0.62, 1.22, 1.15], l: [0.54, 1.15, 0.37], f: 38 },
+  { t: D, p: [0.66, 1.25, 1.3], l: [0.54, 1.15, 0.37], f: 38 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('10', 'Panel Kontrol', 'Pemantauan dari satu tempat', -1, 0.3);
+bug(0.2);
+kartu({ k: 'PANEL KONTROL', tt: 'Satu Titik Kendali', rows: [['Kontrol', 'lampu, layar, selektor'], ['Instrumen', '2 gauge & 2 rotameter']], x: 1360, y: 200, t0: 0.9, t1: 4.2 });
+penanda('•', 'Lampu indikator', S(an.lampu), 4.6, 7.8);
+penanda('•', 'Layar controller', S(V(an.display.x + 0.05, an.display.y, an.display.z)), 5.4, 7.8);
+penanda('•', 'Pressure gauge', S(V(1.18, 1.47, 0.42)), 8.6, 13.1);
+penanda('•', 'Rotameter (flowmeter)', S(V(1.18, 1.2, 0.4)), 9.6, 13.1);
+const rm = el(`<div class="k">MENGHITUNG RECOVERY</div>
+  <div class="f">Recovery = Q<small>produk</small> ÷ (Q<small>produk</small> + Q<small>konsentrat</small>)</div>
+  <div class="e">Contoh: 2,1 ÷ (2,1 + 15,4) L/menit ≈ <b>12 %</b></div>
+  <div class="e" style="margin-top:12px">Tekanan sebelum filter naik → filter perlu dibersihkan / diganti</div>
+  <div class="n">Angka contoh, tipikal</div>`, 'rumus');
+muncul(rm, 13.9, 19.4);
+kartu({ k: 'EMERGENCY STOP', tt: 'Berhenti Seketika', rows: [['Fungsi', 'mematikan sistem'], ['Kapan', 'kapan saja dibutuhkan']], x: 1360, y: 200, t0: 19.9, t1: 99, anchor: S(an.estop) });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  layarTeks(t);
+  const run = t > 4.4;
+  M.green.emissiveIntensity = run ? (Math.sin(t * 6) > -0.2 ? 2.2 : 0.4) : 0.2;
+  M.amber.emissiveIntensity = run ? 0.15 : 1.6;
+  const k = easeOut(prog(t, 8.0, 2.0));
+  pt.pgFeed.set(42 * k + (k > 0.99 ? Math.sin(t * 7) * 0.4 : 0)); pt.pgConc.set(40 * k);
+  pt.fiProd.set(0.3 * k + Math.sin(t * 5) * 0.01 * k); pt.fiConc.set(0.75 * k + Math.sin(t * 4) * 0.01 * k);
+  M.red.emissive && (M.red.emissiveIntensity = t > 19.8 ? 0.4 + 0.4 * Math.sin(t * 8) : 0);
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 5a: Tangki FRP di skid</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { WARNA } from '../video/lib/aliran.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+import { V, penunjuk, alir, jalan } from './lib/bantu.js';
+
+const A = await siapkanAdegan(5, { ke: 5.9 });
+const P = await panggungRuangMesin({ tertutup: false });
+const { cam, scene, refs } = P;
+const S = penunjuk(cam), Pp = refs.pipes, an = refs.anchors;
+const f1 = alir(Pp.feed, WARNA.laut, { parent: scene }), f2 = alir(Pp.t1t2, WARNA.laut, { parent: scene }), f3 = alir(Pp.t2out, WARNA.pre, { parent: scene });
+const camAt = kamera(cam, [
+  { t: 0, p: [-0.8, 2.25, 1.1], l: [0.5, 1.6, -0.18], f: 40 },
+  { t: 5.9, p: [-1.4, 1.3, 0.9], l: [0.66, 1.05, -0.18], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('4', 'Sand Filter & Karbon Aktif', 'Penyaringan awal', 1, 0.3);
+bug(0.2);
+kartu({ k: 'TANGKI FRP 1054', tt: '2 Tangki Media', rows: [['Ukuran', '10 × 54 inci'], ['Isi', 'pasir silika & karbon aktif']], x: 1360, y: 210, t0: 0.8, t1: 99, anchor: S(V(0.50, 1.1, -0.06)) });
+penanda('1', 'Sand filter', S(V(0.50, 0.75, -0.05)), 1.6, 99, { kiri: true });
+penanda('2', 'Karbon aktif', S(V(0.82, 1.35, -0.05)), 2.2, 99);
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  jalan(f1, t, 0, 0.01); jalan(f2, t, 0.6, 0.6); jalan(f3, t, 1.6, 2.0);
+  P.render();
+  flash.style.opacity = easeInOut(prog(t, 5.3, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

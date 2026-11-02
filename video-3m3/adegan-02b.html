@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 2b: Skid SWRO di ruang mesin</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera, layar } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(2, { dari: 9.0 });
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: true });
+const { cam, scene, refs } = P;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const S = (p) => () => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
+const an = refs.anchors;
+// garis dimensi 3D
+const dimM = new THREE.MeshBasicMaterial({ color: '#6ec3ff', toneMapped: false, transparent: true, opacity: 0 });
+const dims = new THREE.Group(); scene.add(dims);
+const bar = (a, b) => { const d = b.clone().sub(a), m = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, d.length(), 8), dimM); m.position.copy(a).add(b).multiplyScalar(0.5); m.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); dims.add(m); };
+const dimLine = (a, b, off) => { bar(a.clone().add(off), b.clone().add(off)); bar(a, a.clone().add(off.clone().multiplyScalar(1.3))); bar(b, b.clone().add(off.clone().multiplyScalar(1.3))); };
+dimLine(V(0, 0.02, 0.43), V(2.2, 0.02, 0.43), V(0, 0, 0.25));
+dimLine(V(2.22, 0.02, -0.4), V(2.22, 0.02, 0.4), V(0.25, 0, 0));
+dimLine(V(2.22, 0.02, 0.43), V(2.22, 1.6, 0.43), V(0.2, 0, 0.2));
+
+const camAt = kamera(cam, [
+  { t: 9.0, p: [1.6, 1.3, 2.6], l: [1.1, 1.0, 0], f: 40 },
+  { t: 13.2, p: [4.4, 2.0, 4.6], l: [1.2, 0.8, 0], f: 40 },
+  { t: 19.4, p: [3.9, 2.3, 3.9], l: [1.2, 0.7, 0.1], f: 40 },
+  { t: 23.4, p: [1.5, 1.35, 3.0], l: [1.1, 0.85, 0], f: 40 },
+  { t: 26.4, p: [1.2, 1.25, 3.4], l: [1.1, 0.85, 0], f: 40 },
+  { t: D, p: [2.6, 1.6, 3.6], l: [1.15, 0.85, 0], f: 40 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#e9f4ff';
+chip('2', 'Solusi SWRO Traya', 'Dipasang di ruang mesin kapal', -1, 9.3);
+bug(9.0);
+kartu({ k: 'SKID RINGKAS', tt: 'Semua dalam Satu Rangka', rows: [['Rangka', 'stainless steel SS304'], ['Profil', 'hollow 40 × 40 mm'], ['Kapasitas', '3 m³/hari produk']], x: 1360, y: 200, t0: 9.6, t1: 14.0 });
+kartu({ k: 'DIMENSI', tt: '± 2,2 × 0,8 × 1,6 m', rows: [['Panjang', '± 2,2 m'], ['Lebar', '± 0,8 m'], ['Tinggi', '± 1,6 m']], x: 110, y: 230, t0: 13.6, t1: 19.6 });
+penanda('', '2,2 m', S(V(1.1, 0.06, 0.7)), 13.9, 19.6);
+penanda('', '0,8 m', S(V(2.5, 0.06, 0)), 14.4, 19.6);
+penanda('', '1,6 m', S(V(2.45, 0.85, 0.66)), 14.9, 19.6);
+kartu({ k: 'PANEL TERTUTUP', tt: 'Terlindung & Mudah Dirawat', rows: [['Melindungi', 'percikan air & debu'], ['Pintu', 'engsel, mudah dibuka']], x: 1360, y: 200, t0: 20.0, t1: 26.2 });
+const L = [['1', 'Sand filter', an.sand, true], ['2', 'Karbon aktif', V(0.82, 1.62, -0.18)], ['3', 'Cartridge filter', an.cart20, true], ['4', 'Pompa HP', V(1.48, 0.42, 0.0)], ['5', 'Dosing', an.dosing], ['6', 'Membran RO', an.membran], ['7', 'Panel kontrol', an.display, true]];
+L.forEach(([n, lb, p, kiri], i) => penanda(n, lb, S(p), 26.7 + i * 0.45, 99, { kiri: !!kiri }));
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  refs.setPintu(easeInOut(prog(t, 23.9, 2.2)));
+  refs.parts.pgFeed.set(0); refs.parts.pgConc.set(0);
+  dimM.opacity = easeInOut(prog(t, 13.6, 0.6)) * (1 - prog(t, 19.4, 0.5)); dims.visible = dimM.opacity > 0.01;
+  if (t > 23.8 && t < 26.4) P.bayangan();
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 9.0, 0.7));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

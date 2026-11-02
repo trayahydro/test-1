@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 12: Instalasi di kapal</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { WARNA } from '../video/lib/aliran.js';
+import { panggungRuangMesin } from './lib/panggung3m3.js';
+import { V, penunjuk, alir, jalan } from './lib/bantu.js';
+
+const A = await siapkanAdegan(12);
+const D = A.durasi;
+const P = await panggungRuangMesin({ tertutup: true });
+const { cam, scene, refs, conn } = P;
+const S = penunjuk(cam), an = refs.anchors;
+const fSea = alir(conn.seaIn, WARNA.laut, { parent: scene }), fPow = alir(conn.power, '#ffd54f', { parent: scene, speed: 1.2, spacing: 0.08 });
+const fFW = alir(conn.product, WARNA.produk, { parent: scene }), fDr = alir(conn.drain, WARNA.brine, { parent: scene });
+const camAt = kamera(cam, [
+  { t: 0, p: [4.8, 2.5, 5.6], l: [1.0, 1.0, 0], f: 42 },
+  { t: 6.0, p: [4.2, 2.4, 5.0], l: [1.0, 1.2, 0], f: 42 },
+  { t: 10.4, p: [3.8, 2.0, 4.6], l: [1.2, 1.0, 0], f: 42 },
+  { t: 11.2, p: [2.75, 0.35, 1.25], l: [2.18, 0.08, 0.38], f: 38 },
+  { t: D, p: [2.65, 0.3, 1.1], l: [2.18, 0.07, 0.38], f: 36 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('11', 'Instalasi di Kapal', 'Cukup 4 titik sambungan', -1, 0.3);
+bug(0.2);
+penanda('1', 'Air laut dari sea chest', S(V(-1.25, 0.3, 0.2)), 1.2, 10.8, { kiri: true });
+penanda('2', 'Listrik kapal', S(V(0.45, 2.2, -0.6)), 6.1, 10.8, { kiri: true });
+penanda('3', 'Tangki air tawar', S(V(2.62, 2.2, 0.3)), 7.6, 10.8);
+penanda('4', 'Pembuangan ke laut', S(V(2.75, 0.06, 0.3)), 8.9, 10.8);
+kartu({ k: 'KAKI ADJUSTABLE', tt: 'Bantalan Karet', rows: [['Meratakan', 'skid di lantai kapal'], ['Meredam', 'getaran mesin kapal']], x: 1360, y: 200, t0: 11.0, t1: 99, anchor: S(V(2.18, 0.01, 0.38)) });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t);
+  jalan(fSea, t, 1.0, 1.4); jalan(fPow, t, 6.0, 1.2); jalan(fFW, t, 7.4, 1.8); jalan(fDr, t, 8.8, 0.8);
+  // getaran lantai diredam: skid sedikit bergetar sebelum diredam
+  const vib = t > 11.4 ? Math.sin(t * 60) * 0.0012 * (1 - easeInOut(prog(t, 13.0, 1.5))) : 0;
+  refs.parts.frame.position.y = vib; refs.parts.encl.position.y = vib;
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

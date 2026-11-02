@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 4a: Sea chest</title>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, clamp } from '../video/lib/common.js';
+import { WARNA, aliran } from '../video/lib/aliran.js';
+import { panggungLaut } from './lib/panggung3m3.js';
+import { V, penunjuk, jalan, kurva } from './lib/bantu.js';
+
+const A = await siapkanAdegan(4, { ke: 8.6 });
+const P = panggungLaut({ waktu: 'pagi', interior: true });
+const { cam, scene } = P;
+const S = penunjuk(cam);
+const ch = P.isi.pos.chest, sk = P.isi.pos.skid;
+// kisi sea chest
+const kisiM = new THREE.MeshStandardMaterial({ color: '#c9d3dc', metalness: 0.6, roughness: 0.4, emissive: '#3a8fd8', emissiveIntensity: 0.6 });
+for (let i = 0; i < 7; i++) { const b = new THREE.Mesh(new THREE.BoxGeometry(0.12, 1.3, 0.08), kisiM); b.position.set(ch.x - 1.05 + i * 0.35, ch.y, ch.z - 0.34); scene.add(b); }
+const masuk = aliran(kurva([V(ch.x, ch.y, ch.z - 6), V(ch.x, ch.y, ch.z - 1.5), V(ch.x, ch.y, ch.z)]), 0.35, WARNA.laut, { parent: scene, speed: 3, spacing: 1.4 });
+const naik = aliran(kurva([V(ch.x, ch.y, ch.z), V(ch.x + 0.5, ch.y + 0.4, ch.z + 1.5), V(sk.x - 1.5, sk.y - 0.6, sk.z - 0.8), V(sk.x - 1.1, sk.y - 0.5, sk.z)]), 0.18, WARNA.laut, { parent: scene, speed: 2.5, spacing: 0.9 });
+const strainer = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.9, 20), new THREE.MeshStandardMaterial({ color: '#2f4f6f', metalness: 0.5, roughness: 0.4, emissive: '#1d5f9a', emissiveIntensity: 0.5 }));
+strainer.position.set(ch.x + 0.9, ch.y + 1.0, ch.z + 3.2); scene.add(strainer);
+
+const camAt = kamera(cam, [
+  { t: 0, p: [40, 10, -70], l: [72, -3, -10], f: 36 },
+  { t: 5.2, p: [62, 0.5, -34], l: [72.5, -3.8, -10], f: 36 },
+  { t: 8.6, p: [66, 0.8, -28], l: [73.5, -3.5, -8], f: 36 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+chip('3', 'Intake Air Laut', 'Sea chest dan pompa umpan', 0, 0.3);
+bug(0.2);
+kartu({ k: 'SEA CHEST', tt: 'Lubang Hisap di Lambung', rows: [['Letak', 'di bawah garis air'], ['Pelindung', 'kisi (grating)']], x: 1360, y: 210, t0: 1.0, t1: 8.4, anchor: S(V(ch.x, ch.y, ch.z - 0.4)) });
+penanda('•', 'Strainer kapal (saringan kasar)', S(strainer.position), 5.8, 8.4, { kiri: true });
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.update(t);
+  P.setXray(easeInOut(prog(t, 0.0, 0.8)));
+  kisiM.emissiveIntensity = 0.4 + 0.5 * (0.5 + 0.5 * Math.sin(t * 5));
+  jalan(masuk, t, 1.4, 1.5); jalan(naik, t, 5.6, 1.6);
+  P.render();
+  flash.style.opacity = easeInOut(prog(t, 8.0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>

@@ -106,66 +106,66 @@
  {
   "no": 3,
   "judul": "Prinsip Reverse Osmosis",
-  "durasi": 43.336,
+  "durasi": 49.713,
   "cues": [
    {
     "a": 0.0,
-    "b": 2.88,
+    "b": 2.264,
     "text": "Prinsipnya adalah osmosis balik."
    },
    {
-    "a": 3.16,
-    "b": 4.011,
+    "a": 2.544,
+    "b": 3.451,
     "text": "Secara alami,"
    },
    {
-    "a": 4.011,
-    "b": 9.448,
+    "a": 3.451,
+    "b": 11.822,
     "text": "air bergerak dari larutan encer menuju larutan pekat melalui membran semipermeabel."
    },
    {
-    "a": 9.728,
-    "b": 12.571,
+    "a": 12.102,
+    "b": 15.088,
     "text": "Aliran berhenti saat tercapai kesetimbangan,"
    },
    {
-    "a": 12.571,
-    "b": 15.608,
+    "a": 15.088,
+    "b": 18.278,
     "text": "dan selisih tekanannya disebut tekanan osmotik."
    },
    {
-    "a": 15.888,
-    "b": 20.039,
+    "a": 18.558,
+    "b": 22.768,
     "text": "Untuk air laut, tekanan osmotiknya tipikal sekitar 27 bar,"
    },
    {
-    "a": 20.039,
-    "b": 23.832,
+    "a": 22.768,
+    "b": 26.616,
     "text": "dan makin tinggi kadar garam, makin besar tekanannya."
    },
    {
-    "a": 24.112,
-    "b": 28.025,
+    "a": 26.896,
+    "b": 30.818,
     "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik,"
    },
    {
-    "a": 28.025,
-    "b": 29.248,
+    "a": 30.818,
+    "b": 32.596,
     "text": "arah aliran dibalik."
    },
    {
-    "a": 29.528,
-    "b": 34.28,
+    "a": 32.876,
+    "b": 38.6,
     "text": "Air tawar menembus membran, sementara garam dan pengotor tertahan."
    },
    {
-    "a": 34.56,
-    "b": 38.292,
+    "a": 38.88,
+    "b": 43.515,
     "text": "Air laut dengan TDS tipikal sekitar 35.000 mg/L"
    },
    {
-    "a": 38.292,
-    "b": 43.056,
+    "a": 43.515,
+    "b": 49.433,
     "text": "dapat diolah menjadi air tawar dengan TDS di bawah 300 mg/L."
    }
   ],

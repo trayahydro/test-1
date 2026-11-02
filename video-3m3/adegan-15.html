@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><title>Adegan 15: Keunggulan & penutup</title>
+<style>
+.ung { position: absolute; left: 110px; top: 210px; width: 560px; padding: 24px 28px; border-radius: 18px; background: linear-gradient(160deg, rgba(14,34,66,.9), rgba(8,22,44,.86)); border: 1px solid rgba(255,200,150,.35); opacity: 0; }
+.ung .k { font-size: 15px; font-weight: 700; letter-spacing: 4px; color: #ffcf9e; }
+.ung .i { display: flex; gap: 16px; align-items: center; font-size: 30px; font-weight: 700; margin-top: 16px; opacity: 0; }
+.ung .i span { width: 40px; height: 40px; border-radius: 50%; background: #6ec3ff; color: #0c2342; display: grid; place-items: center; font-size: 24px; font-weight: 800; }
+.end { position: absolute; left: 0; right: 0; top: 190px; text-align: center; opacity: 0; }
+.end img { height: 210px; filter: drop-shadow(0 6px 24px rgba(0,0,0,.5)); }
+.end .tg { font-size: 30px; font-weight: 600; margin-top: 18px; color: #fff3e6; text-shadow: 0 3px 16px rgba(0,0,0,.6); }
+.contact { position: absolute; left: 410px; top: 610px; width: 1100px; box-sizing: border-box; padding: 26px 34px; border-radius: 22px; background: rgba(8,20,42,.78); border: 1px solid rgba(255,200,150,.35); text-align: center; opacity: 0; }
+.contact .co { font-size: 36px; font-weight: 800; letter-spacing: -.3px; }
+.contact .ad { font-size: 24px; color: #e6eefa; margin-top: 10px; }
+.contact .ln { display: flex; justify-content: center; gap: 46px; margin-top: 14px; font-size: 28px; font-weight: 700; color: #ffd2a8; }
+.vg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(5,10,25,.25), rgba(5,10,25,.65)); opacity: 0; }
+</style>
+<link rel="stylesheet" href="../video/lib/overlay.css">
+</head>
+<body><div id="stage"></div>
+<script>window.TIMING_DIR = 'tts/'; window.TAHAP = ['Intake', 'Sand Filter', 'Karbon Aktif', 'Cartridge', 'Dosing', 'HPP', 'Membran RO', 'Produk']; window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { kamera } from '../video/lib/dunia.js';
+import { siapkanAdegan, bug, kartu, el, muncul, perbarui, waktu } from '../video/lib/overlay.js';
+import { prog, easeInOut, easeOut, clamp } from '../video/lib/common.js';
+import { panggungLaut } from './lib/panggung3m3.js';
+
+const A = await siapkanAdegan(15, { extra: 3.0 });
+const D = A.durasi;
+const P = panggungLaut({ waktu: 'senja', exposure: 0.9 });
+const { cam } = P;
+const camAt = kamera(cam, [
+  { t: 0, p: [260, 14, -120], l: [100, 16, 0], f: 34 },
+  { t: 15.2, p: [140, 30, -190], l: [80, 14, 0], f: 34 },
+  { t: D, p: [-60, 45, -170], l: [70, 10, 0], f: 36 },
+]);
+const flash = el('', 'shade'); flash.style.background = '#06152c';
+bug(0.2);
+const ung = el(`<div class="k">SWRO TRAYA</div>
+  <div class="i"><span>✓</span>Ringkas</div><div class="i"><span>✓</span>Tahan korosi</div>
+  <div class="i"><span>✓</span>Mudah dirawat</div><div class="i"><span>✓</span>Kapasitas bisa ditingkatkan</div>`, 'ung');
+muncul(ung, 0.8, 9.0);
+const it = ung.querySelectorAll('.i');
+kartu({ k: 'DUKUNGAN TIM TRAYA', tt: 'Instalasi & Servis Berkala', rows: [['Instalasi', 'di kapal Anda'], ['Servis', 'berkala & suku cadang']], x: 110, y: 230, t0: 9.2, t1: 15.4 });
+const vg = el('', 'vg');
+const end = el('<img src="../logo/traya-logo-putih.png" alt=""><div class="tg">Mitra Anda untuk solusi air bersih dari air laut</div>', 'end');
+const ct = el('<div class="co">PT Traya Hydro Indonesia</div><div class="ad">The Smith Alam Sutera SOHO-D/10/1009, Tangerang</div><div class="ln"><span>+62 823 110 110 29</span><span>www.trayahydro.com</span></div>', 'contact');
+muncul(vg, 15.6); muncul(end, 15.9, 1e9, 20); muncul(ct, 16.8, 1e9, 20);
+const T = [0.9, 2.0, 3.0, 4.6];
+
+window.renderFrame = (tl) => {
+  const t = waktu(tl);
+  camAt(t); P.update(t);
+  it.forEach((e, i) => { const a = easeOut(prog(t, T[i], 0.5)); e.style.opacity = a; e.style.transform = `translateX(${(1 - a) * -20}px)`; });
+  P.render();
+  flash.style.opacity = 1 - easeInOut(prog(t, 0, 0.6));
+  perbarui(t);
+};
+window._ready();
+</script></body></html>
