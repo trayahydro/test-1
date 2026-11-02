@@ -8,12 +8,13 @@ Langkah:
   4. backsound (audio/buat_musik.py) diredam otomatis saat ada narasi
   5. encode H.264 + AAC, lalu pecah menjadi beberapa file < 95 MB bila perlu
 
-Pemakaian: python3 rakit.py [--vo folder_vo] [--crf 20] [--maks-mb 95]
+Pemakaian: [RAKIT_ROOT=../video-3m3 RAKIT_N=16 RAKIT_VO=../video-3m3/tts/vo RAKIT_NAMA=nama] python3 rakit.py [--vo folder_vo] [--crf 20] [--maks-mb 95]
            [--retime timing_baru.json]   # VO baru: tempo video disesuaikan per kalimat (cue)
 """
 import argparse, glob, json, math, os, re, subprocess, sys
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.environ.get('RAKIT_ROOT', os.path.dirname(os.path.abspath(__file__)))   # folder halaman adegan + out/
+N_ADEGAN = int(os.environ.get('RAKIT_N', 18))
 SEG = os.environ.get('RAKIT_SEG', os.path.join(ROOT, 'out', 'seg'))
 WORK = os.environ.get('RAKIT_WORK', os.path.join(ROOT, 'out', 'rakit'))
 PRE, XF = 0.6, 0.5          # jeda sebelum narasi; durasi crossfade antar adegan
@@ -75,17 +76,17 @@ def retime(src, dst, k_lama, k_baru):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--vo', default=os.path.join(ROOT, '..', 'tts', 'vo'), help='folder adegan_XX.flac / .wav')
+    ap.add_argument('--vo', default=os.environ.get('RAKIT_VO', os.path.join(ROOT, '..', 'tts', 'vo')), help='folder adegan_XX.flac / .wav')
     ap.add_argument('--crf', type=int, default=20)
     ap.add_argument('--maks-mb', type=float, default=95)
-    ap.add_argument('--out', default=os.path.join(ROOT, 'out', 'SWRO-Traya-Hydro-Indonesia.mp4'))
+    ap.add_argument('--out', default=os.path.join(ROOT, 'out', os.environ.get('RAKIT_NAMA', 'SWRO-Traya-Hydro-Indonesia') + '.mp4'))
     ap.add_argument('--retime', help='timing.json VO baru; video tiap adegan disesuaikan per cue')
     a = ap.parse_args()
     os.makedirs(WORK, exist_ok=True)
 
     g = kelompok_adegan()
     nos = sorted(g)
-    if nos != list(range(18)):
+    if nos != list(range(N_ADEGAN)):
         sys.exit(f'segmen belum lengkap, adegan tersedia: {nos}')
     # pastikan semua sub-segmen ada (sesuai daftar halaman)
     for p in glob.glob(os.path.join(ROOT, 'adegan-*.html')):
