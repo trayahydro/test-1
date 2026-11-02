@@ -66,6 +66,18 @@ KAMUS = [
     ("brine", "brain"),
     ("Brine", "Brain"),
     ("mg/L", "miligram per liter"),
+    ("SW30-4040", "es-we tiga puluh, empat puluh empat puluh"),
+    ("SS304", "es-es tiga kosong empat"),
+    ("SS316", "es-es tiga satu enam"),
+    ("biocide", "baiosaid"),
+    ("needle valve", "nidel valf"),
+    ("sea chest", "si ces"),
+    ("conductivity meter", "konduktiviti meter"),
+    ("pressure gauge", "presyur gej"),
+    ("emergency stop", "emerjensi stop"),
+    ("flowmeter", "flo meter"),
+    ("flush", "flas"),
+    ("skid", "skit"),
 ]
 # Singkatan: hanya dicocokkan sebagai kata utuh (huruf besar/kecil persis)
 SINGKATAN = {
