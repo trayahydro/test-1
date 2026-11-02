@@ -138,8 +138,8 @@ export function buildKapal() {
     const kind = k < 2 ? 'jendela' : k > 6 ? 'kaca' : 'balkon';
     [-1, 1].forEach((s) => {
       const tex = facadeTexture(kind); tex.repeat.set(len / 8, 1);
-      const f = mk(new THREE.PlaneGeometry(len - 0.4, DECK * 0.92), S({ map: tex, roughness: 0.4 }), root, false);
-      f.position.set((back + front) / 2, (y0 + y1) / 2, s * (half + 0.02)); if (s < 0) f.rotation.y = Math.PI;
+      const f = mk(new THREE.PlaneGeometry(len - 0.4, DECK * 0.92), S({ map: tex, roughness: 0.4, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 }), root, false);
+      f.position.set((back + front) / 2, (y0 + y1) / 2, s * (half + 0.12)); if (s < 0) f.rotation.y = Math.PI;
     });
     // ujung depan membulat
     const cap = mk(new THREE.CylinderGeometry(half, half, DECK * 0.98, 32, 1, false, 0, Math.PI), M.white); cap.position.set(front, (y0 + y1) / 2, 0); cap.scale.x = 0.45;
@@ -197,7 +197,8 @@ export function buildKapal() {
       mats.forEach((mt) => {
         if (!orig.has(mt)) orig.set(mt, { t: mt.transparent, o: mt.opacity, dw: mt.depthWrite });
         const o = orig.get(mt);
-        mt.transparent = k > 0 || o.t; mt.opacity = THREE.MathUtils.lerp(o.o, 0.09, k); mt.depthWrite = k < 0.5 ? o.dw : false;
+        const tr = k > 0 || o.t; if (mt.transparent !== tr) { mt.transparent = tr; mt.needsUpdate = true; }
+        mt.opacity = THREE.MathUtils.lerp(o.o, 0.09, k); mt.depthWrite = k < 0.5 ? o.dw : false;
       });
       m.castShadow = k < 0.5;
     });

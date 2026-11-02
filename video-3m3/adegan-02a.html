@@ -10,18 +10,18 @@ import * as THREE from 'three';
 import { kamera, layar } from '../video/lib/dunia.js';
 import { siapkanAdegan, bug, judulBesar, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
 import { prog, easeInOut, clamp } from '../video/lib/common.js';
-import { panggungLaut } from './lib/panggung3m3.js';
+import { panggungLaut, muatLogo } from './lib/panggung3m3.js';
 
 const A = await siapkanAdegan(2, { ke: 9.0 });
-const P = panggungLaut({ waktu: 'pagi', interior: true });
+const P = panggungLaut({ waktu: 'pagi', interior: true, logos: await muatLogo() });
 const { cam } = P;
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const S = (p) => () => { const s = layar(cam, p); return s[2] < 1 ? s : null; };
 const sk = P.isi.pos.skid;
 const camAt = kamera(cam, [
-  { t: 0, p: [10, 45, -210], l: [90, 12, 0], f: 34 },
-  { t: 4.2, p: [56, 16, -120], l: [80, -1, -4], f: 34 },
-  { t: 9.0, p: [74.5, -1.6, -13.5], l: [74, -2.6, -7.5], f: 40 },
+  { t: 0, p: [10, 45, 210], l: [90, 12, 0], f: 34 },
+  { t: 4.2, p: [56, 16, 120], l: [76, -1, -2], f: 34 },
+  { t: 9.0, p: [74.4, -1.7, -2.6], l: [74, -2.6, -7.5], f: 40 },
 ]);
 const flash = el('', 'shade'); flash.style.background = '#e9f4ff';
 bug(0.2);
@@ -33,6 +33,7 @@ window.renderFrame = (tl) => {
   camAt(t); P.update(t);
   P.setXray(easeInOut(prog(t, 2.4, 1.6)));
   P.isi.M.skid.emissiveIntensity = 1.0 + 0.8 * (0.5 + 0.5 * Math.sin(t * 5));
+  P.isi.M.skid.opacity = 0.22 * (1 - easeInOut(prog(t, 5.6, 1.6)));
   P.render();
   flash.style.opacity = easeInOut(prog(t, 8.2, 0.8));
   perbarui(t);

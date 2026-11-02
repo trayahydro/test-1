@@ -85,10 +85,11 @@ function hullFoam(mat) {
   const m = new THREE.Mesh(g, mat); m.material.side = THREE.DoubleSide; m.renderOrder = 2; m.frustumCulled = false; return m;
 }
 
-export function panggungLaut({ waktu = 'pagi', interior = false, bloom = 0.15, exposure = 0.95, kecepatan = 7.5 } = {}) {
+export function panggungLaut({ waktu = 'pagi', interior = false, bloom = 0.15, exposure = 0.95, kecepatan = 7.5, logos = null } = {}) {
   const D = buatDunia({ ao: false, bloom, exposure });
   const { scene, pmrem, cam } = D;
-  cam.far = 9000; cam.updateProjectionMatrix();
+  // near 0,5 m: presisi kedalaman cukup untuk fasad kapal dari jarak ratusan meter (tanpa kedip / z-fighting)
+  cam.near = 0.5; cam.far = 9000; cam.updateProjectionMatrix();
   const lp = LANGIT[waktu] || LANGIT.pagi;
   const sk = langit(scene, pmrem, lp);
   const sea = laut(scene, { y: 0, size: 7000, rep: 350, color: waktu === 'senja' ? '#2a4f78' : '#1f6fa3' });
@@ -103,7 +104,25 @@ export function panggungLaut({ waktu = 'pagi', interior = false, bloom = 0.15, e
   const dasar = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), new THREE.MeshBasicMaterial({ color: '#082a48' }));
   dasar.rotation.x = -Math.PI / 2; dasar.position.y = -14; dasar.visible = false; scene.add(dasar);
   let isi = null;
-  if (interior) { isi = buildInterior(); isi.group.visible = false; scene.add(isi.group); }
+  if (interior) {
+    isi = buildInterior(); isi.group.visible = false; scene.add(isi.group);
+    // ruang mesin yang jelas terlihat dalam tampilan X-ray: lantai, garis batas ruangan, lampu, dan model skid asli
+    const er = new THREE.Group(); isi.group.add(er);
+    const lantai = new THREE.Mesh(new THREE.BoxGeometry(42, 0.2, 22), new THREE.MeshStandardMaterial({ color: '#5d6873', roughness: 0.7, metalness: 0.3 }));
+    lantai.position.set(61, -3.5, 0); er.add(lantai);
+    const batas = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(42, 5.8, 22)), new THREE.LineBasicMaterial({ color: '#8fe0ff', transparent: true, opacity: 0.85 }));
+    batas.position.set(61, -0.5, 0); er.add(batas);
+    const dinding = new THREE.Mesh(new THREE.BoxGeometry(42, 5.8, 22), new THREE.MeshBasicMaterial({ color: '#6ec3ff', transparent: true, opacity: 0.06, depthWrite: false, side: THREE.BackSide }));
+    dinding.position.copy(batas.position); er.add(dinding);
+    const lampu = new THREE.PointLight('#eaf4ff', 10, 18, 1.4); lampu.position.set(73, 1.2, -5.5); er.add(lampu);
+    if (logos) {
+      const sk = buildSkid(logos, { tertutup: true });
+      sk.root.position.set(isi.pos.skid.x - 1.1, -3.4, isi.pos.skid.z); er.add(sk.root); isi.skid = sk;
+      // kotak bercahaya menjadi "halo" tipis di sekitar skid (penanda dari jauh)
+      isi.M.skid.transparent = true; isi.M.skid.opacity = 0.22; isi.M.skid.depthWrite = false;
+      isi.group.children.forEach((m) => { if (m.material === isi.M.skid) m.scale.setScalar(1.25); });
+    }
+  }
   const n1 = sea.mat.normalMap;
   return {
     ...D, sky: sk, sea, sun, kapal, refs: kapal.refs, isi,
@@ -115,7 +134,8 @@ export function panggungLaut({ waktu = 'pagi', interior = false, bloom = 0.15, e
     },
     setXray(k) {
       kapal.refs.xray(k); if (isi) isi.group.visible = k > 0.02; mW.uniforms.k.value = mH.uniforms.k.value = 1 - 0.7 * k;
-      sea.mat.transparent = k > 0; sea.mat.opacity = 1 - 0.55 * k; sea.mat.depthWrite = k < 0.5; dasar.visible = k > 0;
+      if (sea.mat.transparent !== k > 0) { sea.mat.transparent = k > 0; sea.mat.needsUpdate = true; }
+      sea.mat.opacity = 1 - 0.55 * k; sea.mat.depthWrite = k < 0.5; dasar.visible = k > 0;
     },
   };
 }

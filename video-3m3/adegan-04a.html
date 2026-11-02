@@ -11,11 +11,11 @@ import { kamera } from '../video/lib/dunia.js';
 import { siapkanAdegan, chip, bug, kartu, penanda, el, perbarui, waktu } from '../video/lib/overlay.js';
 import { prog, easeInOut, clamp } from '../video/lib/common.js';
 import { WARNA, aliran } from '../video/lib/aliran.js';
-import { panggungLaut } from './lib/panggung3m3.js';
+import { panggungLaut, muatLogo } from './lib/panggung3m3.js';
 import { V, penunjuk, jalan, kurva } from './lib/bantu.js';
 
 const A = await siapkanAdegan(4, { ke: 8.6 });
-const P = panggungLaut({ waktu: 'pagi', interior: true });
+const P = panggungLaut({ waktu: 'pagi', interior: true, logos: await muatLogo() });
 const { cam, scene } = P;
 const S = penunjuk(cam);
 const ch = P.isi.pos.chest, sk = P.isi.pos.skid;
