@@ -17,6 +17,10 @@ P&ID "3 m³ Sea Water Reverse Osmosis", foto produk "3 m³/day SWRO SYSTEM" (rec
 foto "MESIN SEA WATER RO", infografis alur 5 tahap + skid, render tampak depan lurus (label panel),
 close-up dosing pump + tangki antiscalant, close-up head valve 2–3 tangki FRP.
 
+Kiriman berikutnya (dicatat dari chat): render **versi tertutup** (panel pintu abu-abu berkisi ventilasi, 4 pintu bawah + 1 pintu atas kanan) dari depan & serong;
+render tampak serong depan-kiri tanpa label; close-up housing **"RO-101 SW30-4040"** dengan FI PRODUCT, PG CONC., FLUSH VALVE, NEEDLE VALVE, dosing pump;
+label nozzle **SEA WATER IN**, **PRODUCT OUT**, **DRAIN**, **BACKWASH DRAIN** di tiap tangki FRP.
+
 ## Spesifikasi yang terbaca
 - Kapasitas produk **3 m³/hari**, recovery **12%**, tekanan operasi **42 bar**, flux **17 LMH**
 - Alur: air laut → **feed pump SS304 0,5 HP** → (pipa 1") → **tangki FRP 1054 sand filter** → **tangki FRP 1054 activated carbon / carbon block** → **cartridge 20"** → injeksi **antiscalant/biocide** (dosing pump + tangki) → **HP pump plunger SS316 (20 Lpm, 60 bar)** → valve HP + pressure gauge 42 bar → **membran SW30-4040, housing FRP 4"** (1 elemen) → conductivity meter + flowmeter produk → **produk ke tangki (maks. 10 m tinggi)**
