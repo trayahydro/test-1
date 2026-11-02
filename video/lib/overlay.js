@@ -4,7 +4,7 @@ import { prog, easeOut, lerp } from './common.js';
 
 export const PRE = 0.6;   // detik sebelum narasi dimulai
 export const POST = 1.0;  // detik setelah narasi selesai (ruang transisi)
-export const TAHAP = ['Intake', 'MMF', 'UF', 'Dosing', 'Cartridge', 'HPP', 'Membran RO', 'ERD', 'Post', 'Produk'];
+export const TAHAP = window.TAHAP || ['Intake', 'MMF', 'UF', 'Dosing', 'Cartridge', 'HPP', 'Membran RO', 'ERD', 'Post', 'Produk'];
 
 const NS = 'http://www.w3.org/2000/svg';
 let ov, svg, subEl, cues = [];
@@ -23,7 +23,7 @@ const interp = (x, xs, ys) => {
 export const keDesain = (tr) => interp(tr, kR, kD);
 export const keNyata = (td) => interp(td, kD, kR);
 export async function siapkanAdegan(no, { pre = PRE, post = POST, extra = 0, dari = 0, ke = null } = {}) {
-  const [des, vo] = await Promise.all(['../tts/timing_desain.json', '../tts/timing_vo.json'].map((u) => fetch(u).then((r) => r.json())));
+  const [des, vo] = await Promise.all([(window.TIMING_DIR || '../tts/') + 'timing_desain.json', (window.TIMING_DIR || '../tts/') + 'timing_vo.json'].map((u) => fetch(u).then((r) => r.json())));
   // muat semua ketebalan font lebih dulu (dipakai juga oleh gambar canvas)
   await Promise.all(['400', '500', '600', '700', '800'].map((w) => document.fonts.load(`${w} 20px Jakarta`)));
   const sd = des.find((d) => d.no === no), sv = vo.find((d) => d.no === no);

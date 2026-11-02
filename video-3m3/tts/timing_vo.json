@@ -1,0 +1,670 @@
+[
+ {
+  "no": 0,
+  "judul": "Pembuka",
+  "durasi": 14.04,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.016,
+    "text": "Di tengah laut lepas, sebuah kapal pesiar membawa ratusan penumpang dan kru."
+   },
+   {
+    "a": 5.296,
+    "b": 9.568,
+    "text": "Setiap hari, mereka membutuhkan ribuan liter air tawar."
+   },
+   {
+    "a": 9.848,
+    "b": 13.76,
+    "text": "Bagaimana sebuah kapal bisa membuat air tawarnya sendiri?"
+   }
+  ],
+  "wav": "adegan_00.wav"
+ },
+ {
+  "no": 1,
+  "judul": "Kebutuhan Air Tawar di Kapal",
+  "durasi": 20.496,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 6.048,
+    "text": "Penumpang dan kru membutuhkan air untuk minum, memasak, mandi, dan mencuci."
+   },
+   {
+    "a": 6.328,
+    "b": 11.128,
+    "text": "Membawa air dari pelabuhan berarti ruang tangki yang besar, biaya pengisian,"
+   },
+   {
+    "a": 11.128,
+    "b": 13.528,
+    "text": "dan ketergantungan pada jadwal sandar."
+   },
+   {
+    "a": 13.808,
+    "b": 19.204,
+    "text": "Padahal, sumber air yang tidak pernah habis ada di sekeliling kapal itu sendiri,"
+   },
+   {
+    "a": 19.204,
+    "b": 20.216,
+    "text": "yaitu air laut."
+   }
+  ],
+  "wav": "adegan_01.wav"
+ },
+ {
+  "no": 2,
+  "judul": "Solusi SWRO Traya di Ruang Mesin",
+  "durasi": 30.808,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.218,
+    "text": "Inilah sistem SWRO dari PT Traya Hydro Indonesia,"
+   },
+   {
+    "a": 3.218,
+    "b": 8.208,
+    "text": "Sea Water Reverse Osmosis dengan kapasitas 3 meter kubik air tawar per hari."
+   },
+   {
+    "a": 8.488,
+    "b": 12.771,
+    "text": "Seluruh komponen terpasang rapi dalam satu skid ringkas berangka stainless steel,"
+   },
+   {
+    "a": 12.771,
+    "b": 16.102,
+    "text": "dengan ukuran sekitar dua koma dua kali nol koma delapan meter,"
+   },
+   {
+    "a": 16.102,
+    "b": 18.904,
+    "text": "sehingga cocok untuk ruang mesin kapal yang terbatas."
+   },
+   {
+    "a": 19.184,
+    "b": 23.174,
+    "text": "Panelnya tertutup untuk melindungi komponen dari percikan dan debu,"
+   },
+   {
+    "a": 23.174,
+    "b": 25.616,
+    "text": "dan pintunya mudah dibuka saat perawatan."
+   },
+   {
+    "a": 25.896,
+    "b": 30.528,
+    "text": "Mari kita ikuti perjalanan air laut di dalamnya, tahap demi tahap."
+   }
+  ],
+  "wav": "adegan_02.wav"
+ },
+ {
+  "no": 3,
+  "judul": "Prinsip Reverse Osmosis",
+  "durasi": 43.336,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.88,
+    "text": "Prinsipnya adalah osmosis balik."
+   },
+   {
+    "a": 3.16,
+    "b": 4.011,
+    "text": "Secara alami,"
+   },
+   {
+    "a": 4.011,
+    "b": 9.448,
+    "text": "air bergerak dari larutan encer menuju larutan pekat melalui membran semipermeabel."
+   },
+   {
+    "a": 9.728,
+    "b": 12.571,
+    "text": "Aliran berhenti saat tercapai kesetimbangan,"
+   },
+   {
+    "a": 12.571,
+    "b": 15.608,
+    "text": "dan selisih tekanannya disebut tekanan osmotik."
+   },
+   {
+    "a": 15.888,
+    "b": 20.039,
+    "text": "Untuk air laut, tekanan osmotiknya tipikal sekitar 27 bar,"
+   },
+   {
+    "a": 20.039,
+    "b": 23.832,
+    "text": "dan makin tinggi kadar garam, makin besar tekanannya."
+   },
+   {
+    "a": 24.112,
+    "b": 28.025,
+    "text": "Dengan memberikan tekanan yang lebih besar dari tekanan osmotik,"
+   },
+   {
+    "a": 28.025,
+    "b": 29.248,
+    "text": "arah aliran dibalik."
+   },
+   {
+    "a": 29.528,
+    "b": 34.28,
+    "text": "Air tawar menembus membran, sementara garam dan pengotor tertahan."
+   },
+   {
+    "a": 34.56,
+    "b": 38.292,
+    "text": "Air laut dengan TDS tipikal sekitar 35.000 mg/L"
+   },
+   {
+    "a": 38.292,
+    "b": 43.056,
+    "text": "dapat diolah menjadi air tawar dengan TDS di bawah 300 mg/L."
+   }
+  ],
+  "wav": "adegan_03.wav"
+ },
+ {
+  "no": 4,
+  "judul": "Intake Air Laut & Feed Pump",
+  "durasi": 21.192,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.136,
+    "text": "Air laut diambil melalui sea chest, yaitu lubang hisap berkisi di lambung kapal,"
+   },
+   {
+    "a": 5.136,
+    "b": 7.704,
+    "text": "lalu disaring kasar oleh strainer kapal."
+   },
+   {
+    "a": 7.984,
+    "b": 11.32,
+    "text": "Air kemudian masuk ke skid melalui katup inlet."
+   },
+   {
+    "a": 11.6,
+    "b": 14.643,
+    "text": "Pompa umpan berbahan stainless steel SS304 berdaya"
+   },
+   {
+    "a": 14.643,
+    "b": 18.477,
+    "text": "setengah tenaga kuda mendorong air laut melalui pipa satu inci,"
+   },
+   {
+    "a": 18.477,
+    "b": 20.912,
+    "text": "melewati seluruh tahap penyaringan awal."
+   }
+  ],
+  "wav": "adegan_04.wav"
+ },
+ {
+  "no": 5,
+  "judul": "Sand Filter & Activated Carbon",
+  "durasi": 35.576,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.064,
+    "text": "Tahap pertama adalah dua tangki FRP berukuran sepuluh kali lima puluh empat inci."
+   },
+   {
+    "a": 5.344,
+    "b": 10.225,
+    "text": "Tangki sand filter berisi lapisan pasir yang menahan lumpur, pasir halus,"
+   },
+   {
+    "a": 10.225,
+    "b": 11.896,
+    "text": "dan partikel tersuspensi."
+   },
+   {
+    "a": 12.176,
+    "b": 15.57,
+    "text": "Tangki karbon aktif kemudian menyerap klorin, bau,"
+   },
+   {
+    "a": 15.57,
+    "b": 18.488,
+    "text": "dan zat organik yang dapat merusak membran."
+   },
+   {
+    "a": 18.768,
+    "b": 23.463,
+    "text": "Setiap tangki dilengkapi katup tiga arah manual untuk mengatur mode operasi,"
+   },
+   {
+    "a": 23.463,
+    "b": 26.304,
+    "text": "pencucian balik atau backwash, dan pembilasan."
+   },
+   {
+    "a": 26.584,
+    "b": 27.351,
+    "text": "Saat backwash,"
+   },
+   {
+    "a": 27.351,
+    "b": 29.762,
+    "text": "aliran dibalik untuk mengangkat kotoran yang"
+   },
+   {
+    "a": 29.762,
+    "b": 32.556,
+    "text": "terperangkap dan membuangnya ke saluran pembuangan,"
+   },
+   {
+    "a": 32.556,
+    "b": 35.296,
+    "text": "sehingga media filter tetap bersih dan tahan lama."
+   }
+  ],
+  "wav": "adegan_05.wav"
+ },
+ {
+  "no": 6,
+  "judul": "Cartridge Filter 20 & 5 Mikron",
+  "durasi": 19.392,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 4.512,
+    "text": "Selanjutnya air melewati empat housing cartridge filter dua puluh inci."
+   },
+   {
+    "a": 4.792,
+    "b": 8.184,
+    "text": "Dua cartridge pertama menyaring partikel hingga 20 mikron,"
+   },
+   {
+    "a": 8.184,
+    "b": 11.46,
+    "text": "lalu dua cartridge berikutnya menyaring hingga 5 mikron,"
+   },
+   {
+    "a": 11.46,
+    "b": 13.624,
+    "text": "jauh lebih kecil dari sehelai rambut."
+   },
+   {
+    "a": 13.904,
+    "b": 16.928,
+    "text": "Inilah pengaman terakhir yang melindungi pompa tekanan"
+   },
+   {
+    "a": 16.928,
+    "b": 19.112,
+    "text": "tinggi dan membran dari partikel halus."
+   }
+  ],
+  "wav": "adegan_06.wav"
+ },
+ {
+  "no": 7,
+  "judul": "Dosing Antiscalant & Biocide",
+  "durasi": 20.256,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.217,
+    "text": "Sebelum menuju pompa tekanan tinggi,"
+   },
+   {
+    "a": 2.217,
+    "b": 6.528,
+    "text": "pompa dosing menginjeksikan antiscalant dan biocide dalam dosis kecil."
+   },
+   {
+    "a": 6.808,
+    "b": 11.032,
+    "text": "Antiscalant mencegah mineral seperti kalsium karbonat mengendap menjadi kerak,"
+   },
+   {
+    "a": 11.032,
+    "b": 15.256,
+    "text": "sedangkan biocide mencegah pertumbuhan bakteri dan lumut di permukaan membran."
+   },
+   {
+    "a": 15.536,
+    "b": 19.976,
+    "text": "Dengan begitu, membran tetap bersih dan umurnya lebih panjang."
+   }
+  ],
+  "wav": "adegan_07.wav"
+ },
+ {
+  "no": 8,
+  "judul": "Pompa Tekanan Tinggi",
+  "durasi": 24.544,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.64,
+    "text": "Kini air siap diberi tekanan."
+   },
+   {
+    "a": 2.92,
+    "b": 5.717,
+    "text": "Pompa plunger tekanan tinggi berbahan stainless"
+   },
+   {
+    "a": 5.717,
+    "b": 9.288,
+    "text": "steel SS316 bekerja dengan piston yang bergerak maju mundur,"
+   },
+   {
+    "a": 9.288,
+    "b": 11.728,
+    "text": "mendorong sekitar 20 liter air per menit."
+   },
+   {
+    "a": 12.008,
+    "b": 15.392,
+    "text": "Tekanan air naik hingga tipikal sekitar 42 bar,"
+   },
+   {
+    "a": 15.392,
+    "b": 18.128,
+    "text": "jauh di atas tekanan osmotik air laut."
+   },
+   {
+    "a": 18.408,
+    "b": 21.602,
+    "text": "Pompa ini dirancang untuk tekanan hingga 60 bar,"
+   },
+   {
+    "a": 21.602,
+    "b": 24.264,
+    "text": "sehingga bekerja dengan aman dan stabil."
+   }
+  ],
+  "wav": "adegan_08.wav"
+ },
+ {
+  "no": 9,
+  "judul": "Membran RO SW30-4040",
+  "durasi": 32.488,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 4.13,
+    "text": "Air bertekanan tinggi masuk ke housing membran FRP"
+   },
+   {
+    "a": 4.13,
+    "b": 7.104,
+    "text": "empat inci berisi membran SW30-4040."
+   },
+   {
+    "a": 7.384,
+    "b": 8.106,
+    "text": "Di dalamnya,"
+   },
+   {
+    "a": 8.106,
+    "b": 10.936,
+    "text": "lembaran membran poliamida dan spacer tergulung"
+   },
+   {
+    "a": 10.936,
+    "b": 14.488,
+    "text": "secara spiral mengelilingi sebuah pipa berlubang di tengah."
+   },
+   {
+    "a": 14.768,
+    "b": 18.96,
+    "text": "Molekul air menembus membran dan terkumpul di pipa tengah sebagai air produk,"
+   },
+   {
+    "a": 18.96,
+    "b": 22.88,
+    "text": "sementara garam terlarut tertahan dan terbawa keluar sebagai konsentrat."
+   },
+   {
+    "a": 23.16,
+    "b": 25.508,
+    "text": "Dengan recovery tipikal 12 persen,"
+   },
+   {
+    "a": 25.508,
+    "b": 29.722,
+    "text": "sistem menghasilkan sekitar 3 meter kubik air tawar per hari,"
+   },
+   {
+    "a": 29.722,
+    "b": 32.208,
+    "text": "atau kira-kira 125 liter setiap jam."
+   }
+  ],
+  "wav": "adegan_09.wav"
+ },
+ {
+  "no": 10,
+  "judul": "Air Produk & Konsentrat",
+  "durasi": 26.976,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.18,
+    "text": "Air produk melewati conductivity meter"
+   },
+   {
+    "a": 2.18,
+    "b": 5.05,
+    "text": "yang mengukur kadar garamnya secara terus-menerus,"
+   },
+   {
+    "a": 5.05,
+    "b": 5.91,
+    "text": "lalu flowmeter,"
+   },
+   {
+    "a": 5.91,
+    "b": 9.009,
+    "text": "sebelum dialirkan ke tangki air tawar kapal dengan TDS"
+   },
+   {
+    "a": 9.009,
+    "b": 11.304,
+    "text": "tipikal di bawah 300 miligram per liter."
+   },
+   {
+    "a": 11.584,
+    "b": 14.728,
+    "text": "Di sisi lain, konsentrat melewati pressure gauge,"
+   },
+   {
+    "a": 14.728,
+    "b": 18.386,
+    "text": "needle valve untuk mengatur tekanan kerja, dan flowmeter,"
+   },
+   {
+    "a": 18.386,
+    "b": 20.632,
+    "text": "lalu dibuang ke saluran pembuangan."
+   },
+   {
+    "a": 20.912,
+    "b": 24.201,
+    "text": "Katup flush digunakan untuk membilas membran dengan aliran"
+   },
+   {
+    "a": 24.201,
+    "b": 26.696,
+    "text": "rendah saat sistem dinyalakan dan dimatikan."
+   }
+  ],
+  "wav": "adegan_10.wav"
+ },
+ {
+  "no": 11,
+  "judul": "Panel Kontrol & Instrumen",
+  "durasi": 23.128,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.24,
+    "text": "Seluruh sistem dikendalikan dari satu panel."
+   },
+   {
+    "a": 3.52,
+    "b": 7.114,
+    "text": "Lampu indikator dan layar controller menampilkan status operasi,"
+   },
+   {
+    "a": 7.114,
+    "b": 10.09,
+    "text": "sementara pressure gauge dan rotameter memperlihatkan"
+   },
+   {
+    "a": 10.09,
+    "b": 12.448,
+    "text": "tekanan serta laju aliran secara langsung."
+   },
+   {
+    "a": 12.728,
+    "b": 13.65,
+    "text": "Dari angka ini,"
+   },
+   {
+    "a": 13.65,
+    "b": 18.632,
+    "text": "operator dapat menghitung recovery dan mengetahui kapan filter perlu dibersihkan."
+   },
+   {
+    "a": 18.912,
+    "b": 22.848,
+    "text": "Tombol emergency stop siap menghentikan sistem kapan saja."
+   }
+  ],
+  "wav": "adegan_11.wav"
+ },
+ {
+  "no": 12,
+  "judul": "Instalasi di Kapal",
+  "durasi": 15.872,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 5.457,
+    "text": "Di kapal, skid cukup dihubungkan ke empat titik: saluran air laut dari sea chest,"
+   },
+   {
+    "a": 5.457,
+    "b": 9.768,
+    "text": "listrik kapal, tangki air tawar, dan saluran pembuangan ke laut."
+   },
+   {
+    "a": 10.048,
+    "b": 12.487,
+    "text": "Kaki yang dapat diatur dengan bantalan karet"
+   },
+   {
+    "a": 12.487,
+    "b": 15.592,
+    "text": "membantu meratakan skid dan meredam getaran mesin kapal."
+   }
+  ],
+  "wav": "adegan_12.wav"
+ },
+ {
+  "no": 13,
+  "judul": "Operasi & Perawatan Mudah",
+  "durasi": 15.0,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.568,
+    "text": "Perawatannya pun sederhana."
+   },
+   {
+    "a": 2.848,
+    "b": 5.76,
+    "text": "Media filter dibersihkan dengan backwash berkala,"
+   },
+   {
+    "a": 5.76,
+    "b": 10.456,
+    "text": "cartridge diganti saat tekanannya mulai naik, dan membran dibilas secara rutin."
+   },
+   {
+    "a": 10.736,
+    "b": 14.72,
+    "text": "Semua komponen mudah dijangkau begitu pintu panel dibuka."
+   }
+  ],
+  "wav": "adegan_13.wav"
+ },
+ {
+  "no": 14,
+  "judul": "Opsi 2 hingga 3 Membran",
+  "durasi": 11.144,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 2.448,
+    "text": "Kebutuhan air lebih besar?"
+   },
+   {
+    "a": 2.728,
+    "b": 4.719,
+    "text": "Skid dapat dikonfigurasi dengan dua"
+   },
+   {
+    "a": 4.719,
+    "b": 7.507,
+    "text": "hingga tiga membran untuk meningkatkan kapasitas,"
+   },
+   {
+    "a": 7.507,
+    "b": 10.864,
+    "text": "dengan ukuran pompa yang disesuaikan oleh tim teknik Traya."
+   }
+  ],
+  "wav": "adegan_14.wav"
+ },
+ {
+  "no": 15,
+  "judul": "Keunggulan & Penutup",
+  "durasi": 21.0,
+  "cues": [
+   {
+    "a": 0.0,
+    "b": 3.943,
+    "text": "SWRO Traya: ringkas, tahan korosi, mudah dirawat,"
+   },
+   {
+    "a": 3.943,
+    "b": 8.208,
+    "text": "dan kapasitasnya dapat ditingkatkan sesuai kebutuhan."
+   },
+   {
+    "a": 8.488,
+    "b": 12.009,
+    "text": "Didukung tim Traya untuk instalasi dan servis berkala,"
+   },
+   {
+    "a": 12.009,
+    "b": 14.944,
+    "text": "siap memenuhi kebutuhan air tawar kapal Anda."
+   },
+   {
+    "a": 15.224,
+    "b": 20.72,
+    "text": "PT Traya Hydro Indonesia, mitra Anda untuk solusi air bersih dari air laut."
+   }
+  ],
+  "wav": "adegan_15.wav"
+ }
+]
