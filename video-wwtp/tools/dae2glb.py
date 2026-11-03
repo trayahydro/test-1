@@ -170,7 +170,14 @@ def main():
         ntri = 0
         for mid, lst in per_grup[g]:
             P = np.concatenate([a for a, _ in lst])
-            N = np.concatenate([n if n is not None else np.zeros_like(a) for a, n in lst])
+            def facen(a):
+                t = a.reshape(-1, 3, 3)
+                fn = np.cross(t[:, 1] - t[:, 0], t[:, 2] - t[:, 0])
+                fn /= np.maximum(np.linalg.norm(fn, axis=1, keepdims=True), 1e-12)
+                return np.repeat(fn, 3, axis=0).astype(np.float32)
+            N = np.concatenate([n if n is not None else facen(a) for a, n in lst])
+            bad = ~np.isfinite(N).all(1) | (np.linalg.norm(N, axis=1) < 0.5)
+            N[bad] = [0, 1, 0]
             ntri += len(P) // 3
             if mid not in mat_index:
                 m = mats.get(mid, {'name': mid, 'effect': None})

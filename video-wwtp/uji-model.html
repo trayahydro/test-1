@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 import { buatDunia, langit, matahari } from '../video/lib/dunia.js';
 const q = new URLSearchParams(location.search);
 const D = buatDunia({ ao: false, bloom: 0.05, exposure: 1.0 });
@@ -17,7 +18,7 @@ const t0 = performance.now();
 const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(q.get('f') || '../video-millenium/model/millenium.glb');
 const root = gltf.scene; scene.add(root);
 const info = {};
-root.traverse((o) => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; } });
+root.traverse((o) => { if (o.isMesh) { if (!o.geometry.attributes.normal) o.geometry = toCreasedNormals(o.geometry, Math.PI / 6); o.castShadow = o.receiveShadow = true; } });
 root.children.forEach((g) => { const b = new THREE.Box3().setFromObject(g); info[g.name] = [b.min.toArray().map((v) => +v.toFixed(1)), b.max.toArray().map((v) => +v.toFixed(1))]; });
 const all = new THREE.Box3().setFromObject(root), c = all.getCenter(new THREE.Vector3()), s = all.getSize(new THREE.Vector3());
 console.log('LOAD_MS', Math.round(performance.now() - t0));
