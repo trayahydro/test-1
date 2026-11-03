@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Uji model WWTP</title>
+<link rel="stylesheet" href="../video/lib/overlay.css"></head><body><div id="stage"></div>
+<script>window.ready = new Promise((r) => (window._ready = r));</script>
+<script type="importmap">{ "imports": { "three": "../video/node_modules/three/build/three.module.js", "three/addons/": "../video/node_modules/three/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { buatDunia, langit, matahari } from '../video/lib/dunia.js';
+const q = new URLSearchParams(location.search);
+const D = buatDunia({ ao: false, bloom: 0.05, exposure: 1.0 });
+const { scene, cam, pmrem, render } = D;
+const sk = langit(scene, pmrem, { elev: 40, az: -130 });
+scene.environment = sk.env;
+scene.add(new THREE.HemisphereLight('#dfeeff', '#5a5040', 0.7));
+const t0 = performance.now();
+const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(q.get('f') || '../video-millenium/model/millenium.glb');
+const root = gltf.scene; scene.add(root);
+const info = {};
+root.traverse((o) => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; } });
+root.children.forEach((g) => { const b = new THREE.Box3().setFromObject(g); info[g.name] = [b.min.toArray().map((v) => +v.toFixed(1)), b.max.toArray().map((v) => +v.toFixed(1))]; });
+const all = new THREE.Box3().setFromObject(root), c = all.getCenter(new THREE.Vector3()), s = all.getSize(new THREE.Vector3());
+console.log('LOAD_MS', Math.round(performance.now() - t0));
+console.log('BBOX', JSON.stringify({ min: all.min, max: all.max }));
+console.log('GRUP', JSON.stringify(info));
+const sun = matahari(scene, sk.sunDir, c, { span: Math.max(s.x, s.z) * 0.6, dist: Math.max(s.x, s.z) * 1.5, map: 4096 });
+const R = Math.max(s.x, s.z);
+const views = {
+  1: [[c.x + R * 0.7, R * 0.55, c.z + R * 0.7], [c.x, 0, c.z]],
+  2: [[c.x, R * 1.1, c.z + 0.01], [c.x, 0, c.z]],
+  3: [[c.x - R * 0.7, R * 0.45, c.z - R * 0.6], [c.x, 0, c.z]],
+};
+window.lihat = (p, l, f = 40) => { cam.position.set(...p); cam.lookAt(...l); cam.fov = f; cam.far = 20000; cam.updateProjectionMatrix(); };
+const v = views[q.get('v') || 1]; window.lihat(v[0], v[1]);
+window.renderFrame = () => render();
+window.DURASI = 1; window._ready();
+</script></body></html>
