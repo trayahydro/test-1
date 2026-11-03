@@ -1,0 +1,6 @@
+# Python untuk voice-over & musik video Traya
+edge-tts>=7.0      # suara Ardi (id-ID-ArdiNeural)
+numpy>=2.0         # musik latar (audio/buat_musik.py)
+scipy>=1.13        # musik latar
+# opsional: suara offline Piper (butuh file model .onnx terpisah)
+# piper-tts>=1.2
