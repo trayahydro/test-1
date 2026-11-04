@@ -65,6 +65,8 @@ export function chip(no, judul, sub = '', tahap = -1, t0 = 0.3) {
   if (tahap >= 0) {
     p = el(TAHAP.map((_, i) => `<i class="${i < tahap ? 'done' : i === tahap ? 'on' : ''}"></i>`).join('') + `<b>${TAHAP[tahap].toUpperCase()}</b>`, 'prog');
     p.style.top = sub ? '150px' : '128px';
+    // warna per tahap (opsional), mis. gradasi air kotor → bersih
+    if (window.TAHAP_WARNA) p.querySelectorAll('i').forEach((e, i) => { if (i <= tahap) { const w = window.TAHAP_WARNA[i]; e.style.background = w; e.style.opacity = i < tahap ? 0.75 : 1; if (i === tahap) e.style.boxShadow = `0 0 12px ${w}`; } });
   }
   items.push({ up: (t) => { const a = easeOut(prog(t, t0, 0.6)); c.style.opacity = a; c.style.transform = `translateY(${(1 - a) * 14}px)`; if (p) p.style.opacity = easeOut(prog(t, t0 + 0.3, 0.6)); } });
 }
