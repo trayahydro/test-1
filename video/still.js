@@ -17,7 +17,7 @@ const fs = require('fs');
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on('console', (m) => console.log('[page]', m.text()));
   page.on('pageerror', (e) => console.error('[pageerror]', e));
-  await page.goto(`http://127.0.0.1:${srv.address().port}/${path.relative(root, path.resolve(html))}`);
+  await page.goto(`http://127.0.0.1:${srv.address().port}/${path.relative(root, path.resolve(html))}?skala=${process.env.SKALA || 1}${process.env.MODEL ? '&model=' + process.env.MODEL : ''}`);
   await page.evaluate(() => window.ready);
   await page.evaluate(() => document.fonts.ready);
   console.log('DURASI', await page.evaluate(() => window.DURASI));

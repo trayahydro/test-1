@@ -38,7 +38,7 @@ function serve(root) {
   page.on('pageerror', (e) => console.error('[pageerror]', e));
   const root = path.resolve(__dirname, '..');
   const srv = await serve(root);
-  await page.goto(`http://127.0.0.1:${srv.address().port}/${path.relative(root, path.resolve(html))}`);
+  await page.goto(`http://127.0.0.1:${srv.address().port}/${path.relative(root, path.resolve(html))}?skala=${process.env.SKALA || 1}${process.env.MODEL ? '&model=' + process.env.MODEL : ''}`);
   await page.evaluate(() => window.ready);
   await page.evaluate(() => document.fonts.ready);
   const gl = await page.evaluate(() => {

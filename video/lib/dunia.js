@@ -17,8 +17,12 @@ export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 
   if (q.has('ao')) ao = ao && q.get('ao') === '1';
   if (q.has('msaa')) samples = Number(q.get('msaa'));
   if (q.has('bloom')) bloom = q.get('bloom') === '0' ? 0 : bloom;
+  // skala resolusi 3D (mis. ?skala=0.67): kanvas dirender lebih kecil lalu direntang ke 1920×1080,
+  // overlay HTML tetap tajam. Mempercepat render di mesin tanpa GPU.
+  const skala = Math.min(1, Math.max(0.3, Number(q.get('skala') || 1)));
   const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
-  renderer.setSize(W, H);
+  renderer.setSize(Math.round(W * skala), Math.round(H * skala), false);
+  renderer.domElement.style.width = W + 'px'; renderer.domElement.style.height = H + 'px';
   renderer.shadowMap.enabled = shadows;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -57,8 +61,10 @@ export function buatDunia({ ao = true, bloom = 0.18, exposure = 0.95, samples = 
   composer.addPass(new OutputPass());
   // InstancedMesh: batas frustum dihitung dari posisi awal instans, jadi partikel yang bergerak bisa
   // ikut "terpotong". Matikan frustum culling untuk semua InstancedMesh sebelum render.
+  const ukur = () => { composer.setSize(Math.round(W * skala), Math.round(H * skala)); if (aoPass && q.get('aofull') !== '1') aoPass.setSize(Math.round(W * skala / 2), Math.round(H * skala / 2)); };
+  ukur();
   const render = () => { scene.traverse((o) => { if (o.isInstancedMesh) o.frustumCulled = false; }); composer.render(); };
-  return { renderer, scene, cam, pmrem, composer, aoPass, bloomPass, render };
+  return { renderer, scene, cam, pmrem, composer, aoPass, bloomPass, render, skala, ukur };
 }
 
 // Kubah langit gradasi + kilau matahari. Warna dapat diganti (pagi, siang, senja).
