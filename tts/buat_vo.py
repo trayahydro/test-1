@@ -78,12 +78,33 @@ KAMUS = [
     ("flowmeter", "flo meter"),
     ("flush", "flas"),
     ("skid", "skit"),
+    ("Moving Bed Biofilm Reactor", "muving bed baiofilm riektor"),
+    ("Membrane Bioreactor", "membren baio-riektor"),
+    ("rotary drum filter", "roteri dram filter"),
+    ("Coarse screen", "Kors skrin"), ("coarse screen", "kors skrin"),
+    ("Fine screen", "Fain skrin"), ("fine screen", "fain skrin"),
+    ("flotation chamber", "flotesyen cember"),
+    ("jogging track", "joging trek"),
+    ("control room", "kontrol rum"),
+    ("crane overhead", "kren overhed"),
+    ("walkway", "wokwei"),
+    ("workshop", "werksyop"), ("Workshop", "Werksyop"),
+    ("diffuser", "difyuser"),
+    ("blower roots", "bloer ruts"),
+    ("blower", "bloer"),
+    ("skimmer", "skimer"), ("Skimmer", "Skimer"),
+    ("permeate", "permiet"),
+    ("rack", "rek"),
+    ("screen", "skrin"),
+    ("sparepart", "sper part"),
+    ("office", "ofis"),
 ]
 # Singkatan: hanya dicocokkan sebagai kata utuh (huruf besar/kecil persis)
 SINGKATAN = {
     "SWRO": "es-we-er-o", "RO": "er-o", "UF": "u-ef", "TDS": "te-de-es", "SDI": "es-de-i",
     "CIP": "ce-i-pe", "PLC": "pe-el-ce", "HMI": "ha-em-i", "SMBS": "es-em-be-es", "FRP": "ef-er-pe",
     "pH": "pe-ha", "psi": "pe-es-i", "MMF": "em-em-ef",
+    "MBBR": "em-be-be-er", "MBR": "em-be-er", "PVDF": "pe-ve-de-ef", "UPVC": "yu-pe-ve-ce", "EF": "e-ef", "PLN": "pe-el-en", "kVA": "ka-ve-a",
 }
 
 SATUAN = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"]

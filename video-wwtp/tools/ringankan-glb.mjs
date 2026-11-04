@@ -16,8 +16,9 @@ const tri = (p) => (p.getIndices() ? p.getIndices().getCount() : p.getAttribute(
 for (const mesh of doc.getRoot().listMeshes()) {
   const prims = mesh.listPrimitives();
   const total = prims.reduce((s, p) => s + tri(p), 0);
-  if (total <= target) { console.log(mesh.getName(), Math.round(total), '(tetap)'); continue; }
-  const ratio = Math.max(0.01, target / total);
+  const tgt = mesh.getName().startsWith('35-RACK') ? Number(process.env.TARGET_RACK || 8000) : target;
+  if (total <= tgt) { console.log(mesh.getName(), Math.round(total), '(tetap)'); continue; }
+  const ratio = Math.max(0.002, tgt / total);
   for (const p of prims) simplifyPrimitive(p, { simplifier: MeshoptSimplifier, ratio, error: 0.01, lockBorder: false });
   console.log(mesh.getName(), Math.round(total), '→', Math.round(mesh.listPrimitives().reduce((s, p) => s + tri(p), 0)));
 }

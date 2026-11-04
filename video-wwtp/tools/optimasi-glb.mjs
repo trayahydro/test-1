@@ -39,7 +39,7 @@ function jelajah(node, g) {
 scene.listChildren().forEach((n) => jelajah(n, null));
 
 // bangun scene baru: satu node per grup, berisi satu mesh dengan semua primitive (transform dibakar)
-const baru = doc.createScene('millenium');
+const baru = doc.createScene('site');
 let nPrim = 0;
 for (const [key, items] of kelompok) {
   const gNode = doc.createNode(key);

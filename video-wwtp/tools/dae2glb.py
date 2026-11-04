@@ -19,6 +19,15 @@ T = lambda t: NS + t
 
 def grup(nama):
     n = (nama or '').lstrip('_')
+    # bagian yang perlu dianimasikan terpisah
+    r = re.match(r'35-MBR_Rack(\d+)_([SN])_R(\d)_C(\d)_T(\d)', n)
+    if r:
+        return f'35-RACK-{r.group(2)}-R{r.group(3)}C{r.group(4)}T{r.group(5)}'
+    g = re.match(r'05-SITE_Gate_Leaf(\d)', n)
+    if g:
+        return f'05-GATE{g.group(1)}'
+    if n.startswith('TRK'):
+        return '06-TRK'
     m = re.match(r'(\d{2}-[A-Z]+)', n)
     if m:
         return m.group(1)

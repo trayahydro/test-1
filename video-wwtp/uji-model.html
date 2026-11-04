@@ -15,7 +15,7 @@ const sk = langit(scene, pmrem, { elev: 40, az: -130 });
 scene.environment = sk.env;
 scene.add(new THREE.HemisphereLight('#dfeeff', '#5a5040', 0.7));
 const t0 = performance.now();
-const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(q.get('f') || '../video-millenium/model/millenium.glb');
+const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(q.get('f') || 'model/site.glb');
 const root = gltf.scene; scene.add(root);
 const info = {};
 root.traverse((o) => { if (o.isMesh) { if (!o.geometry.attributes.normal) o.geometry = toCreasedNormals(o.geometry, Math.PI / 6); o.castShadow = o.receiveShadow = true; } });
@@ -33,6 +33,11 @@ const views = {
 };
 window.lihat = (p, l, f = 40) => { cam.position.set(...p); cam.lookAt(...l); cam.fov = f; cam.far = 20000; cam.updateProjectionMatrix(); };
 const v = views[q.get('v') || 1]; window.lihat(v[0], v[1]);
-window.renderFrame = () => render();
+if (q.get('lbl')) {
+  const ov = document.createElement('div'); ov.style.cssText = 'position:absolute;inset:0;font:600 13px sans-serif;color:#fff'; document.body.appendChild(ov);
+  window.renderFrame = () => { render(); ov.innerHTML = '';
+    root.children.forEach((g) => { if (/RACK/.test(g.name)) return; const b = new THREE.Box3().setFromObject(g); const p = b.getCenter(new THREE.Vector3()); p.y = b.max.y; p.project(cam);
+      const d = document.createElement('div'); d.textContent = g.name; d.style.cssText = `position:absolute;left:${(p.x + 1) / 2 * 1920}px;top:${(1 - p.y) / 2 * 1080}px;background:rgba(0,0,0,.6);padding:1px 4px;transform:translate(-50%,-50%)`; ov.appendChild(d); }); };
+} else window.renderFrame = () => render();
 window.DURASI = 1; window._ready();
 </script></body></html>
