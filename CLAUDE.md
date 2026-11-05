@@ -35,6 +35,8 @@ pindahan dari sesi Claude Code cloud. Rangkuman lengkap ada di `pindahan-claude-
 - Video kontainer SWRO (10:00, VO Ardi) — **selesai**, revisi Pak Jimmy sudah masuk.
 - Video SWRO 3 m³ kapal pesiar (6:37, VO Ardi) — **selesai + revisi** (kaca kapal tidak berkedip,
   ruang mesin terlihat di tampilan X-ray). Angka opsi 2–3 membran masih **estimasi**, tunggu konfirmasi.
+- Video WWTP MBR 30–45 L/detik (9:34, VO Ardi) — **selesai**; file proyek di folder lokal (tidak di-commit),
+  alat umum di `video-wwtp/`. Render CPU: `SKALA=0.6` (3D 60%, overlay 1080p).
 - Jualan website — catatan lengkap; paket & harga sudah disusun; PRD klien fashion v0.2; proposal belum dibuat.
 - Pelajaran web developer — Pelajaran 1 selesai; berikutnya **Pelajaran 2: Frontend**.
 
